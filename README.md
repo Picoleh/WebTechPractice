@@ -1,21 +1,11 @@
 # BioMaterials CRUD
 
 Full-stack CRUD application for biomaterials using:
-- Backend: FastAPI + SQLAlchemy (raw SQL execution)
+- Backend: FastAPI
 - Frontend: React + TypeScript + Vite + Tailwind
-- Database: PostgreSQL (configured via environment variable)
+- Database: PostgreSQL
 
-## Project Structure
-
-```text
-bioMatvenv/
-  backend/
-    main.py
-  frontend/
-    src/
-    package.json
-  .gitignore
-```
+This project is intended to run with Docker Compose.
 
 ## Features
 
@@ -26,115 +16,124 @@ bioMatvenv/
 - Update biomaterials
 - Delete biomaterials
 
+## Docker Services
+
+The `docker-compose.yml` file defines 3 services:
+- `frontend`: Vite app exposed on port `5173`
+- `backend`: FastAPI app exposed on port `8000`
+- `db`: PostgreSQL 15 exposed on port `5432`
+
+Named volume:
+- `postgres_data`: persists PostgreSQL data
+
 ## Prerequisites
 
-- Python 3.12+ (recommended)
-- Node.js 20+ and npm
-- PostgreSQL database with schema/table:
-  - `biomaterials_db.biomaterials`
+- Docker Desktop (or Docker Engine + Docker Compose)
 
-## Backend Setup (FastAPI)
-
-From the project root:
+Verify installation:
 
 ```powershell
-cd backend
+docker --version
+docker compose version
 ```
 
-Install dependencies (if needed):
+## Environment Configuration
 
-```powershell
-pip install -r requirements.txt
-```
-
-### Environment Variable
-
-The backend expects this file path:
+The backend service uses this env file:
 
 ```text
 .env/dbInfo.env
 ```
 
-Inside that file, define:
+Create it if missing, then add:
 
 ```env
-DB_PATH=postgresql+psycopg2://USER:PASSWORD@HOST:5432/DB_NAME
+DB_PATH=postgresql+psycopg2://postgres:root@db:5432/postgres
 ```
 
-Example:
+Important:
+- Use host `db` (the Docker service name), not `localhost`, for container-to-container DB access.
 
-```env
-DB_PATH=postgresql+psycopg2://postgres:postgres@localhost:5432/biomaterials_db
-```
+## Run With Docker Compose
 
-### Run Backend
+From the project root (`bioMatvenv`):
 
 ```powershell
-fastapi dev main.py
+docker compose up --build
 ```
 
-Backend default URL:
-
-```text
-http://localhost:8000
-```
-
-## Frontend Setup (React + Vite)
-
-From the project root:
+Run detached:
 
 ```powershell
-cd frontend
-npm install
+docker compose up --build -d
 ```
 
-Run development server:
+Stop services:
 
 ```powershell
-npm run dev
+docker compose down
 ```
 
-Frontend default URL:
+Stop and remove volumes (deletes DB data):
 
-```text
-http://localhost:5173
+```powershell
+docker compose down -v
 ```
 
-CORS is enabled in the backend for `http://localhost:5173`.
+## Access URLs
+
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API docs (Swagger): http://localhost:8000/docs
+
+## Common Docker Commands
+
+View running containers:
+
+```powershell
+docker compose ps
+```
+
+View logs for all services:
+
+```powershell
+docker compose logs -f
+```
+
+View logs for one service:
+
+```powershell
+docker compose logs -f backend
+docker compose logs -f frontend
+docker compose logs -f db
+```
+
+Rebuild a single service:
+
+```powershell
+docker compose build backend
+docker compose up -d backend
+```
+
+## Optional: Load SQL Dump
+
+If you want to import `dump.sql` into the database:
+
+```powershell
+Get-Content .\dump.sql | docker exec -i postgres_db psql -U postgres -d postgres
+```
+
+Run this after the `db` service is up.
 
 ## API Endpoints
 
 - `GET /` - health check
-- `GET /biomaterials?page=<number>` - paginated list (3 items per page)
+- `GET /biomaterials?page=<number>` - paginated list
 - `GET /biomaterials/search?q=<term>` - search by name or type
 - `GET /biomaterials/{id}` - get one record by ID
 - `POST /biomaterials` - create record
 - `PUT /biomaterials/{id}` - update record
 - `DELETE /biomaterials/{id}` - delete record
-
-## Notes
-
-- Current SQL in `backend/main.py` is built using string formatting. For production use, switch to parameterized queries to avoid SQL injection.
-- Keep secret credentials out of git (already protected by `.gitignore`).
-
-## Quick Start (Two Terminals)
-
-Terminal 1:
-
-```powershell
-cd backend
-fastapi dev main.py
-```
-
-Terminal 2:
-
-```powershell
-cd frontend
-npm install
-npm run dev
-```
-
-Open `http://localhost:5173` in your browser.
 
 ## License
 
