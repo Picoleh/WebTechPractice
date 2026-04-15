@@ -9,7 +9,7 @@ def load_settings() -> dict[str, str]:
     project_root = backend_root.parent
     dotenv_path = project_root / ".env" / "dbInfo.env"
 
-    load_dotenv(dotenv_path=dotenv_path)
+    #load_dotenv(dotenv_path=dotenv_path)
 
     db_path = os.getenv("DB_PATH")
     if not db_path:
