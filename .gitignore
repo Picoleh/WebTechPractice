@@ -1,0 +1,73 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
+# =========================
+# Node / Vite (Frontend)
+# =========================
+node_modules/
+dist/
+dist-ssr
+*.local
+.vite/
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+
+# =========================
+# Python / FastAPI (Backend)
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+.venv/
+Include/
+Lib/
+Scripts/
+
+# Python build
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# =========================
+# FastAPI specific (comum)
+# =========================
+*.sqlite3
+*.db
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Test / coverage
+# =========================
+.coverage
+htmlcov/
+
+# =========================
+# Misc
+# =========================
+*.swp
