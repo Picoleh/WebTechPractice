@@ -3,6 +3,7 @@ import { TableRender } from "../Util/TableRender";
 import PageCounter from "../Util/PageCounter";
 import { FaPlus } from "react-icons/fa6";
 import FilterDropdown from "../Util/FilterDropdown";
+import BioMatForm from "./BioMatForm";
 
 
 export type Biomaterial = {
@@ -33,7 +34,11 @@ export default function SearchComponent() {
     const [totalPages, setTotalPages] = useState(1);
     const [filterTypes, setFilterTypes] = useState<string[]>([]);
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+    const [isFormOpen, setIsFormOpen] = useState(false);
 
+    function toggleForm(){
+        setIsFormOpen(prev => !prev);
+    }
 
     function handleTypeFilterChange(type: string) {
         setSelectedTypes(prev => {
@@ -99,7 +104,7 @@ export default function SearchComponent() {
                     Search
                 </button>
 
-                <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded flex flex-row items-center justify-center gap-2">
+                <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded flex flex-row items-center justify-center gap-2" onClick={toggleForm}>
                     <FaPlus size={28}/>
                     Add
                 </button>
@@ -111,6 +116,8 @@ export default function SearchComponent() {
             <div className="bg-white mt-3 p-2 rounded shadow-lg" >
                 <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
             </div>
+
+            <BioMatForm isOpenState={isFormOpen} onClose={toggleForm}/>
         </div>
     );
 }
