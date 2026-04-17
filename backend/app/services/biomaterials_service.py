@@ -4,26 +4,70 @@ from ..schemas.biomaterial import BiomaterialCreateUpdate
 TABLE = "biomaterials_db.biomaterials"
 PER_PAGE = 3
 
+def get_biomaterials_count(sql: str):
+    select = sql.find("SELECT")
+    from_ = sql.find("FROM")
+    columns  = sql[select + 6: from_]
+    count_sql = sql.replace(columns, " COUNT(*) AS count ")
 
-def search_biomaterials(q: str):
-    sql = f"SELECT * FROM {TABLE} WHERE name ILIKE :query OR type ILIKE :query"
-    return fetch_all(sql, {"query": f"%{q}%"})
+    print({
+        "select": select,
+        "from_": from_,
+        "columns": columns,
+        "count_sql": count_sql
+    })
 
-
-def get_biomaterials(page: int):
-    offset = (page - 1) * PER_PAGE
-    data_sql = f"SELECT * FROM {TABLE} LIMIT :limit OFFSET :offset"
-    count_sql = f"SELECT COUNT(*) AS count FROM {TABLE}"
-
-    data = fetch_all(data_sql, {"limit": PER_PAGE, "offset": offset})
     count_result = fetch_all(count_sql)
+    return count_result[0]["count"] if count_result else 0
+
+def get_biomaterial_types(conditional: str = ""):
+    sql = f"SELECT DISTINCT type FROM {TABLE}"
+    if conditional:
+        sql += f" WHERE {conditional}"
+    results = fetch_all(sql)
+    return [row["type"] for row in results] if results else []
+
+def search_biomaterials(q: str, page: int, selected_types: list[str]):
+    offset = (page - 1) * PER_PAGE
+    sql = f"SELECT * FROM {TABLE} WHERE name ILIKE '%{q}%' OR type ILIKE '%{q}%'"
+
+    for type in selected_types:
+        sql += f" AND type = '{type}'"
+
+    sql_no_limit = sql
+    sql += f" LIMIT {PER_PAGE} OFFSET {offset}"
+
+    data = fetch_all(sql)
+    return {
+        "data": data,
+        "meta": {
+            "page": page,
+            "per_page": PER_PAGE,
+            "total": get_biomaterials_count(sql_no_limit),
+            "types": get_biomaterial_types(f"name ILIKE '%{q}%' OR type ILIKE '%{q}%'")
+        },
+    }
+
+
+def get_biomaterials(page: int, selected_types: list[str]):
+    offset = (page - 1) * PER_PAGE
+    sql = f"SELECT * FROM {TABLE}"
+    
+    if selected_types:
+        sql += " WHERE" + " OR".join([f" type = '{type}'" for type in selected_types])
+    
+    sql_no_limit = sql
+    sql += f" LIMIT {PER_PAGE} OFFSET {offset}"
+
+    data = fetch_all(sql)
 
     return {
         "data": data,
         "meta": {
             "page": page,
             "per_page": PER_PAGE,
-            "total": count_result[0]["count"] if count_result else 0,
+            "total": get_biomaterials_count(sql_no_limit),
+            "types": get_biomaterial_types()
         },
     }
 

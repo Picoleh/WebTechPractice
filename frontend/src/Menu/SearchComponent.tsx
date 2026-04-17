@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { TableRender } from "../Util/TableRender";
-import leftArrowIcon from "../assets/circle-arrow-indicator-left.svg";
-import plusSign from "../assets/plusIcon.png";
-import { Link } from "react-router-dom";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import PageCounter from "../Util/PageCounter";
 import { FaPlus } from "react-icons/fa6";
+import FilterDropdown from "../Util/FilterDropdown";
+
 
 export type Biomaterial = {
     id: number;
@@ -33,6 +31,19 @@ export default function SearchComponent() {
     const [searchTerm, setSearchTerm] = useState("");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [filterTypes, setFilterTypes] = useState<string[]>([]);
+    const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+
+
+    function handleTypeFilterChange(type: string) {
+        setSelectedTypes(prev => {
+            if (prev.includes(type)) {  
+                return prev.filter(t => t !== type);
+            } else {
+                return [...prev, type];
+            }
+        });
+    }
 
     async function loadBiomaterials() {
         try {
@@ -40,6 +51,9 @@ export default function SearchComponent() {
             if (searchTerm.trim() !== "") {
                 fetch_path = `http://localhost:8000/biomaterials/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
             }
+
+            const typeParams = selectedTypes.map(type => `types=${encodeURIComponent(type)}`).join("&");
+            fetch_path += `&${typeParams}`;
 
             console.log(`Fetching biomaterials from: ${fetch_path}`);
 
@@ -53,6 +67,7 @@ export default function SearchComponent() {
             const result = responseJson.data as Biomaterial[];
             setData(result);
             setTotalPages(Math.ceil(responseJson.meta.total / responseJson.meta.per_page));
+            setFilterTypes(responseJson.meta.types || []);
         } catch (err) {
             throw new Error("Unknown error while fetching data");
         } finally {
@@ -74,9 +89,7 @@ export default function SearchComponent() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
 
-                <button className="border border-gray-400 rounded px-3 py-2">
-                    Filter
-                </button>
+                <FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange}/>
 
                 <button type="button" onClick={
                     async () => {

@@ -14,13 +14,13 @@ router = APIRouter(prefix="/biomaterials", tags=["biomaterials"])
 
 
 @router.get("/search")
-async def search_biomaterials_route(q: str = Query(..., min_length=1)):
-    return search_biomaterials(q)
+async def search_biomaterials_route(q: str = Query(..., min_length=1), page: int = Query(1, ge=1), types: list[str] = Query([])):
+    return search_biomaterials(q, page, types)
 
 
 @router.get("")
-async def get_biomaterials_route(page: int = Query(1, ge=1)):
-    return get_biomaterials(page)
+async def get_biomaterials_route(page: int = Query(1, ge=1), types: list[str] = Query([])):
+    return get_biomaterials(page, types)
 
 
 @router.get("/{id}")
