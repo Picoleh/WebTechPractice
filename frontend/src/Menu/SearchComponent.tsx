@@ -3,6 +3,9 @@ import { TableRender } from "../Util/TableRender";
 import leftArrowIcon from "../assets/circle-arrow-indicator-left.svg";
 import plusSign from "../assets/plusIcon.png";
 import { Link } from "react-router-dom";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import PageCounter from "../Util/PageCounter";
+import { FaPlus } from "react-icons/fa6";
 
 export type Biomaterial = {
     id: number;
@@ -26,10 +29,10 @@ const columns: Array<{ key: keyof Biomaterial; label: string }> = [
 
 export default function SearchComponent() {
     const [data, setData] = useState<Biomaterial[]>([]);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     async function loadBiomaterials() {
         try {
@@ -61,42 +64,40 @@ export default function SearchComponent() {
     }, [page]);
 
     return (
-        <div className=" bg-gray-200 w-full p-5">
-            <div className="flex flex-row justify-end mb-3 gap-4">
+        <div className="w-full mt-8">
+            <div className="bg-white flex flex-row justify-end mb-3 gap-4 p-2 rounded shadow-lg">
                 <input
                     type="text"
                     placeholder="Search biomaterials..."
-                    className="border border-gray-400 rounded px-3 py-2 w-full"
+                    className="border border-gray-400 rounded px-3 py-2 w-1/5 mr-auto"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
+
+                <button className="border border-gray-400 rounded px-3 py-2">
+                    Filter
+                </button>
 
                 <button type="button" onClick={
                     async () => {
                         loadBiomaterials();
                     }
-                    } className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded w-1/4">
+                    } className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded w-1/12">
                     Search
                 </button>
-                <div className="flex flex-row align-middle bg-orange-100 px-3">
-                    <button onClick={() => setPage(page > 1 ? page - 1 : 1)} disabled={page === 1} className="text-white rounded hover:bg-gray-300 px-3 disabled:opacity-50 disabled:hover:bg-transparent">
-                        <img src={leftArrowIcon} alt="Previous" className="w-20"/>
-                    </button>
-                    <p className="whitespace-nowrap content-center px-3">Page {page} of {totalPages}</p>
-                    <button onClick={() => setPage(page < totalPages ? page + 1 : totalPages)} disabled={page === totalPages} className="text-white rounded hover:bg-gray-300 px-3 disabled:opacity-50 disabled:hover:bg-transparent">
-                        <img src={leftArrowIcon} alt="Next" className="w-20 rotate-180"/>
-                    </button>
-                </div>
 
-                <Link to="/add">
-                    <button className="bg-green-500 hover:bg-green-700 text-white rounded h-full px-3">
-                        <img src={plusSign} alt="Add" className="w-14"/>
-                    </button>
-                </Link>
+                <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded flex flex-row items-center justify-center gap-2">
+                    <FaPlus size={28}/>
+                    Add
+                </button>
+                
             </div>
 
             {loading && <p>Loading biomaterials...</p>}
             {!loading && <TableRender data={data} columns={columns} onDeleteSucess={loadBiomaterials}/>}
+            <div className="bg-white mt-3 p-2 rounded shadow-lg" >
+                <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
+            </div>
         </div>
     );
 }

@@ -3,6 +3,8 @@ import SearchComponent from "./Menu/SearchComponent"
 import TopBarMenu from "./Menu/TopBarMenu/TopBarMenu"
 import BioMaterialForm from "./Menu/BioMaterialForm";
 import FooterBar from "./Menu/TopBarMenu/FooterBar";
+import AsideMenu from "./Menu/TopBarMenu/AsideMenu";
+import PageTitle from "./Util/PageTitle";
 
 function App() {
 
@@ -11,10 +13,11 @@ function App() {
     <div className="h-screen flex flex-col">
       <TopBarMenu/>
 
-      <div className="flex justify-center items-start">
+      <div className="flex h-full">
+        <AsideMenu/>
 
-        <div className="bg-slate-400 flex justify-center w-11/12 h-auto p-8 my-12">
-
+        <div className="bg-gray-100 flex-1 p-8 m-8 rounded-lg shadow-lg">
+        <PageTitle/>
           <Routes>
             <Route path="/" element={<SearchComponent/>}/>
             <Route path="/add" element={<BioMaterialForm/>}/>
@@ -23,7 +26,7 @@ function App() {
         </div>
       </div>
 
-      <FooterBar/>
+      {/* s<FooterBar/> */}
     </div>
     </BrowserRouter>
   )

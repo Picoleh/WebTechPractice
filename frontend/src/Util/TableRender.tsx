@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { deleteBiomaterial } from "./BioMaterialRemover";
+import { GoPencil } from "react-icons/go";
+import { MdDeleteForever } from "react-icons/md";
 
 type Column<T> = {
   key: keyof T;
@@ -14,45 +16,47 @@ type TableProps<T> = {
 
 export function TableRender<T extends { id: number }>({ data, columns, onDeleteSucess }: TableProps<T>) {
   return (
-    <table className="w-full">
-      <thead>
-        <tr>
-          {columns.map(col => (
-            <th key={String(col.key)}>{col.label}</th>
-          ))}
-          <th>Actions</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {data.map((row, i) => (
-          <tr key={i} className="border-solid border-black border-2 hover:bg-gray-300 text-center">
+    <div className="bg-white rounded shadow-md overflow-hidden p-2">
+      <table className="w-full">
+        <thead className="bg-gray-50 border-b">
+          <tr>
             {columns.map(col => (
-              <td key={String(col.key)} className="p-3">
-                {String(row[col.key])}
-              </td>
+              <th key={String(col.key)} className="text-left px-6 py-4 text-sm font-semibold text-gray-600">{col.label}</th>
             ))}
-
-            <td>
-              <Link to={`/edit/${row.id}`} state={{ biomaterial: row }}>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded mr-2">Edit</button>
-              </Link>
-              <button onClick={
-                async() => {
-                  try{
-                    await deleteBiomaterial(row.id);
-                    onDeleteSucess();
-                  }
-                  catch(err){
-                    console.error("Error deleting biomaterial:", err);
-                  }
-                }
-              } className="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded">Delete
-              </button>
-            </td>
+            <th className="text-left px-6 py-4 text-sm font-semibold text-gray-600">Actions</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {data.map((row, i) => (
+            <tr key={i} className="border-b last:border-none hover:bg-gray-100 transition">
+              {columns.map(col => (
+                <td key={String(col.key)} className="p-3">
+                  {String(row[col.key])}
+                </td>
+              ))}
+
+              <td>
+                <Link to={`/edit/${row.id}`} state={{ biomaterial: row }}>
+                  <button className="text-black px-2 py-1 rounded mr-2 hover:text-teal-500"><GoPencil size={24}/></button>
+                </Link>
+                <button onClick={
+                  async() => {
+                    try{
+                      await deleteBiomaterial(row.id);
+                      onDeleteSucess();
+                    }
+                    catch(err){
+                      console.error("Error deleting biomaterial:", err);
+                    }
+                  }
+                } className="text-black px-2 py-1 rounded hover:text-red-500"><MdDeleteForever size={24}/>
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
