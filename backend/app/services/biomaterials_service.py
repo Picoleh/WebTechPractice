@@ -10,13 +10,6 @@ def get_biomaterials_count(sql: str):
     columns  = sql[select + 6: from_]
     count_sql = sql.replace(columns, " COUNT(*) AS count ")
 
-    print({
-        "select": select,
-        "from_": from_,
-        "columns": columns,
-        "count_sql": count_sql
-    })
-
     count_result = fetch_all(count_sql)
     return count_result[0]["count"] if count_result else 0
 
