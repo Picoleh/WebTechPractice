@@ -57,7 +57,7 @@ def get_biomaterials(page: int, selected_types: list[str]):
         sql += " WHERE" + " OR".join([f" type = '{type}'" for type in selected_types])
     
     sql_no_limit = sql
-    sql += f" LIMIT {PER_PAGE} OFFSET {offset}"
+    sql += f" ORDER BY id ASC LIMIT {PER_PAGE} OFFSET {offset}"
 
     data = fetch_all(sql)
 

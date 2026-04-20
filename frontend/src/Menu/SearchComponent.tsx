@@ -35,8 +35,14 @@ export default function SearchComponent() {
     const [filterTypes, setFilterTypes] = useState<string[]>([]);
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [editingId, setEditingId] = useState<number | null>(null);
 
-    function toggleForm(){
+    function toggleForm(id?: number) {
+        if(id !== undefined){
+            setEditingId(id);
+        } else {
+            setEditingId(null);
+        }
         setIsFormOpen(prev => !prev);
     }
 
@@ -104,7 +110,7 @@ export default function SearchComponent() {
                     Search
                 </button>
 
-                <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded flex flex-row items-center justify-center gap-2" onClick={toggleForm}>
+                <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded flex flex-row items-center justify-center gap-2" onClick={() => toggleForm()}>
                     <FaPlus size={28}/>
                     Add
                 </button>
@@ -112,12 +118,12 @@ export default function SearchComponent() {
             </div>
 
             {loading && <p>Loading biomaterials...</p>}
-            {!loading && <TableRender data={data} columns={columns} onDeleteSucess={loadBiomaterials}/>}
+            {!loading && <TableRender data={data} columns={columns} onDeleteSucess={loadBiomaterials} onEditClick={toggleForm}/>}
             <div className="bg-white mt-3 p-2 rounded shadow-lg" >
                 <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
             </div>
 
-            <BioMatForm isOpenState={isFormOpen} onClose={toggleForm}/>
+            <BioMatForm isOpenState={isFormOpen} onClose={toggleForm} editingId={editingId} onUpdate={loadBiomaterials}/>
         </div>
     );
 }

@@ -5,8 +5,7 @@ function PageTitle() {
 
   const titles : Record<string, string> = {
     "/": "Home",
-    "/add": "Sobre",
-    "/contato": "Contato",
+    "/search": "Materials Inventory",
   };
 
   const currentTitle = titles[location.pathname] ?? "Página";
