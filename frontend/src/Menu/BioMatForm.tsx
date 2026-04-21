@@ -107,17 +107,17 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
 
     return(
         <>
-        {isOpenState && <div className="fixed inset-0 bg-black/30" onClick={onClose}/>}
+        {isOpenState && <div className="fixed inset-0 z-40 bg-black/30" onClick={onClose}/>}
 
-        <aside className={`fixed top-16 right-0 w-1/6 bg-white text-black h-full p-4 shadow-lg transition-all duration-300 ${isOpenState ? "translate-x-0" : "translate-x-full"}`}>
-            <div className="flex flex-col">
-                <div className="flex flex-row">
+        <aside className={`fixed right-0 top-0 z-50 h-screen w-full bg-white p-4 text-black shadow-lg transition-all duration-300 sm:top-16 sm:w-[420px] lg:w-[520px] ${isOpenState ? "translate-x-0" : "translate-x-full"}`}>
+            <div className="flex h-full flex-col overflow-y-auto">
+                <div className="flex flex-row items-start gap-3">
                     <label className="font-bold">{isEditMode ? "Edit Biomaterial" : "Create New Biomaterial"}</label>
                     <button onClick={onClose} className="ml-auto px-2 py-1 rounded hover:bg-gray-300">
                         <IoMdClose size={20}/>
                     </button>
                 </div>
-                <div className="flex flex-col mt-4 gap-4">
+                <div className="mt-4 flex flex-col gap-4">
                     <label className="font-bold">Name:</label>
                     <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full p-2 rounded border border-gray-400"/>
 

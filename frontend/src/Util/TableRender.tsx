@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { deleteBiomaterial } from "./BioMaterialRemover";
 import { GoPencil } from "react-icons/go";
 import { MdDeleteForever } from "react-icons/md";
@@ -17,14 +16,16 @@ type TableProps<T> = {
 
 export function TableRender<T extends { id: number }>({ data, columns, onDeleteSucess, onEditClick }: TableProps<T>) {
   return (
-    <div className="bg-white rounded shadow-md overflow-hidden p-2">
-      <table className="w-full">
+    <div className="overflow-x-auto rounded bg-white shadow-md">
+      <table className="min-w-[760px] w-full">
         <thead className="bg-gray-50 border-b">
           <tr>
             {columns.map(col => (
-              <th key={String(col.key)} className="text-left px-6 py-4 text-xl font-semibold text-gray-600">{col.label}</th>
+              <th key={String(col.key)} className="px-4 py-4 text-left text-sm font-semibold uppercase tracking-wide text-gray-600">
+                {col.label}
+              </th>
             ))}
-            <th className="text-left px-6 py-4 text-xl font-semibold text-gray-600">Actions</th>
+            <th className="px-4 py-4 text-left text-sm font-semibold uppercase tracking-wide text-gray-600">Actions</th>
           </tr>
         </thead>
 
@@ -32,13 +33,13 @@ export function TableRender<T extends { id: number }>({ data, columns, onDeleteS
           {data.map((row, i) => (
             <tr key={i} className="border-b last:border-none hover:bg-gray-100 transition">
               {columns.map(col => (
-                <td key={String(col.key)} className="p-3">
+                <td key={String(col.key)} className="px-4 py-3 align-top text-sm text-gray-700">
                   {String(row[col.key])}
                 </td>
               ))}
 
-              <td>
-                  <button className="text-black px-2 py-1 rounded mr-2 hover:text-teal-500" onClick={() => onEditClick(row.id)}><GoPencil size={24}/></button>
+              <td className="px-4 py-3 whitespace-nowrap">
+                  <button className="mr-2 rounded px-2 py-1 text-black hover:text-teal-500" onClick={() => onEditClick(row.id)}><GoPencil size={24}/></button>
                 <button onClick={
                   async() => {
                     try{
@@ -49,7 +50,7 @@ export function TableRender<T extends { id: number }>({ data, columns, onDeleteS
                       console.error("Error deleting biomaterial:", err);
                     }
                   }
-                } className="text-black px-2 py-1 rounded hover:text-red-500"><MdDeleteForever size={24}/>
+                } className="rounded px-2 py-1 text-black hover:text-red-500"><MdDeleteForever size={24}/>
                 </button>
               </td>
             </tr>

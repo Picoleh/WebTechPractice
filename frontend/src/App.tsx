@@ -9,14 +9,14 @@ function App() {
 
   return (
     <BrowserRouter>
-    <div className="h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col overflow-hidden bg-gray-100">
       <TopBarMenu/>
 
-      <div className="flex h-full">
+      <div className="flex flex-1 flex-col overflow-hidden lg:flex-row">
         <AsideMenu/>
 
-        <div className="bg-gray-100 flex-1 p-8 m-8 rounded-lg shadow-lg">
-        <PageTitle/>
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:m-8 lg:rounded-lg lg:bg-gray-100 lg:p-8 lg:shadow-lg">
+          <PageTitle/>
           <Routes>
             <Route path="/search" element={<SearchComponent/>}/>
             <Route path="/" element={<HomePage/>}/>

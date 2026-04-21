@@ -90,12 +90,12 @@ export default function SearchComponent() {
     }, [page]);
 
     return (
-        <div className="w-full mt-8">
-            <div className="bg-white flex flex-row justify-end mb-3 gap-4 p-2 rounded shadow-lg">
+        <div className="mt-4 w-full sm:mt-8">
+            <div className="mb-3 flex flex-col gap-3 rounded bg-white p-3 shadow-lg sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
                 <input
                     type="text"
                     placeholder="Search biomaterials..."
-                    className="border border-gray-400 rounded px-3 py-2 w-1/5 mr-auto"
+                    className="w-full rounded border border-gray-400 px-3 py-2 sm:min-w-[220px] sm:flex-1"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -106,11 +106,11 @@ export default function SearchComponent() {
                     async () => {
                         loadBiomaterials();
                     }
-                    } className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded w-1/12">
+                    } className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 sm:w-auto">
                     Search
                 </button>
 
-                <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded flex flex-row items-center justify-center gap-2" onClick={() => toggleForm()}>
+                <button className="flex w-full items-center justify-center gap-2 rounded bg-teal-500 px-4 py-2 text-white hover:bg-teal-700 sm:w-auto" onClick={() => toggleForm()}>
                     <FaPlus size={28}/>
                     Add
                 </button>
@@ -119,7 +119,7 @@ export default function SearchComponent() {
 
             {loading && <p>Loading biomaterials...</p>}
             {!loading && <TableRender data={data} columns={columns} onDeleteSucess={loadBiomaterials} onEditClick={toggleForm}/>}
-            <div className="bg-white mt-3 p-2 rounded shadow-lg" >
+            <div className="mt-3 rounded bg-white p-2 shadow-lg" >
                 <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
             </div>
 

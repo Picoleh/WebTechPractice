@@ -5,19 +5,19 @@ import { CgProfile } from "react-icons/cg";
 
 export default function TopBarMenu() {
     return(
-        <div className='flex flex-row bg-teal-900 text-white px-4 py-2 w-full'>
-            <Link to="/" className="flex-row inline-flex text-4xl font-bold hover:text-gray-300 transition-colors duration-200 items-center gap-2">
-                <FcBiomass size={44}/> 
+        <div className='flex flex-col gap-3 bg-teal-900 px-4 py-3 text-white sm:flex-row sm:items-center sm:gap-4'>
+            <Link to="/" className="inline-flex items-center gap-2 text-2xl font-bold transition-colors duration-200 hover:text-gray-300 sm:text-3xl lg:text-4xl">
+                <FcBiomass size={36}/> 
                 BioMatDB
             </Link>
 
-            <button className="flex flex-row items-center gap-2 ml-auto hover:text-gray-300">
-                <IoIosNotificationsOutline size={28}/>
+            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-teal-800 hover:text-gray-300 sm:ml-auto">
+                <IoIosNotificationsOutline size={24}/>
                 Notifications
             </button>
 
-            <button className="flex flex-row items-center gap-2 mx-4 hover:text-gray-300">
-                <CgProfile size={28}/>
+            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-teal-800 hover:text-gray-300">
+                <CgProfile size={24}/>
                 Profile
             </button>
         </div>

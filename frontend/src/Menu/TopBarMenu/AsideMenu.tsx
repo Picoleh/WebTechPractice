@@ -5,18 +5,20 @@ import { useNavigate } from "react-router";
 
 export default function AsideMenu() {
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
 
     return (
-        <aside className={`bg-teal-600 text-white h-full p-4 transition-all duration-300 ${ isOpen ? "w-52" : "w-24"}`}>
-          <AsideButton title={isOpen ? "Menu" : ""} Icon={FaBars} onClick={toggleMenu} isOpen={isOpen}/>
+        <aside className={`shrink-0 border-b border-teal-700 bg-teal-600 text-white transition-all duration-300 lg:border-b-0 lg:border-r ${isOpen ? "w-full lg:w-52" : "w-full lg:w-24"}`}>
+          <div className="flex items-center justify-between gap-3 p-4 lg:flex-col lg:items-stretch">
+            <AsideButton title={isOpen ? "Menu" : ""} Icon={FaBars} onClick={toggleMenu} isOpen={isOpen}/>
+          </div>
 
-          <ul className="space-y-4 mt-6">
-            {isOpen && <h2 className="text-lg font-semibold">Opções</h2>}
+          <ul className="flex flex-col gap-2 px-4 pb-4 lg:mt-6 lg:space-y-4 lg:px-4 lg:pb-4">
+            {isOpen && <h2 className="hidden text-lg font-semibold lg:block">Opções</h2>}
             <li>
               <AsideButton title={"Home"} Icon={FaHome} isOpen={isOpen} onClick={
                 () => navigate("/")
