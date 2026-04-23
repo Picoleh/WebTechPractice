@@ -4,6 +4,7 @@ import PageCounter from "../Util/PageCounter";
 import { FaPlus } from "react-icons/fa6";
 import FilterDropdown from "../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
+import {fetchData} from "../DataManagement/DataManager";
 
 
 export type Biomaterial = {
@@ -58,23 +59,15 @@ export default function SearchComponent() {
 
     async function loadBiomaterials() {
         try {
-            let fetch_path = `http://localhost:8000/biomaterials?page=${page}`;
+            let fetch_path = `biomaterials?page=${page}`;
             if (searchTerm.trim() !== "") {
-                fetch_path = `http://localhost:8000/biomaterials/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
+                fetch_path = `biomaterials/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
             }
 
             const typeParams = selectedTypes.map(type => `types=${encodeURIComponent(type)}`).join("&");
             fetch_path += `&${typeParams}`;
-
-            console.log(`Fetching biomaterials from: ${fetch_path}`);
-
-            const response = await fetch(fetch_path);
-
-            if (!response.ok) {
-                throw new Error(`Request failed with status ${response.status}`);
-            }
             
-            const responseJson = await response.json();
+            const responseJson = await fetchData(fetch_path);
             const result = responseJson.data as Biomaterial[];
             setData(result);
             setTotalPages(Math.ceil(responseJson.meta.total / responseJson.meta.per_page));

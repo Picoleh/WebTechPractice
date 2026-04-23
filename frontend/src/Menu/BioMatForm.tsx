@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Biomaterial } from "./SearchComponent";
 import { IoMdClose } from "react-icons/io";
+import {fetchData} from "../DataManagement/DataManager";
 
 export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: {isOpenState: boolean, onClose?: () => void, editingId: number | null, onUpdate?: () => void}) {
     const isEditMode = editingId !== null;
@@ -44,13 +45,9 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
     async function setBioMatFormData(id: number){
         console.log("Setting form data for id:", id);
 
-        const response = await fetch(`http://localhost:8000/biomaterials/${id}`)
-        if(!response.ok){
-            console.log(`Fetch failed with status ${response.status}`);
-            return;
-        }
+        const json = await fetchData(`biomaterials/${id}`);
 
-        const data = await response.json() as Biomaterial;
+        const data = json as Biomaterial;
         setFormData(data);
         setSelectedBiocompatibility(data.biocompatibility || "High");
     }
@@ -58,20 +55,9 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
     async function Add() {
         console.log("Adding biomaterial:", formData);
         try {
-            const response = await fetch("http://localhost:8000/biomaterials", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
+            const json = await fetchData("biomaterials", "POST", formData);
 
-            if (!response.ok) {
-                console.log(`Post failed with status ${response.status}`);
-            }
-
-            const data =await response.json();
-            console.log("Biomaterial added:", data);
+            alert("Biomaterial added with ID: " + json.data.id);
         }
         catch (err) {
             console.error("Unknown error while fetching data");
@@ -84,18 +70,9 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
     async function Update() {
         console.log("Updating biomaterial:", formData);
         try {
-            const response = await fetch(`http://localhost:8000/biomaterials/${editingId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-            if (!response.ok) {
-                console.log(`Update failed with status ${response.status}`);
-            }
-            const data = await response.json();
-            console.log("Biomaterial updated:", data);
+            const json = await fetchData(`biomaterials/${editingId}`, "PUT", formData);
+            
+            alert("Biomaterial updated with ID: " + json.data.id);
         }
         catch (err) {
             console.error("Unknown error while fetching data");
