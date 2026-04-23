@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa6";
 import FilterDropdown from "../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
 import {fetchData} from "../DataManagement/DataManager";
+import { FaSearch } from "react-icons/fa";
 
 
 export type Biomaterial = {
@@ -99,7 +100,8 @@ export default function SearchComponent() {
                     async () => {
                         loadBiomaterials();
                     }
-                    } className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 sm:w-auto">
+                    } className="w-full flex gap-2 items-center justify-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 sm:w-auto">
+                    <FaSearch size={28}/>
                     Search
                 </button>
 

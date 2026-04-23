@@ -15,7 +15,7 @@ function App() {
       <div className="flex flex-1 flex-col overflow-hidden lg:flex-row">
         <AsideMenu/>
 
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:m-8 lg:rounded-lg lg:bg-gray-100 lg:p-8 lg:shadow-lg">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:m-8 lg:rounded-lg lg:bg-gray-100 lg:p-8 lg:shadow-[0_0_40px_rgba(0,0,0,0.15)]">
           <PageTitle/>
           <Routes>
             <Route path="/search" element={<SearchComponent/>}/>
@@ -24,7 +24,7 @@ function App() {
         </div>
       </div>
 
-      {/* s<FooterBar/> */}
+      {/* <FooterBar/> */}
     </div>
     </BrowserRouter>
   )

@@ -19,7 +19,7 @@ app.add_middleware(
 @app.middleware("http")
 async def credential_middleware(request, call_next):
 
-    print(f"Incoming request: {request.method} {request.url.path} {request.headers}")
+    #print(f"Incoming request: {request.method} {request.url.path} {request.headers}")
 
     if request.method == "OPTIONS":
         return await call_next(request)
