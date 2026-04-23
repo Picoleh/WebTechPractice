@@ -5,7 +5,11 @@ from fastapi.responses import JSONResponse
 from .api.biomaterials import router as biomaterials_router
 from .core.config import settings
 
-app = FastAPI()
+app = FastAPI(
+    title="BioMat API",
+    description="biomaterials management API for BioMatVenv project",
+    version="0.1.0",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,7 +25,7 @@ async def credential_middleware(request, call_next):
 
     #print(f"Incoming request: {request.method} {request.url.path} {request.headers}")
 
-    if request.method == "OPTIONS":
+    if request.method == "OPTIONS" or request.url.path == "/openapi.json":
         return await call_next(request)
     
     api_key = (
