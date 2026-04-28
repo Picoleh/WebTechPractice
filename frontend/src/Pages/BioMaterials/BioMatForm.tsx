@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Biomaterial } from "./SearchComponent";
+import type { Biomaterial } from "../../DataManagement/DataTypes";
 import { IoMdClose } from "react-icons/io";
 import { fetchData } from "../../DataManagement/DataManager";
 
@@ -9,7 +9,7 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
     const [formData, setFormData] = useState<Biomaterial>({
         id: 0,
         name: "",
-        type: "",
+        type_id: 0,
         description: "",
         density: null,
         biocompatibility: "",
@@ -29,7 +29,7 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
             setFormData({
                 id: 0,
                 name: "",
-                type: "",
+                type_id: 0,
                 description: "",
                 density: null,
                 biocompatibility: "",
@@ -99,7 +99,7 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
                     <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full p-2 rounded border border-gray-400"/>
 
                     <label className="font-bold">Type:</label>
-                    <input type="dropdown" value={formData.type} onChange={(e) => setFormData({...formData, type: e.target.value})} className="w-full p-2 rounded border border-gray-400"/>
+                    <input type="dropdown" value={formData.type_id} onChange={(e) => setFormData({...formData, type_id: parseInt(e.target.value)})} className="w-full p-2 rounded border border-gray-400"/>
 
                     <label className="font-bold">Description:</label>
                     <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} className="w-full p-2 rounded border border-gray-400"/>

@@ -6,22 +6,12 @@ import FilterDropdown from "../../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
 import {fetchData} from "../../DataManagement/DataManager";
 import { FaSearch } from "react-icons/fa";
-
-
-export type Biomaterial = {
-    id: number;
-    name: string;
-    type: string;
-    description: string;
-    density: number | null;
-    biocompatibility: string;
-    created_at: string | null;
-};
+import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
 
 const columns: Array<{ key: keyof Biomaterial; label: string }> = [
     { key: "id", label: "ID" },
     { key: "name", label: "Name" },
-    { key: "type", label: "Type" },
+    { key: "type_id", label: "Type" },
     { key: "description", label: "Description" },
     { key: "density", label: "Density" },
     { key: "biocompatibility", label: "Biocompatibility" },
@@ -72,15 +62,26 @@ export default function SearchComponent() {
             const result = responseJson.data as Biomaterial[];
             setData(result);
             setTotalPages(Math.ceil(responseJson.meta.total / responseJson.meta.per_page));
-            setFilterTypes(responseJson.meta.types || []);
         } catch (err) {
             throw new Error("Unknown error while fetching data");
         } finally {
             setLoading(false);
         }
     }
+
+    async function loadBiomaterialTypes() {
+        try{
+            const responseJson = await fetchData("biomaterials/types");
+            const types = responseJson.data as BiomaterialType[];
+            setFilterTypes(types.map(t => t.name));
+        } catch (err) {
+            throw new Error("Unknown error while fetching biomaterial types");
+        }
+    }
+
     useEffect(() => {
         loadBiomaterials();
+        loadBiomaterialTypes();
     }, [page]);
 
     return (

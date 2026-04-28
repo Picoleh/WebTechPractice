@@ -13,19 +13,13 @@ def get_biomaterials_count(sql: str):
     count_result = fetch_all(count_sql)
     return count_result[0]["count"] if count_result else 0
 
-def get_biomaterial_types(conditional: str = ""):
-    sql = f"SELECT DISTINCT type FROM {TABLE}"
-    if conditional:
-        sql += f" WHERE {conditional}"
-    results = fetch_all(sql)
-    return [row["type"] for row in results] if results else []
 
-def search_biomaterials(q: str, page: int, selected_types: list[str]):
+def search_biomaterials(q: str, page: int, selected_types: list[int]):
     offset = (page - 1) * PER_PAGE
-    sql = f"SELECT * FROM {TABLE} WHERE name ILIKE '%{q}%' OR type ILIKE '%{q}%'"
+    sql = f"SELECT * FROM {TABLE} WHERE name ILIKE '%{q}%'"
 
     for type in selected_types:
-        sql += f" AND type = '{type}'"
+        sql += f" AND type_id = {type}"
 
     sql_no_limit = sql
     sql += f" LIMIT {PER_PAGE} OFFSET {offset}"
@@ -37,17 +31,16 @@ def search_biomaterials(q: str, page: int, selected_types: list[str]):
             "page": page,
             "per_page": PER_PAGE,
             "total": get_biomaterials_count(sql_no_limit),
-            "types": get_biomaterial_types(f"name ILIKE '%{q}%' OR type ILIKE '%{q}%'")
         },
     }
 
 
-def get_biomaterials(page: int, selected_types: list[str]):
+def get_biomaterials(page: int, selected_types: list[int]):
     offset = (page - 1) * PER_PAGE
     sql = f"SELECT * FROM {TABLE}"
     
     if selected_types:
-        sql += " WHERE" + " OR".join([f" type = '{type}'" for type in selected_types])
+        sql += " WHERE" + " OR".join([f" type_id = {type}" for type in selected_types])
     
     sql_no_limit = sql
     sql += f" ORDER BY id ASC LIMIT {PER_PAGE} OFFSET {offset}"
@@ -60,7 +53,6 @@ def get_biomaterials(page: int, selected_types: list[str]):
             "page": page,
             "per_page": PER_PAGE,
             "total": get_biomaterials_count(sql_no_limit),
-            "types": get_biomaterial_types()
         },
     }
 
@@ -75,7 +67,7 @@ def get_biomaterial_by_id(id: int):
 
 def create_biomaterial(biomaterial: BiomaterialCreateUpdate):
     sql = f"""
-        INSERT INTO {TABLE} (name, type, description, density, biocompatibility)
+        INSERT INTO {TABLE} (name, type_id, description, density, biocompatibility)
         VALUES (:name, :type, :description, :density, :biocompatibility)
     """
     execute_write(sql, biomaterial.model_dump())
@@ -85,7 +77,7 @@ def update_biomaterial(id: int, biomaterial: BiomaterialCreateUpdate):
     sql = f"""
         UPDATE {TABLE}
         SET name = :name,
-            type = :type,
+            type_id = :type,
             description = :description,
             density = :density,
             biocompatibility = :biocompatibility
