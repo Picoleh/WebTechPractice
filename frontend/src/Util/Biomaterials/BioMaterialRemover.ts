@@ -1,4 +1,4 @@
-import { fetchData } from "../DataManagement/DataManager";
+import { fetchData } from "../../DataManagement/DataManager";
 
 export async function deleteBiomaterial(id: number) {
   try{

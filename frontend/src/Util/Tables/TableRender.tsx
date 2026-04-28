@@ -1,4 +1,4 @@
-import { deleteBiomaterial } from "./BioMaterialRemover";
+import { deleteBiomaterial } from "../Biomaterials/BioMaterialRemover";
 import { GoPencil } from "react-icons/go";
 import { MdDeleteForever } from "react-icons/md";
 import TableValues from "./TableValues";

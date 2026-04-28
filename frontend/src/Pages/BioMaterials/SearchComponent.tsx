@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { TableRender } from "../Util/TableRender";
-import PageCounter from "../Util/PageCounter";
+import { TableRender } from "../../Util/Tables/TableRender";
+import PageCounter from "../../Util/Pages/PageCounter";
 import { FaPlus } from "react-icons/fa6";
-import FilterDropdown from "../Util/FilterDropdown";
+import FilterDropdown from "../../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
-import {fetchData} from "../DataManagement/DataManager";
+import {fetchData} from "../../DataManagement/DataManager";
 import { FaSearch } from "react-icons/fa";
 
 

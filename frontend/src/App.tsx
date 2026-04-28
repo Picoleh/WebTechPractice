@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SearchComponent from "./Menu/SearchComponent"
-import TopBarMenu from "./Menu/TopBarMenu/TopBarMenu"
-import AsideMenu from "./Menu/TopBarMenu/AsideMenu";
-import PageTitle from "./Util/PageTitle";
-import HomePage from "./Menu/HomePage";
+import SearchComponent from "./Pages/BioMaterials/SearchComponent"
+import TopBarMenu from "./Menu/TopBarMenu"
+import AsideMenu from "./Menu/AsideMenu/AsideMenu";
+import PageTitle from "./Util/Pages/PageTitle";
+import HomePage from "./Pages/Home/HomePage";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "./DataManagement/MediaQuery";
 

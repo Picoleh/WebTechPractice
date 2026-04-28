@@ -1,8 +1,8 @@
 import { FaBars } from "react-icons/fa";
-import AsideButton from "../AsideButton";
+import AsideButton from "./AsideButton";
 import { Link, useLocation, useNavigate } from "react-router";
 import { FcBiomass } from "react-icons/fc";
-import { PAGES_INFO } from "../../Util/Paths";
+import { PAGES_INFO } from "../../Util/Pages/Paths";
 
 export default function AsideMenu({ isSideBarOpen, toggleSideBar }: { isSideBarOpen: boolean, toggleSideBar: () => void }) {
     const navigate = useNavigate();

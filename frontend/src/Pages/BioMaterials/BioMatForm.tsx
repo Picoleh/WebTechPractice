@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Biomaterial } from "./SearchComponent";
 import { IoMdClose } from "react-icons/io";
-import {fetchData} from "../DataManagement/DataManager";
+import { fetchData } from "../../DataManagement/DataManager";
 
 export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: {isOpenState: boolean, onClose?: () => void, editingId: number | null, onUpdate?: () => void}) {
     const isEditMode = editingId !== null;
