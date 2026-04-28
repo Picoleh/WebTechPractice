@@ -1,17 +1,12 @@
-import { useState } from "react";
-import { FaBars, FaSearch, FaHome } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import AsideButton from "../AsideButton";
 import { Link, useLocation, useNavigate } from "react-router";
 import { FcBiomass } from "react-icons/fc";
+import { PAGES_INFO } from "../../Util/Paths";
 
 export default function AsideMenu({ isSideBarOpen, toggleSideBar }: { isSideBarOpen: boolean, toggleSideBar: () => void }) {
     const navigate = useNavigate();
     const location = useLocation();
-
-    const menuItems = [
-        { name: "Home", icon: FaHome, path: "/" },
-        { name: "Search", icon: FaSearch, path: "/search" },
-    ];
 
     return (
       <>
@@ -32,7 +27,7 @@ export default function AsideMenu({ isSideBarOpen, toggleSideBar }: { isSideBarO
                 <AsideButton title="Menu" Icon={FaBars} isOpen={isSideBarOpen} isActive={false} onClick={toggleSideBar} />
               </li>
             )}
-            {menuItems.map((item) => (
+            {PAGES_INFO.map((item) => (
               <li key={item.path}>
                 <AsideButton title={item.name} Icon={item.icon} isOpen={isSideBarOpen} isActive={location.pathname === item.path} onClick={() => navigate(item.path)} />
               </li>

@@ -1,14 +1,10 @@
 import { useLocation } from "react-router-dom";
+import { PAGES_INFO } from "./Paths";
 
 function PageTitle() {
   const location = useLocation();
 
-  const titles : Record<string, string> = {
-    "/": "Home",
-    "/search": "BioMaterials Inventory",
-  };
-
-  const currentTitle = titles[location.pathname] ?? "Página";
+  const currentTitle = PAGES_INFO.find((page) => page.path === location.pathname)?.title ?? "Página";
 
   return <h1 className="text-4xl font-bold">{currentTitle}</h1>;
 }
