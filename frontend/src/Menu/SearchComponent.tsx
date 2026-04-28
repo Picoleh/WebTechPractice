@@ -85,14 +85,18 @@ export default function SearchComponent() {
 
     return (
         <div className="mt-4 w-full sm:mt-8">
-            <div className="mb-3 flex flex-col gap-3 rounded bg-white p-3 shadow-lg sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
-                <input
-                    type="text"
-                    placeholder="Search biomaterials..."
-                    className="w-full rounded border border-gray-400 px-3 py-2 sm:min-w-[220px] sm:flex-1"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
+            <div className="mb-3 flex flex-col gap-3 rounded bg-white p-3 shadow-lg lg:flex-row lg:items-center lg:justify-end">
+                
+                <div className="mr-auto w-full lg:w-80 relative min-w-56">
+                    <FaSearch size={24} className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"/>
+                    <input
+                        type="text"
+                        placeholder="Search biomaterials..."
+                        className="mr-auto w-full rounded border border-gray-400 px-3 py-2 pl-8 sm:min-w-[220px]"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
 
                 <FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange}/>
 
@@ -100,12 +104,12 @@ export default function SearchComponent() {
                     async () => {
                         loadBiomaterials();
                     }
-                    } className="w-full flex gap-2 items-center justify-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 sm:w-auto">
+                    } className="w-full flex gap-2 items-center justify-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 lg:w-auto">
                     <FaSearch size={28}/>
                     Search
                 </button>
 
-                <button className="flex w-full items-center justify-center gap-2 rounded bg-teal-500 px-4 py-2 text-white hover:bg-teal-700 sm:w-auto" onClick={() => toggleForm()}>
+                <button className="flex w-full items-center justify-center gap-2 rounded bg-teal-500 px-4 py-2 text-white hover:bg-teal-700 lg:w-auto" onClick={() => toggleForm()}>
                     <FaPlus size={28}/>
                     Add
                 </button>

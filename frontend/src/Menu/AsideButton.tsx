@@ -1,10 +1,10 @@
 import type { IconType } from "react-icons";
 
-export default function AsideButton({ title, Icon, onClick, isOpen }: { title: string; Icon: IconType; onClick?: () => void; isOpen: boolean }) {
+export default function AsideButton({ title, Icon, onClick, isOpen, isActive }: { title: string; Icon: IconType; onClick?: () => void; isOpen: boolean; isActive: boolean }) {
     return (
         <button
       onClick={onClick}
-      className={`flex items-center w-full p-2 hover:bg-teal-700 rounded transition-colors duration-200 ${isOpen ? 'justify-start' : 'justify-center'}`}>
+      className={`flex items-center w-full p-2 hover:bg-teal-700 rounded transition-colors duration-200 ${isActive ? 'bg-teal-700' : ''} ${isOpen ? 'justify-start' : 'justify-center'}`}>
         <Icon size={24} />
         { isOpen && <span
         className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${

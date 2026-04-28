@@ -86,7 +86,7 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
         <>
         {isOpenState && <div className="fixed inset-0 z-40 bg-black/30" onClick={onClose}/>}
 
-        <aside className={`fixed right-0 top-0 z-50 h-screen w-full bg-white p-4 text-black shadow-lg transition-all duration-300 sm:top-16 sm:w-[420px] lg:w-[520px] ${isOpenState ? "translate-x-0" : "translate-x-full"}`}>
+        <aside className={`fixed right-0 top-0 z-50 h-screen w-full bg-white p-4 text-black shadow-lg transition-all duration-300 sm:w-[420px] lg:w-[520px] ${isOpenState ? "translate-x-0" : "translate-x-full"}`}>
             <div className="flex h-full flex-col overflow-y-auto">
                 <div className="flex flex-row items-start gap-3">
                     <label className="font-bold">{isEditMode ? "Edit Biomaterial" : "Create New Biomaterial"}</label>

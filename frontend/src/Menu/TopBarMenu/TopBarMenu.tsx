@@ -1,22 +1,21 @@
-import { Link } from "react-router-dom";
-import { FcBiomass } from "react-icons/fc";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
+import { FaSearch, FaBars } from "react-icons/fa";
 
 export default function TopBarMenu() {
     return(
-        <div className='flex flex-col gap-3 bg-teal-900 px-4 py-3 text-white sm:flex-row sm:items-center sm:gap-4'>
-            <Link to="/" className="inline-flex items-center gap-2 text-2xl font-bold transition-colors duration-200 hover:text-gray-300 sm:text-3xl lg:text-4xl">
-                <FcBiomass size={36}/> 
-                BioMatDB
-            </Link>
+        <div className='flex flex-row bg-white px-8 py-3 gap-4'>
+            <div className="mr-auto w-80 relative min-w-56">
+                <FaSearch size={24} className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"/>
+                <input type="text" placeholder="Search..." className="w-full rounded border border-gray-400 px-3 py-2 pl-8"/>
+            </div>
 
-            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-teal-800 hover:text-gray-300 sm:ml-auto">
+            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200">
                 <IoIosNotificationsOutline size={24}/>
                 Notifications
             </button>
 
-            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-teal-800 hover:text-gray-300">
+            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200">
                 <CgProfile size={24}/>
                 Profile
             </button>

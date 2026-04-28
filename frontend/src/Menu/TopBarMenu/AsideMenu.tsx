@@ -1,35 +1,44 @@
 import { useState } from "react";
 import { FaBars, FaSearch, FaHome } from "react-icons/fa";
 import AsideButton from "../AsideButton";
-import { useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import { FcBiomass } from "react-icons/fc";
 
-export default function AsideMenu() {
+export default function AsideMenu({ isSideBarOpen, toggleSideBar }: { isSideBarOpen: boolean, toggleSideBar: () => void }) {
     const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(true);
+    const location = useLocation();
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
+    const menuItems = [
+        { name: "Home", icon: FaHome, path: "/" },
+        { name: "Search", icon: FaSearch, path: "/search" },
+    ];
 
     return (
-        <aside className={`shrink-0 border-b border-teal-700 bg-teal-600 text-white transition-all duration-300 lg:border-b-0 lg:border-r ${isOpen ? "w-full lg:w-auto" : "w-full lg:w-auto"}`}>
-          <div className="flex items-center justify-between p-4 lg:flex-col lg:items-stretch">
-            <AsideButton title={isOpen ? "Menu" : ""} Icon={FaBars} onClick={toggleMenu} isOpen={isOpen}/>
-          </div>
+      <>
+        {isSideBarOpen && <div className="fixed inset-0 z-40 bg-black/30 lg:hidden" onClick={toggleSideBar}/>}
+        <aside className="border-b border-teal-700 bg-teal-600 text-white transition-all duration-300 z-50">
+          {isSideBarOpen && (
+            <div className="flex items-center justify-between p-4 lg:flex-col lg:items-stretch">
+              <Link to="/" className="inline-flex items-center gap-2 font-bold transition-colors duration-200 hover:text-gray-300 sm:text-2xl lg:text-3xl">
+                <FcBiomass size={36}/> 
+                BioMatDB
+            </Link>
+          </div>)
+          }
 
-          <ul className="flex flex-col px-4 pb-4 lg:mt-6 lg:space-y-4 lg:px-4 lg:pb-4">
-            {isOpen && <h2 className="hidden text-lg font-semibold lg:block">Opções</h2>}
-            <li>
-              <AsideButton title={"Home"} Icon={FaHome} isOpen={isOpen} onClick={
-                () => navigate("/")
-              }/>
-            </li>
-            <li>
-                <AsideButton title={"Search"} Icon={FaSearch} isOpen={isOpen} onClick={
-                    () => navigate("/search")
-                }/>
-            </li>
+          <ul className="flex flex-col px-4 pb-4 lg:mt-6 lg:space-y-4 lg:px-4 lg:pb-4 mt-4">
+            {!isSideBarOpen && (
+              <li>
+                <AsideButton title="Menu" Icon={FaBars} isOpen={isSideBarOpen} isActive={false} onClick={toggleSideBar} />
+              </li>
+            )}
+            {menuItems.map((item) => (
+              <li key={item.path}>
+                <AsideButton title={item.name} Icon={item.icon} isOpen={isSideBarOpen} isActive={location.pathname === item.path} onClick={() => navigate(item.path)} />
+              </li>
+            ))}
           </ul>
         </aside>
+      </>
     );
 }
