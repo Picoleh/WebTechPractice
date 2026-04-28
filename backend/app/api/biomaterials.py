@@ -10,6 +10,10 @@ from ..services.biomaterials_service import (
     update_biomaterial,
 )
 
+from ..services.biomaterials_types_service import (
+    get_biomaterial_types,
+)
+
 router = APIRouter(prefix="/biomaterials", tags=["biomaterials"])
 
 
@@ -21,6 +25,11 @@ async def search_biomaterials_route(q: str = Query(..., min_length=1, descriptio
 @router.get("", summary="Get a list of biomaterials, supports pagination and filtering by type", tags=["Get"])
 async def get_biomaterials_route(page: int = Query(1, ge=1, description="Page number"), types: list[str] = Query([], description="List of types to filter by separated by &")):
     return get_biomaterials(page, types)
+
+
+@router.get("/types", summary="Get a list of biomaterials types", tags=["Get"])
+async def get_biomaterialsTypes_route():
+    return get_biomaterial_types()
 
 
 @router.get("/{id}", summary="Get a biomaterial by its ID", tags=["Get"])

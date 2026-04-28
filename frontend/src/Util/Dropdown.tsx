@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import type { BiomaterialType } from "../DataManagement/DataTypes";
 
-type FilterDropdownProps = {
-    filterByTitle: string;
-    data: BiomaterialType[];
-    onTypeChange: (type: BiomaterialType) => void;
-    getLabel: (option: BiomaterialType) => string;
+type DropdownProps<T> = {
+  title: string;
+  data: T[];
+  onValueChange: (value: T) => void;
+  getLabel: (item: T) => string;
 };
 
-export default function FilterDropdown({filterByTitle, data, onTypeChange, getLabel} : FilterDropdownProps) {
+export default function Dropdown<T>({title, data, onValueChange, getLabel} : DropdownProps<T>) {
     const [isOpen, setIsOpen] = useState(false);
+    const [selectedValue, setSelectedValue] = useState<T>(data[0]);
     return (
         <div className="relative w-full lg:w-auto">
             <button className="flex w-full items-center justify-center gap-2 rounded border border-gray-400 px-3 py-2 hover:bg-gray-100 lg:w-auto" onClick={() => setIsOpen(!isOpen)}>
                 <IoFilter size={24}/>
-                Filter by {filterByTitle}
+                    {title}
                 <RiArrowDropDownLine size={24}/>
             </button>
 
@@ -24,7 +24,7 @@ export default function FilterDropdown({filterByTitle, data, onTypeChange, getLa
                 <ul>
                     {data.map((option, index) => (
                         <label key={index} className="block cursor-pointer px-4 py-2 hover:bg-gray-100">
-                                <input type="checkbox" className="mr-2" onChange={() => onTypeChange(option)}/>
+                                <input type="checkbox" className="mr-2" onChange={() => onValueChange(option)}/>
                                 {getLabel(option)}
                         </label>
                     ))}

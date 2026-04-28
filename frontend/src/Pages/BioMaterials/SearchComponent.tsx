@@ -24,8 +24,8 @@ export default function SearchComponent() {
     const [searchTerm, setSearchTerm] = useState("");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [filterTypes, setFilterTypes] = useState<string[]>([]);
-    const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+    const [filterTypes, setFilterTypes] = useState<BiomaterialType[]>([]);
+    const [selectedTypes, setSelectedTypes] = useState<BiomaterialType[]>([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editingId, setEditingId] = useState<number | null>(null);
 
@@ -38,7 +38,7 @@ export default function SearchComponent() {
         setIsFormOpen(prev => !prev);
     }
 
-    function handleTypeFilterChange(type: string) {
+    function handleTypeFilterChange(type: BiomaterialType) {
         setSelectedTypes(prev => {
             if (prev.includes(type)) {  
                 return prev.filter(t => t !== type);
@@ -55,7 +55,7 @@ export default function SearchComponent() {
                 fetch_path = `biomaterials/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
             }
 
-            const typeParams = selectedTypes.map(type => `types=${encodeURIComponent(type)}`).join("&");
+            const typeParams = selectedTypes.map(type => `types=${encodeURIComponent(type.id.toString())}`).join("&");
             fetch_path += `&${typeParams}`;
             
             const responseJson = await fetchData(fetch_path);
@@ -72,8 +72,8 @@ export default function SearchComponent() {
     async function loadBiomaterialTypes() {
         try{
             const responseJson = await fetchData("biomaterials/types");
-            const types = responseJson.data as BiomaterialType[];
-            setFilterTypes(types.map(t => t.name));
+            const types = responseJson as BiomaterialType[];
+            setFilterTypes(types);
         } catch (err) {
             throw new Error("Unknown error while fetching biomaterial types");
         }
@@ -99,7 +99,7 @@ export default function SearchComponent() {
                         />
                     </div>
 
-                <FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange}/>
+                <FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange} getLabel={(type) => type.name}/>
 
                 <button type="button" onClick={
                     async () => {
@@ -123,7 +123,7 @@ export default function SearchComponent() {
                 <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
             </div>
 
-            <BioMatForm isOpenState={isFormOpen} onClose={toggleForm} editingId={editingId} onUpdate={loadBiomaterials}/>
+            <BioMatForm isOpenState={isFormOpen} onClose={toggleForm} editingId={editingId} onUpdate={loadBiomaterials} biomaterialTypes={filterTypes}/>
         </div>
     );
 }

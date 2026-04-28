@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
-import type { Biomaterial } from "../../DataManagement/DataTypes";
+import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
 import { IoMdClose } from "react-icons/io";
 import { fetchData } from "../../DataManagement/DataManager";
+import FilterDropdown from "../../Util/FilterDropdown";
+import Dropdown from "../../Util/Dropdown";
 
-export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: {isOpenState: boolean, onClose?: () => void, editingId: number | null, onUpdate?: () => void}) {
+type BioMatFormProps = {
+    isOpenState: boolean;
+    onClose?: () => void;
+    editingId: number | null;
+    onUpdate?: () => void;
+    biomaterialTypes: BiomaterialType[];
+};
+
+export default function BioMatForm({isOpenState, onClose, editingId, onUpdate, biomaterialTypes}: BioMatFormProps) {
     const isEditMode = editingId !== null;
 
     const [formData, setFormData] = useState<Biomaterial>({
@@ -41,6 +51,11 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
 
         void setBioMatFormData(editingId);
     }, [editingId]);
+
+
+    function handleTypeChange(type: BiomaterialType) {
+        setFormData(prev => ({...prev, type_id: type.id}));
+    }
 
     async function setBioMatFormData(id: number){
         console.log("Setting form data for id:", id);
@@ -99,7 +114,7 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate}: 
                     <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full p-2 rounded border border-gray-400"/>
 
                     <label className="font-bold">Type:</label>
-                    <input type="dropdown" value={formData.type_id} onChange={(e) => setFormData({...formData, type_id: parseInt(e.target.value)})} className="w-full p-2 rounded border border-gray-400"/>
+                    <Dropdown title="Type" data={biomaterialTypes} onValueChange={handleTypeChange} getLabel={(option) => option.name}/>
 
                     <label className="font-bold">Description:</label>
                     <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} className="w-full p-2 rounded border border-gray-400"/>

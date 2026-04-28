@@ -3,10 +3,8 @@ from ..schemas.biomaterial import BiomaterialType
 
 TABLE = "biomaterials_db.biomaterial_type"
 
-def get_biomaterial_types(conditional: str = ""):
+def get_biomaterial_types():
     sql = f"SELECT * FROM {TABLE}"
-    if conditional:
-        sql += f" WHERE {conditional}"
     results = fetch_all(sql)
 
     return results if results else []
