@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import type { BiomaterialType } from "../DataManagement/DataTypes";
 
-type FilterDropdownProps = {
+type FilterDropdownProps<T> = {
     filterByTitle: string;
-    data: BiomaterialType[];
-    onTypeChange: (type: BiomaterialType) => void;
-    getLabel: (option: BiomaterialType) => string;
+    data: T[];
+    onTypeChange: (type: T) => void;
+    getLabel: (option: T) => string;
 };
 
-export default function FilterDropdown({filterByTitle, data, onTypeChange, getLabel} : FilterDropdownProps) {
+export default function FilterDropdown<T>({filterByTitle, data, onTypeChange, getLabel} : FilterDropdownProps<T>) {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <div className="relative w-full lg:w-auto">
