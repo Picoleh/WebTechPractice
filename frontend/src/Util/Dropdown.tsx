@@ -16,8 +16,6 @@ export default function Dropdown<T>({title, data, settedValueId, onValueChange, 
     const [selectedValue, setSelectedValue] = useState<T>();
 
     useEffect(() => {
-        console.log("Dropdown received settedValueId:", settedValueId);
-
         if(settedValueId !== null){
             setSelectedValue(data.find(item => {
                 return getId(item) === settedValueId;

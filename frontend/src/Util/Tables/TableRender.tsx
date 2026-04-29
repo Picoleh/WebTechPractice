@@ -35,7 +35,7 @@ export function TableRender<T>({ data, columns, onDeleteSucess, onEditClick }: T
           {data.map((row, i) => (
             <tr key={i} className="border-b last:border-none hover:bg-gray-100 transition">
               {columns.map(col => (
-                  <TableValues keyProp={String(col.key)} value={String(row[col.key])} />
+                  <TableValues key={String(col.key)} keyProp={String(col.key)} value={String(row[col.key])} />
               ))}
 
               <td className="px-4 py-3 whitespace-nowrap">
