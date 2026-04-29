@@ -13,7 +13,7 @@ export async function fetchData(endpoint: string, method: string = "GET", body?:
     const url = getUrl();
     const apiKey = getApiKey();
 
-    // console.log(`Fetching data from: ${url}/${endpoint} with method: ${method} and body: ${body ? JSON.stringify(body) : "None"} key: ${apiKey}`);
+    //console.log(`Fetching data from: ${url}/${endpoint} with method: ${method} and body: ${body ? JSON.stringify(body) : "None"} key: ${apiKey}`);
 
     const response = await fetch(`${url}/${endpoint}`, {
         method: method,

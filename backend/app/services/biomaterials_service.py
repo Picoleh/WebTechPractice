@@ -4,6 +4,7 @@ from ..schemas.biomaterial import BiomaterialCreateUpdate
 TABLE = "biomaterials_db.biomaterials"
 PER_PAGE = 10
 
+# Biomaterials Service
 def get_biomaterials_count(sql: str):
     select = sql.find("SELECT")
     from_ = sql.find("FROM")
@@ -86,7 +87,6 @@ def update_biomaterial(id: int, biomaterial: BiomaterialCreateUpdate):
     params = biomaterial.model_dump()
     params["id"] = id
     execute_write(sql, params)
-
 
 def delete_biomaterial(id: int):
     sql = f"DELETE FROM {TABLE} WHERE id = :id"

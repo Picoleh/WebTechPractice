@@ -2,9 +2,49 @@ from ..db.session import execute_write, fetch_all
 from ..schemas.biomaterial import BiomaterialType
 
 TABLE = "biomaterials_db.biomaterial_type"
+PER_PAGE = 3
 
-def get_biomaterial_types():
+def get_biomaterial_types_count(sql: str):
+    select = sql.find("SELECT")
+    from_ = sql.find("FROM")
+    columns  = sql[select + 6: from_]
+    count_sql = sql.replace(columns, " COUNT(*) AS count ")
+
+    count_result = fetch_all(count_sql)
+    return count_result[0]["count"] if count_result else 0
+
+
+def get_biomaterial_types(page: int):
+    offset = (page - 1) * PER_PAGE
+
     sql = f"SELECT * FROM {TABLE}"
-    results = fetch_all(sql)
+    sql_no_limit = sql
+    sql += f" ORDER BY id ASC LIMIT {PER_PAGE} OFFSET {offset}"
 
-    return results if results else []
+    data = fetch_all(sql)
+
+    return {
+        "data": data,
+        "meta": {
+            "page": page,
+            "per_page": PER_PAGE,
+            "total": get_biomaterial_types_count(sql_no_limit),
+        },
+    }
+
+def search_biomaterial_types(q: str, page: int):
+    offset = (page - 1) * PER_PAGE
+    sql = f"SELECT * FROM {TABLE} WHERE name ILIKE '%{q}%'"
+
+    sql_no_limit = sql
+    sql += f" LIMIT {PER_PAGE} OFFSET {offset}"
+
+    data = fetch_all(sql)
+    return {
+        "data": data,
+        "meta": {
+            "page": page,
+            "per_page": PER_PAGE,
+            "total": get_biomaterial_types_count(sql_no_limit),
+        },
+    }

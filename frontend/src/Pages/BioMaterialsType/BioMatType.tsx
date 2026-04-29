@@ -13,12 +13,16 @@ const columns: Array<{ key: keyof BiomaterialType; label: string }> = [
 export default function BioMatType() {
     async function loadTypes(searchTerm: string, _page: number) {
         try {
-            const responseJson = await fetchData("biomaterials/types");
-            const result = responseJson as BiomaterialType[];
+            let fetch_path = `biomaterials/types?page=${_page}`;
+            if (searchTerm.trim() !== "") {
+                fetch_path = `biomaterials/types/search?q=${encodeURIComponent(searchTerm)}&page=${_page}`;
+            }
+            const responseJson = await fetchData(fetch_path);
+            const result = responseJson.data as BiomaterialType[];
 
             return {
                 data: result,
-                totalPages: 1,
+                totalPages: Math.ceil(responseJson.meta.total / responseJson.meta.per_page),
             };
         } catch (err) {
             throw new Error("Unknown error while fetching biomaterial types");
