@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import type { FilterDropdownProps } from "../DataManagement/DataTypes";
 
-type FilterDropdownProps<T> = {
-    filterByTitle: string;
-    data: T[];
-    onTypeChange: (type: T) => void;
-    getLabel: (option: T) => string;
-};
 
 export default function FilterDropdown<T>({filterByTitle, data, onTypeChange, getLabel} : FilterDropdownProps<T>) {
     const [isOpen, setIsOpen] = useState(false);

@@ -1,22 +1,9 @@
-import { deleteBiomaterial } from "../Biomaterials/BioMaterialRemover";
 import { GoPencil } from "react-icons/go";
 import { MdDeleteForever } from "react-icons/md";
 import TableValues from "./TableValues";
-import type { Biomaterial } from "../../DataManagement/DataTypes";
+import type { TableProps } from "../../DataManagement/DataTypes";
 
-type Column<T> = {
-  key: keyof T;
-  label: string;
-};
-
-type TableProps<T> = {
-  data: T[];
-  columns: Column<T>[];
-  onDeleteSucess: () => void;
-  onEditClick: (item: T) => void;
-};
-
-export function TableRender<T>({ data, columns, onDeleteSucess, onEditClick }: TableProps<T>) {
+export function TableRender<T>({ data, columns, onDeleteClick, onEditClick }: TableProps<T>) {
   return (
     <div className="overflow-x-auto rounded bg-white shadow-md">
       <table className="min-w-[760px] w-full">
@@ -43,11 +30,10 @@ export function TableRender<T>({ data, columns, onDeleteSucess, onEditClick }: T
                 <button onClick={
                   async() => {
                     try{
-                      await deleteBiomaterial(row as Biomaterial);
-                      onDeleteSucess();
+                      await onDeleteClick(row);
                     }
                     catch(err){
-                      console.error("Error deleting biomaterial:", err);
+                      console.error("Error deleting item:", err);
                     }
                   }
                 } className="rounded px-2 py-1 text-black hover:text-red-500"><MdDeleteForever size={28}/>

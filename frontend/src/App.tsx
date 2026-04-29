@@ -6,6 +6,7 @@ import PageTitle from "./Util/Pages/PageTitle";
 import HomePage from "./Pages/Home/HomePage";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "./DataManagement/MediaQuery";
+import BioMatType from "./Pages/BioMaterialsType/BioMatType";
 
 function App() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -33,6 +34,7 @@ function App() {
           <Routes>
             <Route path="/search" element={<SearchComponent/>}/>
             <Route path="/" element={<HomePage/>}/>
+            <Route path="/crud" element={<BioMatType/>}/> 
           </Routes>
         </div>
       </div>

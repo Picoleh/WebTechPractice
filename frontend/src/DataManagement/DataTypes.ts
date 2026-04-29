@@ -24,3 +24,28 @@ export const EmptyBiomaterial = (): Biomaterial => ({
     biocompatibility: "",
     created_at: null,
 });
+
+export type FilterDropdownProps<T> = {
+    filterByTitle: string;
+    data: T[];
+    onTypeChange: (type: T) => void;
+    getLabel: (option: T) => string;
+};
+
+
+export type Column<T> = {
+    key: keyof T;
+    label: string;
+};
+
+export type TableProps<T> = {
+    data: T[];
+    columns: Column<T>[];
+    onDeleteClick: (item: T) => Promise<void> | void;
+    onEditClick: (item: T) => void;
+};
+
+export type TableValuesProps<T> = {
+    data: T[];
+    columns: Column<T>[];
+}

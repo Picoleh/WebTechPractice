@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { TableRender } from "../../Util/Tables/TableRender";
-import PageCounter from "../../Util/Pages/PageCounter";
-import { FaPlus } from "react-icons/fa6";
 import FilterDropdown from "../../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
 import {fetchData} from "../../DataManagement/DataManager";
-import { FaSearch } from "react-icons/fa";
 import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
+import Crud from "../crud/Crud";
+import { deleteBiomaterial } from "../../Util/Biomaterials/BioMaterialRemover";
 
 const columns: Array<{ key: keyof Biomaterial; label: string }> = [
     { key: "id", label: "ID" },
@@ -19,24 +17,8 @@ const columns: Array<{ key: keyof Biomaterial; label: string }> = [
 ];
 
 export default function SearchComponent() {
-    const [data, setData] = useState<Biomaterial[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [filterTypes, setFilterTypes] = useState<BiomaterialType[]>([]);
     const [selectedTypes, setSelectedTypes] = useState<BiomaterialType[]>([]);
-    const [isFormOpen, setIsFormOpen] = useState(false);
-    const [editingBioMat, setEditingBioMat] = useState<Biomaterial | null>(null);
-
-    function toggleForm(bioMat: Biomaterial | null = null) {
-        if(bioMat !== null){
-            setEditingBioMat(bioMat);
-        } else {
-            setEditingBioMat(null);
-        }
-        setIsFormOpen(prev => !prev);
-    }
 
     function handleTypeFilterChange(type: BiomaterialType) {
         setSelectedTypes(prev => {
@@ -48,7 +30,7 @@ export default function SearchComponent() {
         });
     }
 
-    async function loadBiomaterials() {
+    async function loadBiomaterials(searchTerm: string, page: number) {
         try {
             let fetch_path = `biomaterials?page=${page}`;
             if (searchTerm.trim() !== "") {
@@ -60,12 +42,12 @@ export default function SearchComponent() {
             
             const responseJson = await fetchData(fetch_path);
             const result = responseJson.data as Biomaterial[];
-            setData(result);
-            setTotalPages(Math.ceil(responseJson.meta.total / responseJson.meta.per_page));
+            return {
+                data: result,
+                totalPages: Math.ceil(responseJson.meta.total / responseJson.meta.per_page),
+            };
         } catch (err) {
             throw new Error("Unknown error while fetching data");
-        } finally {
-            setLoading(false);
         }
     }
 
@@ -80,50 +62,25 @@ export default function SearchComponent() {
     }
 
     useEffect(() => {
-        loadBiomaterials();
         loadBiomaterialTypes();
-    }, [page]);
+    }, []);
 
     return (
-        <div className="mt-4 w-full sm:mt-8">
-            <div className="mb-3 flex flex-col gap-3 rounded bg-white p-3 shadow-lg lg:flex-row lg:items-center lg:justify-end">
-                
-                <div className="mr-auto w-full lg:w-80 relative min-w-56">
-                    <FaSearch size={24} className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"/>
-                    <input
-                        type="text"
-                        placeholder="Search biomaterials..."
-                        className="mr-auto w-full rounded border border-gray-400 px-3 py-2 pl-8 sm:min-w-[220px]"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
-
-                <FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange} getLabel={(type) => type.name}/>
-
-                <button type="button" onClick={
-                    async () => {
-                        loadBiomaterials();
-                    }
-                    } className="w-full flex gap-2 items-center justify-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 lg:w-auto">
-                    <FaSearch size={28}/>
-                    Search
-                </button>
-
-                <button className="flex w-full items-center justify-center gap-2 rounded bg-teal-500 px-4 py-2 text-white hover:bg-teal-700 lg:w-auto" onClick={() => toggleForm()}>
-                    <FaPlus size={28}/>
-                    Add
-                </button>
-                
-            </div>
-
-            {loading && <p>Loading biomaterials...</p>}
-            {!loading && <TableRender data={data} columns={columns} onDeleteSucess={loadBiomaterials} onEditClick={toggleForm}/>}
-            <div className="mt-3 rounded bg-white p-2 shadow-lg" >
-                <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
-            </div>
-
-            <BioMatForm isOpenState={isFormOpen} onClose={() => toggleForm()} editingBioMaterial={editingBioMat} onUpdate={loadBiomaterials} biomaterialTypes={filterTypes}/>
-        </div>
+        <Crud
+            columns={columns}
+            loadData={loadBiomaterials}
+            onDeleteItem={deleteBiomaterial}
+            searchPlaceholder="Search biomaterials..."
+            renderFilters={<FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange} getLabel={(type) => type.name}/>}
+            form={(crudProps) => (
+                <BioMatForm
+                    isOpenState={crudProps.isFormOpen}
+                    onClose={() => crudProps.toggleForm(null)}
+                    editingBioMaterial={crudProps.editingObj}
+                    onUpdate={crudProps.onUpdate}
+                    biomaterialTypes={filterTypes}
+                />
+            )}
+        />
     );
 }
