@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
-import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
+import { EmptyBiomaterial, type Biomaterial, type BiomaterialType } from "../../DataManagement/DataTypes";
 import { IoMdClose } from "react-icons/io";
 import { fetchData } from "../../DataManagement/DataManager";
-import FilterDropdown from "../../Util/FilterDropdown";
 import Dropdown from "../../Util/Dropdown";
 
 type BioMatFormProps = {
     isOpenState: boolean;
     onClose?: () => void;
-    editingId: number | null;
+    editingBioMaterial: Biomaterial | null;
     onUpdate?: () => void;
     biomaterialTypes: BiomaterialType[];
 };
 
-export default function BioMatForm({isOpenState, onClose, editingId, onUpdate, biomaterialTypes}: BioMatFormProps) {
-    const isEditMode = editingId !== null;
+export default function BioMatForm({isOpenState, onClose, editingBioMaterial, onUpdate, biomaterialTypes}: BioMatFormProps) {
+    const isEditMode = editingBioMaterial !== null;
 
-    const [formData, setFormData] = useState<Biomaterial>({
-        id: 0,
-        name: "",
-        type_id: 0,
-        description: "",
-        density: null,
-        biocompatibility: "",
-        created_at: null,
-    });
+    const [formData, setFormData] = useState<Biomaterial>(EmptyBiomaterial());
 
     const [selectedBiocompatibility, setSelectedBiocompatibility] = useState<string>("High");
 
@@ -35,36 +26,25 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate, b
     const offset = thumbSize / 2 - (percentage / 100) * thumbSize;
 
     useEffect(() => {
-        if (editingId === null) {
-            setFormData({
-                id: 0,
-                name: "",
-                type_id: 0,
-                description: "",
-                density: null,
-                biocompatibility: "",
-                created_at: null,
-            });
+        if (editingBioMaterial !== null) {
+            setBioMatFormData(editingBioMaterial);
+        }
+        else{
+            setFormData(EmptyBiomaterial());
             setSelectedBiocompatibility("High");
-            return;
         }
 
-        void setBioMatFormData(editingId);
-    }, [editingId]);
+    }, [editingBioMaterial]);
 
 
     function handleTypeChange(type: BiomaterialType) {
         setFormData(prev => ({...prev, type_id: type.id}));
     }
 
-    async function setBioMatFormData(id: number){
-        console.log("Setting form data for id:", id);
-
-        const json = await fetchData(`biomaterials/${id}`);
-
-        const data = json as Biomaterial;
-        setFormData(data);
-        setSelectedBiocompatibility(data.biocompatibility || "High");
+    async function setBioMatFormData(bioMat: Biomaterial) {
+        console.log("Setting form data for id:", bioMat.id);
+        setFormData(bioMat);
+        setSelectedBiocompatibility(bioMat.biocompatibility || "High");
     }
 
     async function Add() {
@@ -85,7 +65,7 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate, b
     async function Update() {
         console.log("Updating biomaterial:", formData);
         try {
-            const json = await fetchData(`biomaterials/${editingId}`, "PUT", formData);
+            const json = await fetchData(`biomaterials/${editingBioMaterial?.id}`, "PUT", formData);
             
             alert("Biomaterial updated with ID: " + json.data.id);
         }
@@ -114,7 +94,7 @@ export default function BioMatForm({isOpenState, onClose, editingId, onUpdate, b
                     <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full p-2 rounded border border-gray-400"/>
 
                     <label className="font-bold">Type:</label>
-                    <Dropdown title="Type" data={biomaterialTypes} onValueChange={handleTypeChange} getLabel={(option) => option.name}/>
+                    <Dropdown title="Type" data={biomaterialTypes} settedValueId={editingBioMaterial?.type_id ?? null} onValueChange={handleTypeChange} getLabel={(option) => option.name} getId={(option) => option.id}/>
 
                     <label className="font-bold">Description:</label>
                     <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} className="w-full p-2 rounded border border-gray-400"/>

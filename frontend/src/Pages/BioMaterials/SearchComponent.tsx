@@ -27,13 +27,13 @@ export default function SearchComponent() {
     const [filterTypes, setFilterTypes] = useState<BiomaterialType[]>([]);
     const [selectedTypes, setSelectedTypes] = useState<BiomaterialType[]>([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
-    const [editingId, setEditingId] = useState<number | null>(null);
+    const [editingBioMat, setEditingBioMat] = useState<Biomaterial | null>(null);
 
-    function toggleForm(id?: number) {
-        if(id !== undefined){
-            setEditingId(id);
+    function toggleForm(bioMat: Biomaterial | null = null) {
+        if(bioMat !== null){
+            setEditingBioMat(bioMat);
         } else {
-            setEditingId(null);
+            setEditingBioMat(null);
         }
         setIsFormOpen(prev => !prev);
     }
@@ -123,7 +123,7 @@ export default function SearchComponent() {
                 <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
             </div>
 
-            <BioMatForm isOpenState={isFormOpen} onClose={toggleForm} editingId={editingId} onUpdate={loadBiomaterials} biomaterialTypes={filterTypes}/>
+            <BioMatForm isOpenState={isFormOpen} onClose={() => toggleForm()} editingBioMaterial={editingBioMat} onUpdate={loadBiomaterials} biomaterialTypes={filterTypes}/>
         </div>
     );
 }

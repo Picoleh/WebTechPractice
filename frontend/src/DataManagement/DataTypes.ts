@@ -14,3 +14,13 @@ export type Biomaterial = {
     biocompatibility: string;
     created_at: string | null;
 };
+
+export const EmptyBiomaterial = (): Biomaterial => ({
+    id: 0,
+    name: "",
+    type_id: 0,
+    description: "",
+    density: 0,
+    biocompatibility: "",
+    created_at: null,
+});

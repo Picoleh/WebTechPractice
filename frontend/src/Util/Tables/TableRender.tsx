@@ -2,6 +2,7 @@ import { deleteBiomaterial } from "../Biomaterials/BioMaterialRemover";
 import { GoPencil } from "react-icons/go";
 import { MdDeleteForever } from "react-icons/md";
 import TableValues from "./TableValues";
+import type { Biomaterial } from "../../DataManagement/DataTypes";
 
 type Column<T> = {
   key: keyof T;
@@ -12,10 +13,10 @@ type TableProps<T> = {
   data: T[];
   columns: Column<T>[];
   onDeleteSucess: () => void;
-  onEditClick: (id ?: number) => void;
+  onEditClick: (item: T) => void;
 };
 
-export function TableRender<T extends { id: number }>({ data, columns, onDeleteSucess, onEditClick }: TableProps<T>) {
+export function TableRender<T>({ data, columns, onDeleteSucess, onEditClick }: TableProps<T>) {
   return (
     <div className="overflow-x-auto rounded bg-white shadow-md">
       <table className="min-w-[760px] w-full">
@@ -38,11 +39,11 @@ export function TableRender<T extends { id: number }>({ data, columns, onDeleteS
               ))}
 
               <td className="px-4 py-3 whitespace-nowrap">
-                  <button className="mr-2 rounded px-2 py-1 text-black hover:text-teal-500" onClick={() => onEditClick(row.id)}><GoPencil size={28}/></button>
+                <button className="mr-2 rounded px-2 py-1 text-black hover:text-teal-500" onClick={() => onEditClick(row)}><GoPencil size={28}/></button>
                 <button onClick={
                   async() => {
                     try{
-                      await deleteBiomaterial(row.id);
+                      await deleteBiomaterial(row as Biomaterial);
                       onDeleteSucess();
                     }
                     catch(err){
