@@ -55,9 +55,7 @@ export default function SearchComponent() {
     async function addBiomaterial(obj: Biomaterial) {
         console.log("Adding biomaterial:", obj);
         try {
-            const json = await fetchData("biomaterials", "POST", obj);
-
-            // alert("Biomaterial added with ID: " + json.data.id);
+            await fetchData("biomaterials", "POST", obj);
         }
         catch (err) {
             console.error("Unknown error while fetching data");
@@ -100,11 +98,10 @@ export default function SearchComponent() {
             searchPlaceholder="Search biomaterials..."
             renderFilters={<FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange} getLabel={(type) => type.name}/>}
             form={(crudProps) => (
-                <AsideCrudForm isOpenState={crudProps.isFormOpen} editingObject={crudProps.editingObj} onClose={() => crudProps.toggleForm(null)} onUpdate={crudProps.onUpdate} onAdd={crudProps.onAdd}
+                <AsideCrudForm title="Biomaterial" isOpenState={crudProps.isFormOpen} editingObject={crudProps.editingObj} onClose={() => crudProps.toggleForm(null)} onUpdate={crudProps.onUpdate} onAdd={crudProps.onAdd}
                     children={(asideFormProps) => (
                         <BioMatForm formData={asideFormProps.formData} setFormData={asideFormProps.setFormData} biomaterialTypes={filterTypes}/>
-                    )}>
-                </AsideCrudForm>
+                    )}/>
             )}
         />
     );

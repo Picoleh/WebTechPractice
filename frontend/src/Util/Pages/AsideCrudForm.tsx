@@ -7,6 +7,7 @@ type FormProps<T> = {
 }
 
 type AsideCrudFormProps<T> = {
+    title: string;
     isOpenState: boolean;
     onClose: () => void;
     editingObject: T | null;
@@ -15,7 +16,7 @@ type AsideCrudFormProps<T> = {
     children: (props: FormProps<T>) => React.ReactNode;
 };
 
-export default function AsideCrudForm<T>({isOpenState, onClose, editingObject, onUpdate, onAdd, children}: AsideCrudFormProps<T>) {
+export default function AsideCrudForm<T>({title, isOpenState, onClose, editingObject, onUpdate, onAdd, children}: AsideCrudFormProps<T>) {
     const isEditMode = editingObject !== null;
     const [formData, setFormData] = useState<T>(editingObject as T);
 
@@ -33,7 +34,7 @@ export default function AsideCrudForm<T>({isOpenState, onClose, editingObject, o
                 <aside className={`fixed right-0 top-0 z-50 h-screen w-full bg-white p-4 text-black shadow-lg transition-all duration-300 sm:w-[420px] lg:w-[520px] ${isOpenState ? "translate-x-0" : "translate-x-full"}`}>
                     <div className="flex h-full flex-col overflow-y-auto">
                         <div className="flex flex-row items-start gap-3">
-                            <label className="font-bold">{isEditMode ? "Ahhh" : "Ohhhh"}</label>
+                            <label className="font-bold text-3xl">{isEditMode ? `Edit ${title}` : `Add ${title}`}</label>
                             <button onClick={onClose} className="ml-auto px-2 py-1 rounded hover:bg-gray-300">
                                 <IoMdClose size={20}/>
                             </button>

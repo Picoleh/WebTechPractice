@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { EmptyBiomaterial, type Biomaterial, type BiomaterialType } from "../../DataManagement/DataTypes";
-import { IoMdClose } from "react-icons/io";
-import { fetchData } from "../../DataManagement/DataManager";
 import Dropdown from "../../Util/Dropdown";
 
 type BioMatFormProps = {

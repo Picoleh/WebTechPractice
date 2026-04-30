@@ -35,11 +35,15 @@ export default function BioMatType() {
         <Crud
             columns={columns}
             loadData={loadTypes}
+            onAddItem={async () => {}}
+            onUpdateItem={async () => {}}
             onDeleteItem={async () => {}}
             searchPlaceholder="Search biomaterial types..."
             form={(crudProps) => (
-                <AsideCrudForm isOpenState={crudProps.isFormOpen} editingObject={crudProps.editingObj} onClose={() => crudProps.toggleForm(null)} onUpdate={crudProps.onUpdate}>
-                    <BioMatTypesForm />
+                <AsideCrudForm  title="Biomaterial Type" isOpenState={crudProps.isFormOpen} editingObject={crudProps.editingObj} onClose={() => crudProps.toggleForm(null)} onUpdate={crudProps.onUpdate} onAdd={crudProps.onAdd}
+                children={(asideFormProps) => (
+                    <BioMatTypesForm formData={asideFormProps.formData} setFormData={asideFormProps.setFormData} />
+                )}>
                 </AsideCrudForm>
             )}
         />

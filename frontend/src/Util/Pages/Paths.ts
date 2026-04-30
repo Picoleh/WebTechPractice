@@ -1,7 +1,8 @@
-import { FaHome, FaSearch } from "react-icons/fa";
+import { FaBiohazard, FaHome, FaSearch } from "react-icons/fa";
+import { MdMergeType } from "react-icons/md";
 
 export const PAGES_INFO = [
     { name: "Home", path: "/" , icon: FaHome, title: "Home" },
-    { name: "Search", path: "/search", icon: FaSearch, title: "BioMaterials Inventory" },
-    { name: "CRUD", path: "/crud", icon: FaSearch, title: "CRUD Operations" },
+    { name: "Biomaterials", path: "/search", icon: FaBiohazard, title: "BioMaterials Inventory" },
+    { name: "Biomaterial Types", path: "/crud", icon: MdMergeType, title: "CRUD Operations" },
 ]
