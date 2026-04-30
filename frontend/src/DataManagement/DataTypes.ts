@@ -21,7 +21,7 @@ export const EmptyBiomaterial = (): Biomaterial => ({
     type_id: 0,
     description: "",
     density: 0,
-    biocompatibility: "",
+    biocompatibility: "High",
     created_at: null,
 });
 

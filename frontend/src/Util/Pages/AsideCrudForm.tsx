@@ -11,7 +11,7 @@ type AsideCrudFormProps<T> = {
     onClose?: () => void;
     editingObject: T | null;
     onUpdate?: () => void;
-    onAdd: (item: T) => Promise<void>;
+    onAdd: (item: T) => void;
     children: (props: FormProps<T>) => React.ReactNode;
 };
 
@@ -20,7 +20,6 @@ export default function AsideCrudForm<T>({isOpenState, onClose, editingObject, o
     const [formData, setFormData] = useState<T>(editingObject as T);
 
     useEffect(() => {
-        console.log("ed obj arrived in form:", editingObject);
         if(editingObject !== null){
             setFormData(editingObject);
         } else {

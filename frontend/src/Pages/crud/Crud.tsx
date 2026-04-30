@@ -10,7 +10,7 @@ type CrudFormProps<T> = {
     toggleForm: (obj: any | null) => void;
     editingObj: T | null;
     onUpdate: () => Promise<void> | void;
-    onAdd: (item: T) => Promise<void>;
+    onAdd: (item: T) => void;
 }
 
 type CrudLoadResult<T> = {
@@ -56,15 +56,6 @@ export default function Crud<T>({ columns, loadData, onAddItem, onDeleteItem, re
         }
     }
 
-    async function addData(obj: T) {
-        try {
-            const json = await onAddItem(obj);
-            await reloadData();
-        } catch (err) {
-            console.error("Error while adding data:", err);
-        }
-    }
-
     useEffect(() => {
         void reloadData();
     }, [page]);
@@ -72,7 +63,6 @@ export default function Crud<T>({ columns, loadData, onAddItem, onDeleteItem, re
     function toggleForm(obj: T | null = null) {
         if(obj !== null){
             setEditingObj(obj);
-            console.log("obj to edit:", obj);
         } else {
             setEditingObj(null);
         }

@@ -21,14 +21,14 @@ export default function BioMatForm({formData, setFormData, biomaterialTypes}: Bi
     const offset = thumbSize / 2 - (percentage / 100) * thumbSize;
 
     useEffect(() => {
-        console.log("Form data changed:", formData);
         if (formData != null) {
             setBioMatFormData(formData);
             const dens = formData.density ?? 0;
             setPercentage(((dens - min) / (max - min)) * 100);
+            console.log("Form data updated: ", formData.biocompatibility);
         }
         else{
-            console.log("Form data is null, resetting form");
+            console.log("Form data is null, resetting form: ", EmptyBiomaterial().biocompatibility);
             setFormData(EmptyBiomaterial());
             setSelectedBiocompatibility("High");
         }
@@ -41,8 +41,11 @@ export default function BioMatForm({formData, setFormData, biomaterialTypes}: Bi
     }
 
     async function setBioMatFormData(bioMat: Biomaterial) {
-        console.log("Setting form data for id:", bioMat.id);
         setFormData(bioMat);
+        if(bioMat.biocompatibility == undefined){
+            bioMat.biocompatibility = selectedBiocompatibility;
+            console.log("bio was undefined");
+        }
         setSelectedBiocompatibility(bioMat.biocompatibility ?? "High");
     }
 

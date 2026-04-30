@@ -57,7 +57,7 @@ export default function SearchComponent() {
         try {
             const json = await fetchData("biomaterials", "POST", obj);
 
-            alert("Biomaterial added with ID: " + json.data.id);
+            // alert("Biomaterial added with ID: " + json.data.id);
         }
         catch (err) {
             console.error("Unknown error while fetching data");
