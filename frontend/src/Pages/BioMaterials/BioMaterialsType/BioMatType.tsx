@@ -1,7 +1,9 @@
 import type { ReactNode } from "react";
-import { fetchData } from "../../DataManagement/DataManager";
-import type { BiomaterialType } from "../../DataManagement/DataTypes";
-import Crud from "../../Pages/crud/Crud";
+import { fetchData } from "../../../DataManagement/DataManager";
+import type { BiomaterialType } from "../../../DataManagement/DataTypes";
+import Crud from "../../crud/Crud";
+import AsideCrudForm from "../../../Util/Pages/AsideCrudForm";
+import BioMatTypesForm from "./BioMatTypesForm";
 
 const columns: Array<{ key: keyof BiomaterialType; label: string }> = [
     { key: "id", label: "ID" },
@@ -35,7 +37,11 @@ export default function BioMatType() {
             loadData={loadTypes}
             onDeleteItem={async () => {}}
             searchPlaceholder="Search biomaterial types..."
-            form={(): ReactNode => null}
+            form={(crudProps) => (
+                <AsideCrudForm isOpenState={crudProps.isFormOpen} editingObject={crudProps.editingObj} onClose={() => crudProps.toggleForm(null)} onUpdate={crudProps.onUpdate}>
+                    <BioMatTypesForm />
+                </AsideCrudForm>
+            )}
         />
     );
 }

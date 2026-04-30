@@ -6,7 +6,7 @@ import PageTitle from "./Util/Pages/PageTitle";
 import HomePage from "./Pages/Home/HomePage";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "./DataManagement/MediaQuery";
-import BioMatType from "./Pages/BioMaterialsType/BioMatType";
+import BioMatType from "./Pages/BioMaterials/BioMaterialsType/BioMatType";
 
 function App() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");

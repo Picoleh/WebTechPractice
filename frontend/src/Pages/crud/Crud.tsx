@@ -10,6 +10,7 @@ type CrudFormProps<T> = {
     toggleForm: (obj: any | null) => void;
     editingObj: T | null;
     onUpdate: () => Promise<void> | void;
+    onAdd: (item: T) => Promise<void>;
 }
 
 type CrudLoadResult<T> = {
@@ -20,13 +21,14 @@ type CrudLoadResult<T> = {
 type CrudProps<T> = {
     columns: Column<T>[];
     loadData: (searchTerm: string, page: number) => Promise<CrudLoadResult<T>>;
+    onAddItem: (item: T) => Promise<void>;
     onDeleteItem: (item: T) => Promise<void>;
     renderFilters?: React.ReactNode;
     searchPlaceholder?: string;
     form: (props: CrudFormProps<T>) => React.ReactNode;
 }
 
-export default function Crud<T>({ columns, loadData, onDeleteItem, renderFilters, searchPlaceholder = "Search...", form }: CrudProps<T>) {
+export default function Crud<T>({ columns, loadData, onAddItem, onDeleteItem, renderFilters, searchPlaceholder = "Search...", form }: CrudProps<T>) {
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
@@ -54,6 +56,15 @@ export default function Crud<T>({ columns, loadData, onDeleteItem, renderFilters
         }
     }
 
+    async function addData(obj: T) {
+        try {
+            const json = await onAddItem(obj);
+            await reloadData();
+        } catch (err) {
+            console.error("Error while adding data:", err);
+        }
+    }
+
     useEffect(() => {
         void reloadData();
     }, [page]);
@@ -61,6 +72,7 @@ export default function Crud<T>({ columns, loadData, onDeleteItem, renderFilters
     function toggleForm(obj: T | null = null) {
         if(obj !== null){
             setEditingObj(obj);
+            console.log("obj to edit:", obj);
         } else {
             setEditingObj(null);
         }
@@ -111,8 +123,9 @@ export default function Crud<T>({ columns, loadData, onDeleteItem, renderFilters
                     {form({
                         isFormOpen,
                         toggleForm: (obj: T | null) => toggleForm(obj),
-                        editingObj,
-                        onUpdate: reloadData
+                        editingObj: editingObj,
+                        onUpdate: reloadData,
+                        onAdd: onAddItem
                     })}
                 </div>
     );

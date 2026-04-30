@@ -5,6 +5,7 @@ import {fetchData} from "../../DataManagement/DataManager";
 import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
 import Crud from "../crud/Crud";
 import { deleteBiomaterial } from "../../Util/Biomaterials/BioMaterialRemover";
+import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 
 const columns: Array<{ key: keyof Biomaterial; label: string }> = [
     { key: "id", label: "ID" },
@@ -51,6 +52,30 @@ export default function SearchComponent() {
         }
     }
 
+    async function addBiomaterial(obj: Biomaterial) {
+        console.log("Adding biomaterial:", obj);
+        try {
+            const json = await fetchData("biomaterials", "POST", obj);
+
+            alert("Biomaterial added with ID: " + json.data.id);
+        }
+        catch (err) {
+            console.error("Unknown error while fetching data");
+        }
+    }
+
+    async function updateBiomaterial(obj: Biomaterial) {
+        console.log("Updating biomaterial:", obj);
+        try {
+            const json = await fetchData(`biomaterials/${obj?.id}`, "PUT", obj);
+            
+            alert("Biomaterial updated with ID: " + json.data.id);
+        }
+        catch (err) {
+            console.error("Unknown error while fetching data");
+        }
+    }
+
     async function loadBiomaterialTypes() {
         try{
             const responseJson = await fetchData("biomaterials/types");
@@ -69,17 +94,16 @@ export default function SearchComponent() {
         <Crud
             columns={columns}
             loadData={loadBiomaterials}
+            onAddItem={addBiomaterial}
             onDeleteItem={deleteBiomaterial}
             searchPlaceholder="Search biomaterials..."
             renderFilters={<FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange} getLabel={(type) => type.name}/>}
             form={(crudProps) => (
-                <BioMatForm
-                    isOpenState={crudProps.isFormOpen}
-                    onClose={() => crudProps.toggleForm(null)}
-                    editingBioMaterial={crudProps.editingObj}
-                    onUpdate={crudProps.onUpdate}
-                    biomaterialTypes={filterTypes}
-                />
+                <AsideCrudForm isOpenState={crudProps.isFormOpen} editingObject={crudProps.editingObj} onClose={() => crudProps.toggleForm(null)} onUpdate={crudProps.onUpdate} onAdd={crudProps.onAdd}
+                    children={(asideFormProps) => (
+                        <BioMatForm formData={asideFormProps.formData} setFormData={asideFormProps.setFormData} biomaterialTypes={filterTypes}/>
+                    )}>
+                </AsideCrudForm>
             )}
         />
     );
