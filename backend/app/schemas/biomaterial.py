@@ -9,7 +9,5 @@ class BiomaterialCreateUpdate(BaseModel):
     biocompatibility: str
 
 class BiomaterialType(BaseModel):
-    id: int
     name: str
     description: str
-    created_at: str

@@ -48,3 +48,25 @@ def search_biomaterial_types(q: str, page: int):
             "total": get_biomaterial_types_count(sql_no_limit),
         },
     }
+
+def create_biomaterial_type(biomaterial_type: BiomaterialType):
+    sql = f"""
+        INSERT INTO {TABLE} (name, description)
+        VALUES (:name, :description)
+    """
+    execute_write(sql, biomaterial_type.model_dump())
+
+def update_biomaterial_type(id: int, biomaterial_type: BiomaterialType):
+    sql = f"""
+        UPDATE {TABLE}
+        SET name = :name,
+            description = :description
+        WHERE id = :id
+    """
+    params = biomaterial_type.model_dump()
+    params["id"] = id
+    execute_write(sql, params)
+
+def delete_biomaterial_type(id: int):
+    sql = f"DELETE FROM {TABLE} WHERE id = :id"
+    execute_write(sql, {"id": id})
