@@ -4,7 +4,6 @@ import BioMatForm from "./BioMatForm";
 import {fetchData} from "../../DataManagement/DataManager";
 import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
 import Crud from "../crud/Crud";
-import { deleteBiomaterial } from "../../Util/Biomaterials/BioMaterialRemover";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 
 const columns: Array<{ key: keyof Biomaterial; label: string }> = [
@@ -81,6 +80,16 @@ export default function SearchComponent() {
             setFilterTypes(types);
         } catch (err) {
             throw new Error("Unknown error while fetching biomaterial types");
+        }
+    }
+
+    async function deleteBiomaterial(bioMat: Biomaterial) {
+        try{
+            const json = await fetchData(`biomaterials/${bioMat.id}`, "DELETE");
+            return json;
+        }
+        catch (err) {
+            throw new Error("Erro ao deletar biomaterial");
         }
     }
 
