@@ -9,7 +9,7 @@ type CrudFormProps<T> = {
     isFormOpen: boolean;
     toggleForm: (obj: any | null) => void;
     editingObj: T | null;
-    onUpdate: () => Promise<void> | void;
+    onUpdate: (item: T) => void;
     onAdd: (item: T) => void;
 }
 
@@ -22,13 +22,14 @@ type CrudProps<T> = {
     columns: Column<T>[];
     loadData: (searchTerm: string, page: number) => Promise<CrudLoadResult<T>>;
     onAddItem: (item: T) => Promise<void>;
+    onUpdateItem: (item: T) => Promise<void>;
     onDeleteItem: (item: T) => Promise<void>;
     renderFilters?: React.ReactNode;
     searchPlaceholder?: string;
     form: (props: CrudFormProps<T>) => React.ReactNode;
 }
 
-export default function Crud<T>({ columns, loadData, onAddItem, onDeleteItem, renderFilters, searchPlaceholder = "Search...", form }: CrudProps<T>) {
+export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, onDeleteItem, renderFilters, searchPlaceholder = "Search...", form }: CrudProps<T>) {
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
@@ -54,6 +55,16 @@ export default function Crud<T>({ columns, loadData, onAddItem, onDeleteItem, re
         } finally {
             setLoading(false);
         }
+    }
+
+    async function addData(item: T) {
+        await onAddItem(item);
+        await reloadData();
+    }
+
+    async function updateData(item: T) {
+        await onUpdateItem(item);
+        await reloadData();
     }
 
     useEffect(() => {
@@ -114,8 +125,8 @@ export default function Crud<T>({ columns, loadData, onAddItem, onDeleteItem, re
                         isFormOpen,
                         toggleForm: (obj: T | null) => toggleForm(obj),
                         editingObj: editingObj,
-                        onUpdate: reloadData,
-                        onAdd: onAddItem
+                        onUpdate: updateData,
+                        onAdd: addData
                     })}
                 </div>
     );

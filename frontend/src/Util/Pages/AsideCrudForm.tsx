@@ -8,9 +8,9 @@ type FormProps<T> = {
 
 type AsideCrudFormProps<T> = {
     isOpenState: boolean;
-    onClose?: () => void;
+    onClose: () => void;
     editingObject: T | null;
-    onUpdate?: () => void;
+    onUpdate: (item : T) => void;
     onAdd: (item: T) => void;
     children: (props: FormProps<T>) => React.ReactNode;
 };
@@ -47,7 +47,13 @@ export default function AsideCrudForm<T>({isOpenState, onClose, editingObject, o
                                 }
                             )}
 
-                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded-md mt-4" onClick={isEditMode ? onUpdate : () => onAdd(formData)}>
+                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded-md mt-4" onClick={isEditMode ? () => {
+                                onUpdate(formData);
+                                onClose();
+                            } : () => {
+                                onAdd(formData);
+                                onClose();
+                            }}>
                                 Save
                             </button>
                             <button className="bg-white hover:bg-gray-200 text-black border border-gray-400 px-4 py-2 rounded-md mt-4" onClick={onClose}>

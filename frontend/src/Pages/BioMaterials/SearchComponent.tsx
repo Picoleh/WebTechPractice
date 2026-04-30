@@ -95,6 +95,7 @@ export default function SearchComponent() {
             columns={columns}
             loadData={loadBiomaterials}
             onAddItem={addBiomaterial}
+            onUpdateItem={updateBiomaterial}
             onDeleteItem={deleteBiomaterial}
             searchPlaceholder="Search biomaterials..."
             renderFilters={<FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange} getLabel={(type) => type.name}/>}
