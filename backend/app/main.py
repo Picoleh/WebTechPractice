@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from .api.biomaterials import router as biomaterials_router
-# from .api.biomaterials_type import router as biomaterials_types_router
+from .api.studyTypes import router as study_types_router
 from .core.config import settings
 
 app = FastAPI(
@@ -45,4 +45,4 @@ async def root():
 
 
 app.include_router(biomaterials_router)
-# app.include_router(biomaterials_types_router)
+app.include_router(study_types_router)

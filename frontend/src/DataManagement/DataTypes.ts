@@ -53,3 +53,19 @@ export type TableValuesProps<T> = {
     data: T[];
     columns: Column<T>[];
 }
+
+export type StudyType = {
+    id: number;
+    name: string;
+    description: string;
+    level_evidence: string;
+    created_at: string | null;
+}
+
+export const EmptyStudyType = (): StudyType => ({
+    id: 0,
+    name: "",
+    description: "",
+    level_evidence: "High",
+    created_at: null,
+});
