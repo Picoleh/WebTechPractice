@@ -77,6 +77,11 @@ export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, on
         } else {
             setEditingObj(null);
         }
+
+        if(isFormOpen){
+            setEditingObj(null);
+        }
+
         setIsFormOpen(prev => !prev);
     }
 
