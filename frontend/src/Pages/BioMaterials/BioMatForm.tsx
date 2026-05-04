@@ -54,7 +54,7 @@ export default function BioMatForm({formData, setFormData, biomaterialTypes}: Bi
             <div className="flex flex-row gap-4 items-center">
 
             <label className="font-bold">Type:</label>
-            <Dropdown title="Type" data={biomaterialTypes} settedValueId={formData?.type_id ?? null} onValueChange={handleTypeChange} getLabel={(option) => option.name} getId={(option) => option.id}/>
+            <Dropdown title="Type" data={biomaterialTypes} settedValueId={formData?.type_id ?? null} expandRight={false} onValueChange={handleTypeChange} getLabel={(option) => option.name} getId={(option) => option.id}/>
 
             <label className="font-bold">Image:</label>
             <input type="file" accept="image/*" ref={fileInputRef} onChange={(e) => {

@@ -85,3 +85,31 @@ export const EmptyResearchTech = (): ResearchTech => ({
     cost_level: "High",
     created_at: null,
 });
+
+export type Experiment = {
+    id: number;
+    title: string;
+    objective: string;
+    description: string;
+    start_date: string | null;
+    end_date: string | null;
+    status: string;
+    biomaterial_id: number;
+    study_type_id: number;
+    results: string;
+    created_at: string | null;
+}
+
+export const EmptyExperiment = (): Experiment => ({
+    id: 0,
+    title: "",
+    objective: "",
+    description: "",
+    start_date: null,
+    end_date: null,
+    status: "Pending",
+    biomaterial_id: 0,
+    study_type_id: 0,
+    results: "",
+    created_at: null,
+});

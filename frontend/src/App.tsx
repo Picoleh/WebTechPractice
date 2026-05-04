@@ -9,6 +9,7 @@ import { useMediaQuery } from "./DataManagement/MediaQuery";
 import BioMatType from "./Pages/BioMaterials/BioMaterialsType/BioMatType";
 import StudyTypes from "./Pages/StudyTypes/StudyTypes";
 import ResearchTech from "./Pages/ResearchTech/ResearchTech";
+import Experiments from "./Pages/Experiments/Experiments";
 
 function App() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -39,6 +40,7 @@ function App() {
             <Route path="/biomaterialTypes" element={<BioMatType/>}/> 
             <Route path="/studyTypes" element={<StudyTypes/>}/>
             <Route path="/researchTech" element={<ResearchTech/>}/>
+            <Route path="/experiments" element={<Experiments/>}/>
           </Routes>
         </div>
       </div>
