@@ -10,6 +10,7 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+      - ./uploads:/uploads
     depends_on:
       - backend
 
@@ -23,6 +24,7 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+      - ./uploads:/uploads
 
   db:
     image: postgres:15

@@ -48,6 +48,9 @@ dist/
 # Logs
 *.log
 
+# User uploads (runtime generated)
+uploads/
+
 # =========================
 # FastAPI specific (comum)
 # =========================

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, UploadFile
+from fastapi import APIRouter, File, Query, UploadFile
 
 from ..schemas.biomaterial import BiomaterialCreateUpdate, BiomaterialType
 from ..services.biomaterials_service import (
@@ -54,7 +54,7 @@ async def search_biomaterials_route(q: str = Query(..., min_length=1, descriptio
     return search_biomaterials(q, page, types)
 
 @router.post("/upload-image", summary="Upload an image for a biomaterial", tags=["Post"])
-async def upload_biomaterial_image_route(image: UploadFile):
+async def upload_biomaterial_image_route(image: UploadFile = File(...)):
     return await ImageSaver.saveImage(image)
 
 @router.get("", summary="Get a list of biomaterials, supports pagination and filtering by type", tags=["Get"])

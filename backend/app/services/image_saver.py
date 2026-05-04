@@ -1,17 +1,20 @@
+import os
 from pathlib import Path
 
 from fastapi import UploadFile
 
-class ImageSaver:
-    saveFolderPath = Path(__file__).resolve().parents[3] / "frontend" / "src" / "assets" / "savedImages"
 
+class ImageSaver:
     @staticmethod
     async def saveImage(image: UploadFile) -> dict:
-        ImageSaver.saveFolderPath.mkdir(parents=True, exist_ok=True)
-        
-        if image:
-            imagePath = ImageSaver.saveFolderPath / image.filename
-            with open(imagePath, "wb") as f:
-                f.write(await image.read())
+        # Salva em /uploads que está mapeado no docker-compose
+        save_folder = Path("/uploads")
+        save_folder.mkdir(parents=True, exist_ok=True)
 
-        return {"url": str(imagePath)}
+        safe_name = Path(image.filename).name
+        image_path = save_folder / safe_name
+
+        with open(image_path, "wb") as f:
+            f.write(await image.read())
+
+        return {"url": str(image_path)}
