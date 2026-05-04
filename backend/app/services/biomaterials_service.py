@@ -81,7 +81,8 @@ def update_biomaterial(id: int, biomaterial: BiomaterialCreateUpdate):
             type_id = :type_id,
             description = :description,
             density = :density,
-            biocompatibility = :biocompatibility
+            biocompatibility = :biocompatibility,
+            img_path = :img_path
         WHERE id = :id
     """
     params = biomaterial.model_dump()

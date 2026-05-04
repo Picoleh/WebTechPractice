@@ -71,9 +71,14 @@ export default function SearchComponent() {
     async function updateBiomaterial(obj: Biomaterial) {
         console.log("Updating biomaterial:", obj);
         try {
-            const json = await fetchData(`biomaterials/${obj?.id}`, "PUT", obj);
+            if (obj.image !== undefined){
+                const imgPath = await uploadImage(obj.image as File);
+                obj.img_path = imgPath;   
+                delete obj.image;
+            }
             
-            alert("Biomaterial updated with ID: " + json.data.id);
+            await fetchData(`biomaterials/${obj.id}`, "PUT", obj);
+            
         }
         catch (err) {
             console.error("Unknown error while fetching data");
