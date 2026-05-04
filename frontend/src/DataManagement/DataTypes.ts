@@ -69,3 +69,19 @@ export const EmptyStudyType = (): StudyType => ({
     level_evidence: "High",
     created_at: null,
 });
+
+export type ResearchTech = {
+    id: number;
+    name: string;
+    description: string;
+    cost_level: string;
+    created_at: string | null;
+}
+
+export const EmptyResearchTech = (): ResearchTech => ({
+    id: 0,
+    name: "",
+    description: "",
+    cost_level: "High",
+    created_at: null,
+});

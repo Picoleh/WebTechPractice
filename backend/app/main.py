@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 
 from .api.biomaterials import router as biomaterials_router
 from .api.studyTypes import router as study_types_router
+from .api.researchTechs import router as research_techs_router
 from .core.config import settings
 
 app = FastAPI(
@@ -46,3 +47,4 @@ async def root():
 
 app.include_router(biomaterials_router)
 app.include_router(study_types_router)
+app.include_router(research_techs_router)
