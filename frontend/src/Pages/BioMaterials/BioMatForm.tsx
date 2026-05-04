@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EmptyBiomaterial, type Biomaterial, type BiomaterialType } from "../../DataManagement/DataTypes";
 import Dropdown from "../../Util/Dropdown";
 
@@ -9,7 +9,7 @@ type BioMatFormProps = {
 };
 
 export default function BioMatForm({formData, setFormData, biomaterialTypes}: BioMatFormProps) {
-    
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const thumbSize = 24;
     const min = 0;
     const max = 20;
@@ -23,12 +23,12 @@ export default function BioMatForm({formData, setFormData, biomaterialTypes}: Bi
             setBioMatFormData(formData);
             const dens = formData.density ?? 0;
             setPercentage(((dens - min) / (max - min)) * 100);
-            console.log("Form data updated: ", formData.biocompatibility);
         }
         else{
-            console.log("Form data is null, resetting form: ", EmptyBiomaterial().biocompatibility);
             setFormData(EmptyBiomaterial());
             setSelectedBiocompatibility("High");
+            if(fileInputRef.current)
+                fileInputRef.current.value = "";
         }
 
     },[formData]);
@@ -42,7 +42,6 @@ export default function BioMatForm({formData, setFormData, biomaterialTypes}: Bi
         setFormData(bioMat);
         if(bioMat.biocompatibility == undefined){
             bioMat.biocompatibility = selectedBiocompatibility;
-            console.log("bio was undefined");
         }
         setSelectedBiocompatibility(bioMat.biocompatibility ?? "High");
     }
@@ -58,12 +57,13 @@ export default function BioMatForm({formData, setFormData, biomaterialTypes}: Bi
             <Dropdown title="Type" data={biomaterialTypes} settedValueId={formData?.type_id ?? null} onValueChange={handleTypeChange} getLabel={(option) => option.name} getId={(option) => option.id}/>
 
             <label className="font-bold">Image:</label>
-            <input type="file" accept="image/*" onChange={(e) => {
+            <input type="file" accept="image/*" ref={fileInputRef} onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) {
                     setFormData(prev => ({ ...prev, image: file }));
                 }
-            }}/>
+            }}
+            />
             </div>
 
             <label className="font-bold">Description:</label>
