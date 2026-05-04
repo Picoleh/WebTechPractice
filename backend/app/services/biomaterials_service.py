@@ -68,8 +68,8 @@ def get_biomaterial_by_id(id: int):
 
 def create_biomaterial(biomaterial: BiomaterialCreateUpdate):
     sql = f"""
-        INSERT INTO {TABLE} (name, type_id, description, density, biocompatibility)
-        VALUES (:name, :type_id, :description, :density, :biocompatibility)
+        INSERT INTO {TABLE} (name, type_id, description, density, biocompatibility, img_path)
+        VALUES (:name, :type_id, :description, :density, :biocompatibility, :img_path)
     """
     execute_write(sql, biomaterial.model_dump())
 
@@ -88,6 +88,8 @@ def update_biomaterial(id: int, biomaterial: BiomaterialCreateUpdate):
     params["id"] = id
     execute_write(sql, params)
 
+
 def delete_biomaterial(id: int):
     sql = f"DELETE FROM {TABLE} WHERE id = :id"
     execute_write(sql, {"id": id})
+

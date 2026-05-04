@@ -9,7 +9,7 @@ function getApiKey() {
   return apiKey;
 }
 
-export async function fetchData(endpoint: string, method: string = "GET", body?: any) {
+export async function fetchData(endpoint: string, method: string = "GET", body?: any, isFormData: boolean = false) {
     const url = getUrl();
     const apiKey = getApiKey();
 
@@ -19,9 +19,9 @@ export async function fetchData(endpoint: string, method: string = "GET", body?:
         method: method,
         headers: {
         'apiKey': `${apiKey}`,
-        'Content-Type': 'application/json'
+        ...(isFormData ? {} : { "Content-Type": "application/json" })
         },
-        body: body ? JSON.stringify(body) : undefined
+        body: body ? (isFormData ? body : JSON.stringify(body)) : undefined
     });
 
 
@@ -32,4 +32,15 @@ export async function fetchData(endpoint: string, method: string = "GET", body?:
     const json = await response.json();
     // console.log("Received response:", json);
     return json;
+}
+
+export async function uploadImage(file: File) {
+  console.log("Uploading image:", file);
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const data = await fetchData("biomaterials/upload-image", "POST", formData, true);
+
+    console.log("Image upload response:", data);
+    return data.url;
 }

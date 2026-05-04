@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FilterDropdown from "../../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
-import {fetchData} from "../../DataManagement/DataManager";
+import {fetchData, uploadImage} from "../../DataManagement/DataManager";
 import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
 import Crud from "../crud/Crud";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
@@ -14,6 +14,7 @@ const columns: Array<{ key: keyof Biomaterial; label: string }> = [
     { key: "density", label: "Density" },
     { key: "biocompatibility", label: "Biocompatibility" },
     { key: "created_at", label: "Created At" },
+    { key: "img_path", label: "Image" },
 ];
 
 export default function SearchComponent() {
@@ -53,11 +54,17 @@ export default function SearchComponent() {
 
     async function addBiomaterial(obj: Biomaterial) {
         console.log("Adding biomaterial:", obj);
+
         try {
+            if (obj.image !== undefined){
+                const imgPath = await uploadImage(obj.image as File);
+                obj.img_path = imgPath;   
+                delete obj.image;
+            }
             await fetchData("biomaterials", "POST", obj);
         }
         catch (err) {
-            console.error("Unknown error while fetching data");
+            console.error(err);
         }
     }
 

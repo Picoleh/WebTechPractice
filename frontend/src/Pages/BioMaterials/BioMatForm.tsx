@@ -52,8 +52,19 @@ export default function BioMatForm({formData, setFormData, biomaterialTypes}: Bi
             <label className="font-bold">Name:</label>
             <input type="text" value={formData?.name ?? ""} onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))} className="w-full p-2 rounded border border-gray-400"/>
 
+            <div className="flex flex-row gap-4 items-center">
+
             <label className="font-bold">Type:</label>
             <Dropdown title="Type" data={biomaterialTypes} settedValueId={formData?.type_id ?? null} onValueChange={handleTypeChange} getLabel={(option) => option.name} getId={(option) => option.id}/>
+
+            <label className="font-bold">Image:</label>
+            <input type="file" accept="image/*" onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                    setFormData(prev => ({ ...prev, image: file }));
+                }
+            }}/>
+            </div>
 
             <label className="font-bold">Description:</label>
             <textarea value={formData?.description ?? ""} onChange={(e) => setFormData(prev => ({...prev, description: e.target.value}))} className="w-full p-2 rounded border border-gray-400"/>

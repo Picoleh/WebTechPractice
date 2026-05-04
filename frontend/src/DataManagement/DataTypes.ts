@@ -13,6 +13,8 @@ export type Biomaterial = {
     density: number | null;
     biocompatibility: string;
     created_at: string | null;
+    img_path?: string;
+    image?: File;
 };
 
 export const EmptyBiomaterial = (): Biomaterial => ({
@@ -23,6 +25,8 @@ export const EmptyBiomaterial = (): Biomaterial => ({
     density: 0,
     biocompatibility: "High",
     created_at: null,
+    img_path: undefined,
+    image: undefined,
 });
 
 export type FilterDropdownProps<T> = {

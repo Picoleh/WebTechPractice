@@ -7,6 +7,7 @@ class BiomaterialCreateUpdate(BaseModel):
     description: str
     density: float | None = None
     biocompatibility: str
+    img_path: str | None = None
 
 class BiomaterialType(BaseModel):
     name: str
