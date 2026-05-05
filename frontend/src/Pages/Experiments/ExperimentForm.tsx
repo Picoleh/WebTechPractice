@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import { EmptyExperiment, type Biomaterial, type Experiment, type StudyType } from "../../DataManagement/DataTypes";
+import { EmptyExperiment, type Biomaterial, type Experiment, type ResearchTech, type StudyType } from "../../DataManagement/DataTypes";
 import Dropdown from "../../Util/Dropdown";
+import MultiTags from "../../Util/MultiTags";
+import ChipInput from "../../Util/ChipInput";
 
 type ExperimentFormProps = {
     formData: Experiment;
     setFormData: React.Dispatch<React.SetStateAction<Experiment>>;
     biomaterials: Biomaterial[];
     studyTypes: StudyType[];
+    researchTechs: ResearchTech[];
 };
 
-export default function ExperimentForm({formData, setFormData, biomaterials, studyTypes}: ExperimentFormProps) {
+export default function ExperimentForm({formData, setFormData, biomaterials, studyTypes, researchTechs}: ExperimentFormProps) {
 
     const [selectedStatus, setSelectedStatus] = useState<string>(formData?.status ?? "Completed");
+    // const [selectedResearchTechs, setSelectedResearchTechs] = useState<number[]>([]);
 
     useEffect(() => {
             if (formData != null) {
@@ -19,9 +23,33 @@ export default function ExperimentForm({formData, setFormData, biomaterials, stu
             }
             else{
                 setFormData(EmptyExperiment());
+                // setSelectedResearchTechs([]); 
             }
-    
+            
         },[formData]);
+
+    function handleResearchTechChange(tag: ResearchTech){
+        // setSelectedResearchTechs(prev => {
+        //     if(prev.some(t => t === tag.id)){
+        //         return prev
+        //     }
+        //     else{
+        //         return [...prev, tag.id];
+        //     }
+        // });
+        setFormData(prev => {
+            if(prev.research_tech_ids?.some(t => t === tag.id)){
+                return prev;
+            }
+            else{
+                return {...prev, research_tech_ids: [...(prev.research_tech_ids || []), tag.id]};
+            }
+        });
+    }
+
+    // useEffect(() => {
+    //     setFormData(prev => ({...prev, research_tech_ids: selectedResearchTechs}));
+    // }, [selectedResearchTechs]);
     
     return(
         <>
@@ -49,6 +77,14 @@ export default function ExperimentForm({formData, setFormData, biomaterials, stu
                 <label className="font-bold">Study Type:</label>
                 <Dropdown title="Study Type" data={studyTypes} settedValueId={formData?.study_type_id ?? null} expandRight={true} onValueChange={(option) => setFormData(prev => ({...prev, study_type_id: option.id}))} getLabel={(option) => option.name} getId={(option) => option.id}/>
 
+            </div>
+
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-row gap-4 items-center">
+                    <label className="font-bold">Research Technologies:</label>
+                    <MultiTags title="Tags" tags={researchTechs} selectedTags={formData?.research_tech_ids || []} getLabel={(tag) => tag.name} getId={(tag) => tag.id} onChange={handleResearchTechChange}/>
+                </div>
+                <ChipInput tags={researchTechs} selectedTags={formData?.research_tech_ids || []} getLabel={(tag) => tag.name} getId={(tag) => tag.id} onRemove={(tag) => setFormData(prev => ({...prev, research_tech_ids: prev.research_tech_ids?.filter(id => id !== tag.id)}))}/>
             </div>
 
             <label className="font-bold">Results:</label>

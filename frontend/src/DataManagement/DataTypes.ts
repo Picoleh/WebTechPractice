@@ -96,6 +96,7 @@ export type Experiment = {
     status: string;
     biomaterial_id: number;
     study_type_id: number;
+    research_tech_ids: number[];
     results: string;
     created_at: string | null;
 }
@@ -110,6 +111,7 @@ export const EmptyExperiment = (): Experiment => ({
     status: "Pending",
     biomaterial_id: 0,
     study_type_id: 0,
+    research_tech_ids: [],
     results: "",
     created_at: null,
 });

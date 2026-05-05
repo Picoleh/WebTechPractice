@@ -1,7 +1,8 @@
-from ..db.session import execute_write, fetch_all
+from ..db.session import execute_write, execute_write_returning_id, fetch_all
 from ..schemas.experiment import ExperimentCreateUpdate
 
 TABLE = "biomaterials_db.experiments"
+TABLE_EXPERIMENT_RESEARCH_TECH = "biomaterials_db.experiments_technologies"
 PER_PAGE = 14
 
 # Experiments Service
@@ -35,10 +36,10 @@ def search_experiments(q: str, page: int):
 
 def get_experiments(page: int):
     offset = (page - 1) * PER_PAGE
-    sql = f"SELECT * FROM {TABLE}"
+    sql = f"SELECT exp.*, ARRAY_AGG(ert.technology_id) AS research_tech_ids FROM {TABLE} exp LEFT JOIN {TABLE_EXPERIMENT_RESEARCH_TECH} ert ON exp.id = ert.experiment_id GROUP BY exp.id"
     
     sql_no_limit = sql
-    sql += f" ORDER BY id ASC LIMIT {PER_PAGE} OFFSET {offset}"
+    sql += f" ORDER BY exp.id ASC LIMIT {PER_PAGE} OFFSET {offset}"
 
     data = fetch_all(sql)
 
@@ -53,7 +54,7 @@ def get_experiments(page: int):
 
 
 def get_experiment_by_id(id: int):
-    sql = f"SELECT * FROM {TABLE} WHERE id = :id"
+    sql = f"SELECT exp.*, ARRAY_AGG(ert.technology_id) AS research_tech_ids FROM {TABLE} exp LEFT JOIN {TABLE_EXPERIMENT_RESEARCH_TECH} ert ON exp.id = ert.experiment_id WHERE exp.id = :id GROUP BY exp.id"
     results = fetch_all(sql, {"id": id})
     if results:
         return results[0]
@@ -64,8 +65,13 @@ def create_experiment(experiment: ExperimentCreateUpdate):
     sql = f"""
         INSERT INTO {TABLE} (title, objective, description, start_date, end_date, status, biomaterial_id, study_type_id, results)
         VALUES (:title, :objective, :description, :start_date, :end_date, :status, :biomaterial_id, :study_type_id, :results)
+        RETURNING id
     """
-    execute_write(sql, experiment.model_dump())
+    row = execute_write_returning_id(sql, experiment.model_dump())
+
+    for tech_id in experiment.research_tech_ids:
+        sql = f"INSERT INTO {TABLE_EXPERIMENT_RESEARCH_TECH} (experiment_id, technology_id) VALUES (:exp_id, :tech_id)"
+        execute_write(sql, {"exp_id": row[0], "tech_id": tech_id})
 
 
 def update_experiment(id: int, experiment: ExperimentCreateUpdate):
@@ -86,8 +92,18 @@ def update_experiment(id: int, experiment: ExperimentCreateUpdate):
     params["id"] = id
     execute_write(sql, params)
 
+    sql = f"DELETE FROM {TABLE_EXPERIMENT_RESEARCH_TECH} WHERE experiment_id = :id"
+    execute_write(sql, {"id": id})
+
+    for tech_id in experiment.research_tech_ids:
+        sql = f"INSERT INTO {TABLE_EXPERIMENT_RESEARCH_TECH} (experiment_id, technology_id) VALUES (:exp_id, :tech_id)"
+        execute_write(sql, {"tech_id": tech_id, "exp_id": id})
+
 
 def delete_experiment(id: int):
+    sql = f"DELETE FROM {TABLE_EXPERIMENT_RESEARCH_TECH} WHERE experiment_id = :id"
+    execute_write(sql, {"id": id})
+
     sql = f"DELETE FROM {TABLE} WHERE id = :id"
     execute_write(sql, {"id": id})
 

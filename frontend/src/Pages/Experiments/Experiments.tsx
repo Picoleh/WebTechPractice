@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "../../DataManagement/DataManager";
-import type { Biomaterial, Experiment, StudyType } from "../../DataManagement/DataTypes";
+import type { Biomaterial, Experiment, ResearchTech, StudyType } from "../../DataManagement/DataTypes";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 import Crud from "../crud/Crud";
 import ExperimentForm from "./ExperimentForm";
@@ -24,6 +24,7 @@ export default function Experiments() {
 
     const [biomaterials, setBiomaterials] = useState<Biomaterial[]>([]);
     const [studyTypes, setStudyTypes] = useState<StudyType[]>([]);
+    const [researchTechs, setResearchTechs] = useState<ResearchTech[]>([]);
 
     async function loadExperiments(searchTerm: string, page: number) {
         try {
@@ -81,6 +82,9 @@ export default function Experiments() {
 
             const studyTypesResponse = await fetchData("studyTypes");
             setStudyTypes(studyTypesResponse.data as StudyType[]);
+
+            const researchTechsResponse = await fetchData("researchTechs");
+            setResearchTechs(researchTechsResponse.data as ResearchTech[]);
         }
         catch (err) {
             console.error("Unknown error while fetching data");
@@ -102,7 +106,7 @@ export default function Experiments() {
             form={(crudProps) => (
                 <AsideCrudForm title="Experiment" isOpenState={crudProps.isFormOpen} editingObject={crudProps.editingObj} onClose={() => crudProps.toggleForm(null)} onUpdate={crudProps.onUpdate} onAdd={crudProps.onAdd}
                     children={(asideFormProps) => (
-                        <ExperimentForm formData={asideFormProps.formData} setFormData={asideFormProps.setFormData} biomaterials={biomaterials} studyTypes={studyTypes}/>
+                        <ExperimentForm formData={asideFormProps.formData} setFormData={asideFormProps.setFormData} biomaterials={biomaterials} studyTypes={studyTypes} researchTechs={researchTechs}/>
                     )}/>
             )}
         />

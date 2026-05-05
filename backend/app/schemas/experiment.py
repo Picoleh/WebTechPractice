@@ -10,5 +10,6 @@ class ExperimentCreateUpdate(BaseModel):
     status: str
     biomaterial_id: int
     study_type_id: int
+    research_tech_ids: list[int] 
     results: str
     

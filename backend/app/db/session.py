@@ -14,3 +14,9 @@ def execute_write(sql: str, params: dict | None = None):
     with engine.connect() as conn:
         conn.execute(text(sql), params or {})
         conn.commit()
+
+def execute_write_returning_id(sql: str, params: dict | None = None):
+    with engine.connect() as conn:
+        result = conn.execute(text(sql), params or {})
+        conn.commit()
+        return result.fetchone()
