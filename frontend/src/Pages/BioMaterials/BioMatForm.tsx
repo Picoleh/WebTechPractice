@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { EmptyBiomaterial, type Biomaterial, type BiomaterialType } from "../../DataManagement/DataTypes";
 import Dropdown from "../../Util/Dropdown";
+import FileSelect from "../../Util/FileSelect";
 
 type BioMatFormProps = {
     formData: Biomaterial;
@@ -51,26 +52,23 @@ export default function BioMatForm({formData, setFormData, biomaterialTypes}: Bi
             <label className="font-bold">Name:</label>
             <input type="text" value={formData?.name ?? ""} onChange={(e) => setFormData(prev => ({...prev, name: e.target.value}))} className="w-full p-2 rounded border border-gray-400"/>
 
-            <div className="flex flex-row gap-4 items-center">
+            <div className="flex flex-row gap-4 items-center justify-between">
+                <div className="flex flex-row items-center gap-4 w-full">
+                    <label className="font-bold">Type:</label>
+                    <Dropdown title="Type" data={biomaterialTypes} settedValueId={formData?.type_id ?? null} expandRight={false} onValueChange={handleTypeChange} getLabel={(option) => option.name} getId={(option) => option.id}/>
+                </div>
 
-            <label className="font-bold">Type:</label>
-            <Dropdown title="Type" data={biomaterialTypes} settedValueId={formData?.type_id ?? null} expandRight={false} onValueChange={handleTypeChange} getLabel={(option) => option.name} getId={(option) => option.id}/>
-
-            <label className="font-bold">Image:</label>
-            <input type="file" accept="image/*" ref={fileInputRef} onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                    setFormData(prev => ({ ...prev, image: file }));
-                }
-            }}
-            />
+                <div className="flex flex-row items-center gap-4 w-full">
+                    <label className="font-bold">Image:</label>
+                    <FileSelect accept="image/*" onFileSelect={(file) => setFormData(prev => ({...prev, image: file}))}/>
+                </div>
             </div>
 
             <label className="font-bold">Description:</label>
             <textarea value={formData?.description ?? ""} onChange={(e) => setFormData(prev => ({...prev, description: e.target.value}))} className="w-full p-2 rounded border border-gray-400"/>
 
             <label className="mb-6 font-bold">Density ($g/cm^3):</label>
-            <div className="relative">
+            <div className="relative mx-2 align-middle">
                 <div className="absolute -top-10 -translate-x-1/2 text-xl font-medium" style={{ left: `calc(${percentage}% + ${offset}px)` }}>
                     {(formData?.density ?? 0).toFixed(1)}
                 </div>
