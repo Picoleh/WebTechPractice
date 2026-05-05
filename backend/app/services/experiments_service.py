@@ -16,30 +16,39 @@ def get_experiments_count(sql: str):
     return count_result[0]["count"] if count_result else 0
 
 
-def search_experiments(q: str, page: int):
-    offset = (page - 1) * PER_PAGE
+def search_experiments(q: str, page: int, limit: int = None):
+    page_size = limit if limit and limit > 0 else PER_PAGE
+    offset = (page - 1) * page_size
     sql = f"SELECT * FROM {TABLE} WHERE name ILIKE '%{q}%'"
 
     sql_no_limit = sql
-    sql += f" LIMIT {PER_PAGE} OFFSET {offset}"
+    
+    # If limit is -1 or 0, return all without pagination
+    if not (limit and (limit == -1 or limit == 0)):
+        sql += f" LIMIT {page_size} OFFSET {offset}"
 
     data = fetch_all(sql)
     return {
         "data": data,
         "meta": {
             "page": page,
-            "per_page": PER_PAGE,
+            "per_page": page_size,
             "total": get_experiments_count(sql_no_limit),
         },
     }
 
 
-def get_experiments(page: int):
-    offset = (page - 1) * PER_PAGE
+def get_experiments(page: int, limit: int = None):
+    page_size = limit if limit and limit > 0 else PER_PAGE
+    offset = (page - 1) * page_size
     sql = f"SELECT exp.*, ARRAY_AGG(ert.technology_id) AS research_tech_ids FROM {TABLE} exp LEFT JOIN {TABLE_EXPERIMENT_RESEARCH_TECH} ert ON exp.id = ert.experiment_id GROUP BY exp.id"
     
     sql_no_limit = sql
-    sql += f" ORDER BY exp.id ASC LIMIT {PER_PAGE} OFFSET {offset}"
+    sql += " ORDER BY exp.id ASC"
+    
+    # If limit is -1 or 0, return all without pagination
+    if not (limit and (limit == -1 or limit == 0)):
+        sql += f" LIMIT {page_size} OFFSET {offset}"
 
     data = fetch_all(sql)
 
@@ -47,7 +56,7 @@ def get_experiments(page: int):
         "data": data,
         "meta": {
             "page": page,
-            "per_page": PER_PAGE,
+            "per_page": page_size,
             "total": get_experiments_count(sql_no_limit),
         },
     }

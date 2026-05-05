@@ -14,12 +14,12 @@ router = APIRouter(prefix="/experiments", tags=["experiments"])
 
 # Experiments Endpoints
 @router.get("/search", summary="Search experiments, supports pagination", tags=["Get"])
-async def search_experiments_route(q: str = Query(..., min_length=1, description="Search term"), page: int = Query(1, ge=1, description="Page number")):
-    return search_experiments(q, page)
+async def search_experiments_route(q: str = Query(..., min_length=1, description="Search term"), page: int = Query(1, ge=1, description="Page number"), limit: int = Query(None, description="Number of items per page, -1 for all")):
+    return search_experiments(q, page, limit)
 
 @router.get("", summary="Get a list of experiments", tags=["Get"])
-async def get_experiments_route(page: int = Query(1, ge=1, description="Page number")):
-    return get_experiments(page)
+async def get_experiments_route(page: int = Query(1, ge=1, description="Page number"), limit: int = Query(None, description="Number of items per page, -1 for all")):
+    return get_experiments(page, limit)
 
 @router.get("/{id}", summary="Get an experiment by its ID", tags=["Get"])
 async def get_experiment_by_id_route(id: int):

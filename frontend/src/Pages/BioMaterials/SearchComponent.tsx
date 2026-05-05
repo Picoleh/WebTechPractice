@@ -87,7 +87,7 @@ export default function SearchComponent() {
 
     async function loadBiomaterialTypes() {
         try{
-            const responseJson = await fetchData("biomaterials/types");
+            const responseJson = await fetchData("biomaterials/types?limit=-1");
             const types = responseJson.data as BiomaterialType[];
             setFilterTypes(types);
         } catch (err) {

@@ -15,36 +15,47 @@ def get_biomaterials_count(sql: str):
     return count_result[0]["count"] if count_result else 0
 
 
-def search_biomaterials(q: str, page: int, selected_types: list[int]):
-    offset = (page - 1) * PER_PAGE
+def search_biomaterials(q: str, page: int, selected_types: list[int], limit: int = None):
+    page_size = limit if limit and limit > 0 else PER_PAGE
+    offset = (page - 1) * page_size
     sql = f"SELECT * FROM {TABLE} WHERE name ILIKE '%{q}%'"
 
     for type in selected_types:
         sql += f" AND type_id = {type}"
 
     sql_no_limit = sql
-    sql += f" LIMIT {PER_PAGE} OFFSET {offset}"
+    
+    # If limit is -1 or 0, return all without pagination
+    if limit and (limit == -1 or limit == 0):
+        pass  # No LIMIT/OFFSET
+    else:
+        sql += f" LIMIT {page_size} OFFSET {offset}"
 
     data = fetch_all(sql)
     return {
         "data": data,
         "meta": {
             "page": page,
-            "per_page": PER_PAGE,
+            "per_page": page_size,
             "total": get_biomaterials_count(sql_no_limit),
         },
     }
 
 
-def get_biomaterials(page: int, selected_types: list[int]):
-    offset = (page - 1) * PER_PAGE
+def get_biomaterials(page: int, selected_types: list[int], limit: int = None):
+    page_size = limit if limit and limit > 0 else PER_PAGE
+    offset = (page - 1) * page_size
     sql = f"SELECT * FROM {TABLE}"
     
     if selected_types:
         sql += " WHERE" + " OR".join([f" type_id = {type}" for type in selected_types])
     
     sql_no_limit = sql
-    sql += f" ORDER BY id ASC LIMIT {PER_PAGE} OFFSET {offset}"
+    sql += " ORDER BY id ASC"
+    
+    # If limit is -1 or 0, return all without pagination
+    if not (limit and (limit == -1 or limit == 0)):
+        sql += f" LIMIT {page_size} OFFSET {offset}"
 
     data = fetch_all(sql)
 
@@ -52,7 +63,7 @@ def get_biomaterials(page: int, selected_types: list[int]):
         "data": data,
         "meta": {
             "page": page,
-            "per_page": PER_PAGE,
+            "per_page": page_size,
             "total": get_biomaterials_count(sql_no_limit),
         },
     }

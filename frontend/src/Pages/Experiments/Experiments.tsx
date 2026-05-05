@@ -77,13 +77,13 @@ export default function Experiments() {
 
     async function loadDropdownData() {
         try {
-            const biomaterialsResponse = await fetchData("biomaterials");
+            const biomaterialsResponse = await fetchData("biomaterials?limit=-1");
             setBiomaterials(biomaterialsResponse.data as Biomaterial[]);
 
-            const studyTypesResponse = await fetchData("studyTypes");
+            const studyTypesResponse = await fetchData("studyTypes?limit=-1");
             setStudyTypes(studyTypesResponse.data as StudyType[]);
 
-            const researchTechsResponse = await fetchData("researchTechs");
+            const researchTechsResponse = await fetchData("researchTechs?limit=-1");
             setResearchTechs(researchTechsResponse.data as ResearchTech[]);
         }
         catch (err) {
