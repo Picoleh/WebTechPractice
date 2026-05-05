@@ -2,7 +2,7 @@ from ..db.session import execute_write, fetch_all
 from ..schemas.biomaterial import BiomaterialCreateUpdate
 
 TABLE = "biomaterials_db.biomaterials"
-PER_PAGE = 10
+PER_PAGE = 14
 
 # Biomaterials Service
 def get_biomaterials_count(sql: str):

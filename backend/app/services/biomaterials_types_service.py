@@ -2,7 +2,7 @@ from ..db.session import execute_write, fetch_all
 from ..schemas.biomaterial import BiomaterialType
 
 TABLE = "biomaterials_db.biomaterial_type"
-PER_PAGE = 3
+PER_PAGE = 14
 
 def get_biomaterial_types_count(sql: str):
     select = sql.find("SELECT")

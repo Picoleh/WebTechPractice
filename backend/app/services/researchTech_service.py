@@ -2,7 +2,7 @@ from ..db.session import execute_write, fetch_all
 from ..schemas.researchTech import ResearchTechCreateUpdate
 
 TABLE = "biomaterials_db.research_technologies"
-PER_PAGE = 10
+PER_PAGE = 14
 
 # Research Technologies Service
 def get_research_technologies_count(sql: str):

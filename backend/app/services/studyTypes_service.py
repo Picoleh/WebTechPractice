@@ -2,7 +2,7 @@ from ..db.session import execute_write, fetch_all
 from ..schemas.studyType import StudyTypeCreateUpdate
 
 TABLE = "biomaterials_db.study_type"
-PER_PAGE = 10
+PER_PAGE = 14
 
 # Study Types Service
 def get_study_types_count(sql: str):

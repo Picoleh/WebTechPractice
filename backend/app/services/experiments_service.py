@@ -2,7 +2,7 @@ from ..db.session import execute_write, fetch_all
 from ..schemas.experiment import ExperimentCreateUpdate
 
 TABLE = "biomaterials_db.experiments"
-PER_PAGE = 10
+PER_PAGE = 14
 
 # Experiments Service
 def get_experiments_count(sql: str):
