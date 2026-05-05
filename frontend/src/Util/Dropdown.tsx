@@ -34,7 +34,7 @@ export default function Dropdown<T>({title, data, settedValueId, expandRight, on
                 <RiArrowDropDownLine size={24}/>
             </button>
 
-            <div className={`absolute ${expandRight ? "right-0" : "left-0"} z-20 mt-2 w-full rounded border border-gray-300 bg-white shadow-lg lg:w-64 overflow-y-scroll ${isOpen ? "block" : "hidden"}`}>
+            <div className={`absolute ${expandRight ? "right-0" : "left-0"} z-20 mt-2 max-h-96 w-full rounded border border-gray-300 bg-white shadow-lg lg:w-64 overflow-y-scroll ${isOpen ? "block" : "hidden"}`}>
                 <ul>
                     {data.map((option, index) => (
                         <label key={index} className="block cursor-pointer px-4 py-2 hover:bg-gray-100">
