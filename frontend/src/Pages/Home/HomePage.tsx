@@ -7,7 +7,7 @@ export default function HomePage() {
             <p className="mb-8 max-w-xl text-base text-gray-600 sm:text-lg">
                 Explore a vast collection of biomaterials, their properties, and applications. Use the search bar to find the ideal material for your project or add new materials to our database.
             </p>
-            <Link to="/search" className="w-full max-w-sm rounded-lg bg-teal-500 px-6 py-3 text-lg text-white hover:bg-teal-700 sm:w-auto">
+            <Link to="/biomaterials" className="w-full max-w-sm rounded-lg bg-teal-500 px-6 py-3 text-lg text-white hover:bg-teal-700 sm:w-auto">
                 Go to Search
             </Link>
         </div>

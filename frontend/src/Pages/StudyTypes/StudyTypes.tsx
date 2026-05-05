@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { fetchData } from "../../DataManagement/DataManager";
 import type { StudyType } from "../../DataManagement/DataTypes";
 import Crud from "../crud/Crud";
