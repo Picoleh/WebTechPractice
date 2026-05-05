@@ -20,6 +20,7 @@ export default function ExperimentForm({formData, setFormData, biomaterials, stu
     useEffect(() => {
             if (formData != null) {
                 setFormData(formData);
+                setSelectedStatus(formData.status ?? "Completed");
             }
             else{
                 setFormData(EmptyExperiment());
@@ -29,14 +30,6 @@ export default function ExperimentForm({formData, setFormData, biomaterials, stu
         },[formData]);
 
     function handleResearchTechChange(tag: ResearchTech){
-        // setSelectedResearchTechs(prev => {
-        //     if(prev.some(t => t === tag.id)){
-        //         return prev
-        //     }
-        //     else{
-        //         return [...prev, tag.id];
-        //     }
-        // });
         setFormData(prev => {
             if(prev.research_tech_ids?.some(t => t === tag.id)){
                 return prev;
@@ -46,10 +39,6 @@ export default function ExperimentForm({formData, setFormData, biomaterials, stu
             }
         });
     }
-
-    // useEffect(() => {
-    //     setFormData(prev => ({...prev, research_tech_ids: selectedResearchTechs}));
-    // }, [selectedResearchTechs]);
     
     return(
         <>

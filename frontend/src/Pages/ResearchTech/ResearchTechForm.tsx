@@ -13,6 +13,7 @@ export default function ResearchTechForm({formData, setFormData}: ResearchTechFo
     useEffect(() => {
             if (formData != null) {
                 setFormData(formData);
+                setSelectedCostLevel(formData.cost_level ?? "High");
             }
             else{
                 setFormData(EmptyResearchTech());

@@ -13,6 +13,7 @@ export default function StudyTypeForm({formData, setFormData}: StudyTypeFormProp
     useEffect(() => {
             if (formData != null) {
                 setFormData(formData);
+                setSelectedLevelOfEvidence(formData.level_evidence ?? "High");
             }
             else{
                 setFormData(EmptyStudyType());
