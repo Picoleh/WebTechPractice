@@ -49,7 +49,7 @@ dist/
 *.log
 
 # User uploads (runtime generated)
-uploads/
+frontend/public/
 
 # =========================
 # FastAPI specific (comum)

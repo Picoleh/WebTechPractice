@@ -7,8 +7,8 @@ from fastapi import UploadFile
 class ImageSaver:
     @staticmethod
     async def saveImage(image: UploadFile) -> dict:
-        # Salva em /uploads que está mapeado no docker-compose
-        save_folder = Path("/uploads")
+        # Preferência: usar o mapeamento de volume em /project/frontend/public (compose mapeia .:/project)
+        save_folder = Path("/project/frontend/public")
         save_folder.mkdir(parents=True, exist_ok=True)
 
         safe_name = Path(image.filename).name
@@ -17,4 +17,5 @@ class ImageSaver:
         with open(image_path, "wb") as f:
             f.write(await image.read())
 
-        return {"url": str(image_path)}
+        # Vite serves files in `public/` at the site root, então retornamos `/{filename}`
+        return {"url": f"/{safe_name}"}
