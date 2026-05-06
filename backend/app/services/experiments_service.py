@@ -19,7 +19,7 @@ def get_experiments_count(sql: str):
 def search_experiments(q: str, page: int, limit: int = None):
     page_size = limit if limit and limit > 0 else PER_PAGE
     offset = (page - 1) * page_size
-    sql = f"SELECT * FROM {TABLE} WHERE name ILIKE '%{q}%'"
+    sql = f"SELECT * FROM {TABLE} WHERE title ILIKE '%{q}%'"
 
     sql_no_limit = sql
     
