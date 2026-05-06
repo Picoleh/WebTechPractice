@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from .api.home import router as home_router
 from .api.biomaterials import router as biomaterials_router
 from .api.studyTypes import router as study_types_router
 from .api.researchTechs import router as research_techs_router
@@ -41,11 +42,7 @@ async def credential_middleware(request, call_next):
     
     return await call_next(request)
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
+app.include_router(home_router)
 app.include_router(biomaterials_router)
 app.include_router(study_types_router)
 app.include_router(research_techs_router)
