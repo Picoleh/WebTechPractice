@@ -10,15 +10,43 @@ def get_home_data():
     numberCard = fetch_all(sql)
 
     sql = """SELECT 
-        tp.name,
-        DATE_TRUNC('month', b.created_at) AS month,
-        COUNT(b.id) AS count
-        FROM biomaterials_db.biomaterial_type tp
-        LEFT JOIN biomaterials_db.biomaterials b 
-        ON tp.id = b.type_id
-        GROUP BY tp.id, tp.name, month
-        ORDER BY month ASC, tp.name;
+      tp.name, COUNT(b.id) AS count FROM biomaterials_db.biomaterial_type tp
+      LEFT JOIN biomaterials_db.biomaterials b 
+      ON tp.id = b.type_id
+      GROUP BY tp.id, tp.name
+      ORDER BY tp.name
     """
     trendData = fetch_all(sql)
+
+    sql = """SELECT 
+      COUNT(name), DATE_TRUNC('month',created_at) AS month FROM biomaterials_db.study_type
+      GROUP BY month
+      ORDER BY month
+    """
+    studyTypeData = fetch_all(sql)
+
+    sql = """SELECT 
+    COUNT(title) AS count, b.name, b.img_path FROM biomaterials_db.experiments 
+    LEFT JOIN biomaterials_db.biomaterials AS b 
+    ON biomaterial_id = b.id GROUP BY b.name, b.img_path 
+    ORDER BY count DESC, b.name ASC 
+    LIMIT 3
+    """
+
+    biomaterialData = fetch_all(sql)
+
+    sql = """SELECT 
+    name, NOW()::date - created_at::date AS days 
+    FROM biomaterials_db.research_technologies 
+    WHERE created_at >= NOW() - INTERVAL '7 days'
+    ORDER BY days
+    LIMIT 7
+    """
+
+    researchTechnologiesData = fetch_all(sql)
+
     return { "numberCardData": numberCard[0],
-             "trendData": trendData }
+             "trendData": trendData,
+             "studyTypeData": studyTypeData,
+             "biomaterialsData": biomaterialData,
+             "researchTechData": researchTechnologiesData }
