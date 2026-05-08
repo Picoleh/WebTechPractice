@@ -37,9 +37,9 @@ function App() {
           <Routes>
             <Route path="/biomaterials" element={<SearchComponent/>}/>
             <Route path="/" element={<HomePage/>}/>
-            <Route path="/biomaterialTypes" element={<BioMatType/>}/> 
-            <Route path="/studyTypes" element={<StudyTypes/>}/>
-            <Route path="/researchTech" element={<ResearchTech/>}/>
+            <Route path="/biomaterial_types" element={<BioMatType/>}/> 
+            <Route path="/study_types" element={<StudyTypes/>}/>
+            <Route path="/research_tech" element={<ResearchTech/>}/>
             <Route path="/experiments" element={<Experiments/>}/>
           </Routes>
         </div>
