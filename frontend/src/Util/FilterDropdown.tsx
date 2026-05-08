@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import type { FilterDropdownProps } from "../DataManagement/DataTypes";
@@ -6,8 +6,28 @@ import type { FilterDropdownProps } from "../DataManagement/DataTypes";
 
 export default function FilterDropdown<T>({filterByTitle, data, onTypeChange, getLabel} : FilterDropdownProps<T>) {
     const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
+    
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+          // verifica se o clique foi fora do dropdown
+          if (
+            dropdownRef.current &&
+            !dropdownRef.current.contains(event.target as Node)
+          ) {
+            setIsOpen(false);
+          }
+        }
+    
+        document.addEventListener("mousedown", handleClickOutside);
+    
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, []);
+
     return (
-        <div className="relative w-full lg:w-auto">
+        <div className="relative w-full lg:w-auto" ref={dropdownRef}>
             <button className="flex w-full items-center justify-center gap-2 rounded border border-gray-400 px-3 py-2 hover:bg-gray-100 lg:w-auto" onClick={() => setIsOpen(!isOpen)}>
                 <IoFilter size={24}/>
                 Filter by {filterByTitle}

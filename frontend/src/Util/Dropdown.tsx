@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
@@ -15,6 +15,7 @@ type DropdownProps<T> = {
 export default function Dropdown<T>({title, data, settedValueId, expandRight, onValueChange, getLabel, getId} : DropdownProps<T>) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState<T>();
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         if(settedValueId !== null){
@@ -27,8 +28,25 @@ export default function Dropdown<T>({title, data, settedValueId, expandRight, on
         }
     }, [settedValueId]);
 
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target as Node)
+            ) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className="relative w-full lg:w-full">
+        <div className="relative w-full lg:w-full" ref={dropdownRef}>
             <button className="flex w-full items-center justify-center gap-2 rounded border border-gray-400 px-3 py-2 hover:bg-gray-100 lg:w-full" onClick={() => setIsOpen(!isOpen)}>
                 {selectedValue !== undefined ? getLabel(selectedValue) : title}
                 <RiArrowDropDownLine size={24}/>
