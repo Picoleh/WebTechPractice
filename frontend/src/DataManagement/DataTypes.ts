@@ -115,3 +115,9 @@ export const EmptyExperiment = (): Experiment => ({
     results: "",
     created_at: null,
 });
+
+export type ProjectSearchResultType = {
+    entity_type: string;
+    title: string;
+    content: string;
+};
