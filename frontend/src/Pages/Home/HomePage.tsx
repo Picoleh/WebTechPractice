@@ -99,12 +99,12 @@ export default function HomePage() {
                     <ContentCard title="Biomaterials by Type">
                         <div className="w-full h-full">
                             <ResponsiveContainer>
-                                <BarChart data={homeData.barChartData}>
+                                <BarChart data={homeData.barChartData} margin={{bottom:20}}>
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
+                                    <XAxis dataKey="name" angle={-15} textAnchor="end" interval={0} tick={{ fontSize: 12 }}/>
                                     <YAxis />
                                     <Tooltip />
-                                    <Bar dataKey="count" fill="#8884d8" />
+                                    <Bar dataKey="count" fill="#14b8a6" />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
@@ -119,7 +119,7 @@ export default function HomePage() {
                                     <XAxis dataKey="month" axisLine={false} />
                                     <YAxis tickLine={false}/>
                                     <Tooltip />
-                                    <Line dataKey="count" stroke="#8884d8" strokeWidth={4} type={"monotone"} dot={false} />
+                                    <Line dataKey="count" stroke="#14b8a6" strokeWidth={4} type={"monotone"} dot={false} />
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
@@ -133,10 +133,10 @@ export default function HomePage() {
                                 Add Biomaterial
                             </Link>
                             <Link to="/biomaterials" className="bg-teal-500 w-full px-4 py-2 rounded-lg text-white font-bold hover:bg-teal-600 transition-colors">
-                                Add Biomaterial
+                                Import Dataset
                             </Link>
                             <Link to="/biomaterials" className="bg-teal-500 w-full px-4 py-2 rounded-lg text-white font-bold hover:bg-teal-600 transition-colors">
-                                Add Biomaterial
+                                Download Report
                             </Link>
                         </div>
                     </ContentCard>
