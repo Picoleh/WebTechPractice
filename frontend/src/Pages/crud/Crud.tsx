@@ -119,8 +119,11 @@ export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, on
                     </div>
         
                     {!loading && <TableRender data={data} columns={columns} onDeleteClick={async (item) => {
-                        await onDeleteItem(item);
-                        await reloadData();
+                        const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+                        if (confirmDelete) {
+                            await onDeleteItem(item);
+                            await reloadData();
+                        }
                     }} onEditClick={(item) => toggleForm(item)} />}
                     <div className="mt-3 rounded bg-white p-2 shadow-lg" >
                         <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
