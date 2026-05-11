@@ -33,7 +33,7 @@ export default function SearchComponent() {
 
     async function loadBiomaterials(searchTerm: string, page: number) {
         try {
-            let fetch_path = `biomaterials?page=${page}`;
+            let fetch_path = `biomaterials?page=${page}&limit=9`;
             if (searchTerm.trim() !== "") {
                 fetch_path = `biomaterials/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
             }

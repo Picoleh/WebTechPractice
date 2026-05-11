@@ -57,7 +57,7 @@ def get_experiments(page: int, limit: int = None):
         "meta": {
             "page": page,
             "per_page": page_size,
-            "total": get_experiments_count(sql_no_limit),
+            "total": get_experiments_count(f"SELECT * FROM {TABLE}"),
         },
     }
 

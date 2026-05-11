@@ -28,7 +28,7 @@ export default function Experiments() {
 
     async function loadExperiments(searchTerm: string, page: number) {
         try {
-            let fetch_path = `experiments?page=${page}`;
+            let fetch_path = `experiments?page=${page}&limit=7`;
             if (searchTerm.trim() !== "") {
                 fetch_path = `experiments/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
             }

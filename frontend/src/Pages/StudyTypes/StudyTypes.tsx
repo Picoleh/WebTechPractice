@@ -16,7 +16,7 @@ export default function StudyTypes() {
 
     async function loadStudyTypes(searchTerm: string, page: number) {
         try {
-            let fetch_path = `studyTypes?page=${page}`;
+            let fetch_path = `studyTypes?page=${page}&limit=10`;
             if (searchTerm.trim() !== "") {
                 fetch_path = `studyTypes/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
             }
