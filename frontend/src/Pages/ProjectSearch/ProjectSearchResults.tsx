@@ -3,6 +3,9 @@ import ProjectSearchResult from "./ProjectSearchResult";
 import { useEffect, useState } from "react";
 import { fetchData } from "../../DataManagement/DataManager";
 import type { ProjectSearchResultType } from "../../DataManagement/DataTypes";
+import { FaBiohazard, FaBook } from "react-icons/fa";
+import { GrTechnology } from "react-icons/gr";
+import { MdMergeType } from "react-icons/md";
 
 
 
@@ -23,22 +26,29 @@ export default function ProjectSearchResults({searchTerm}: {searchTerm: string})
     }, [searchTerm]);
 
     return (
-        <div className="bg-white w-full rounded-lg grid grid-cols-2 grid-rows-3 items-start gap-4 p-4">
-            <div className="bg-gray-400 col-span-2">
-                <ProjectSearchResult title="Experiments" content={results.filter(x => x.entity_type == "experiment")} icon={AiOutlineExperiment} />
-            </div>
-            <div className="bg-gray-400">
-                <ProjectSearchResult title="Biomaterials" content={results.filter(x => x.entity_type == "biomaterial")} icon={AiOutlineExperiment} />
-            </div>
-            <div className="bg-gray-400">
-                <ProjectSearchResult title="Bio Type" content={results.filter(x => x.entity_type == "biomaterial_type")} icon={AiOutlineExperiment} />
-            </div>
-            <div className="bg-gray-400">
-                <ProjectSearchResult title="Research Technologies" content={results.filter(x => x.entity_type == "research_technology")} icon={AiOutlineExperiment} />
-            </div>
-            <div className="bg-gray-400">
-                <ProjectSearchResult title="Study Types" content={results.filter(x => x.entity_type == "study_type")} icon={AiOutlineExperiment} />
-            </div>
+        <div className="bg-white w-full rounded-lg flex flex-col items-start gap-8 p-6">
+            {searchTerm.length > 2 ? (
+                <>
+                    
+                        <ProjectSearchResult title="Experiments" path="/experiments" content={results.filter(x => x.entity_type == "experiment")} searchTerm={searchTerm} icon={AiOutlineExperiment} />
+                    
+                    
+                        <ProjectSearchResult title="Biomaterials" path="/biomaterials" content={results.filter(x => x.entity_type == "biomaterial")} searchTerm={searchTerm} icon={FaBiohazard} />
+                    
+                    
+                        <ProjectSearchResult title="Bio Type" path="/biomaterial_types" content={results.filter(x => x.entity_type == "biomaterial_type")} searchTerm={searchTerm} icon={MdMergeType} />
+                    
+                    
+                        <ProjectSearchResult title="Research Technologies" path="/research_tech" content={results.filter(x => x.entity_type == "research_technology")} searchTerm={searchTerm} icon={GrTechnology} />
+                    
+                    
+                        <ProjectSearchResult title="Study Types" path="/study_types" content={results.filter(x => x.entity_type == "study_type")} searchTerm={searchTerm} icon={FaBook} />
+                    
+                </>
+                ) : (
+                <span className="text-gray-500">Please enter at least 3 characters to search.</span>
+                 )
+            }
         </div>
     );
 }

@@ -11,7 +11,7 @@ export default function ProjectSearch() {
             <input type="text" placeholder="Search across all data" onChange={(e) => setSearchTerm(e.target.value)}  className=" flex-1 rounded-lg p-4 text-2xl"/>
         </div>
 
-        <div className="">
+        <div className="flex flex-col gap-2">
             <h1 className="text-xl font-bold">Dynamic Search Results</h1>
 
             <ProjectSearchResults searchTerm={searchTerm} />
