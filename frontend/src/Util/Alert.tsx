@@ -68,7 +68,7 @@ export default function Alert({ message, type, isOpen, triggerId, onClose }: Ale
 
         closeTimerRef.current = setTimeout(() => {
             closeAlert();
-        }, 3000);
+        }, 1500);
     }
 
     function closeAlert() {

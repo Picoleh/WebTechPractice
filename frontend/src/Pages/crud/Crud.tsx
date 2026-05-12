@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import type { Column } from "../../DataManagement/DataTypes";
 import Alert from "../../Util/Alert";
 import { useAlert } from "../../Util/Hooks/useAlert";
+import { useConfirmAlert } from "../../Util/Hooks/useConfirmAlert";
+import ConfirmAlert from "../../Util/ConfirmAlert";
 
 type CrudFormProps<T> = {
     isFormOpen: boolean;
@@ -41,6 +43,7 @@ export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, on
     const [editingObj, setEditingObj] = useState<T | null>(null);
     const loadDataRef = useRef(loadData);
     const { alert, showAlert, closeAlert } = useAlert();
+    const { isConfirmOpen, confirmMessage, triggerId, openConfirm, handleConfirmResult } = useConfirmAlert();
 
     useEffect(() => {
         loadDataRef.current = loadData;
@@ -111,6 +114,7 @@ export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, on
     return (
         <div className="mt-4 w-full sm:mt-8">
             <Alert message={alert.message} type={alert.type} isOpen={alert.isOpen} triggerId={alert.triggerId} onClose={closeAlert}/>
+            <ConfirmAlert message={confirmMessage} isOpen={isConfirmOpen} triggerId={triggerId} onConfirm={handleConfirmResult}/>
                     <div className="mb-3 flex flex-col gap-3 rounded bg-white p-3 shadow-lg lg:flex-row lg:items-center lg:justify-end">
                         
                         <div className="mr-auto w-full lg:w-80 relative min-w-56">
@@ -143,18 +147,19 @@ export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, on
                     </div>
         
                     {!loading && <TableRender data={data} columns={columns} onDeleteClick={async (item) => {
-                        const confirmDelete = window.confirm("Are you sure you want to delete this item?");
-                        if (!confirmDelete) {
+                        const confirmed = await openConfirm("Are you sure you want to delete this item?");
+                        if (!confirmed) {
                             return;
                         }
-
-                        try {
-                            await onDeleteItem(item);
-                            await reloadData();
-                            showAlert("Item deleted successfully.", "success");
-                        } catch (err) {
-                            console.error("Error while deleting item:", err);
-                            showAlert("An error occurred while deleting the item.", "error");
+                        else{
+                            try {
+                                await onDeleteItem(item);
+                                await reloadData();
+                                showAlert("Item deleted successfully.", "success");
+                            } catch (err) {
+                                console.error("Error while deleting item:", err);
+                                showAlert("An error occurred while deleting the item.", "error");
+                            }
                         }
                     }} onEditClick={(item) => toggleForm(item)} />}
                     <div className="mt-3 rounded bg-white p-2 shadow-lg" >
