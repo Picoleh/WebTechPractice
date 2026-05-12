@@ -27,19 +27,16 @@ export default function Experiments() {
     const [studyTypes, setStudyTypes] = useState<StudyType[]>([]);
     const [researchTechs, setResearchTechs] = useState<ResearchTech[]>([]);
 
-    async function loadExperiments(searchTerm: string, page: number) {
+    async function loadExperiments(searchTerm: string) {
         try {
-            let fetch_path = `experiments?page=${page}&limit=7`;
+            let fetch_path = `experiments`;
             if (searchTerm.trim() !== "") {
-                fetch_path = `experiments/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
+                fetch_path = `experiments/search?q=${encodeURIComponent(searchTerm)}`;
             }
             
             const responseJson = await fetchData(fetch_path);
-            const result = responseJson.data as Experiment[];
-            return {
-                data: result,
-                totalPages: Math.ceil(responseJson.meta.total / responseJson.meta.per_page),
-            };
+            const result = responseJson as Experiment[];
+            return result;
         } catch (err) {
             throw console.error(err);
         }
@@ -78,14 +75,14 @@ export default function Experiments() {
 
     async function loadDropdownData() {
         try {
-            const biomaterialsResponse = await fetchData("biomaterials?limit=-1");
-            setBiomaterials(biomaterialsResponse.data as Biomaterial[]);
+            const biomaterialsResponse = await fetchData("biomaterials");
+            setBiomaterials(biomaterialsResponse as Biomaterial[]);
 
-            const studyTypesResponse = await fetchData("studyTypes?limit=-1");
-            setStudyTypes(studyTypesResponse.data as StudyType[]);
+            const studyTypesResponse = await fetchData("studyTypes");
+            setStudyTypes(studyTypesResponse as StudyType[]);
 
-            const researchTechsResponse = await fetchData("researchTechs?limit=-1");
-            setResearchTechs(researchTechsResponse.data as ResearchTech[]);
+            const researchTechsResponse = await fetchData("researchTechs");
+            setResearchTechs(researchTechsResponse as ResearchTech[]);
         }
         catch (err) {
             console.error("Unknown error while fetching data");

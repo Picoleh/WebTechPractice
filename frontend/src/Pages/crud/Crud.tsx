@@ -23,14 +23,9 @@ type CrudFormProps<T> = {
     onAdd: (item: T) => void;
 }
 
-type CrudLoadResult<T> = {
-    data: T[];
-    totalPages: number;
-};
-
 type CrudProps<T extends MRT_RowData> = {
     columns: MRT_ColumnDef<T>[];
-    loadData: (searchTerm: string, page: number) => Promise<CrudLoadResult<T>>;
+    loadData: (searchTerm: string, page: number) => Promise<T[]>;
     onAddItem: (item: T) => Promise<void>;
     onUpdateItem: (item: T) => Promise<void>;
     onDeleteItem: (item: T) => Promise<void>;
@@ -98,8 +93,7 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
 
         try {
             const response = await loadDataRef.current(searchTerm, page);
-            setData(response.data);
-            setTotalPages(response.totalPages);
+            setData(response);
         } catch (err) {
             console.error("Error while loading data:", err);
         } finally {
@@ -191,9 +185,9 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
                     </div>
         
                     <MaterialReactTable table={table}/>
-                    <div className="mt-3 rounded bg-white p-2 shadow-lg" >
+                    {/* <div className="mt-3 rounded bg-white p-2 shadow-lg" >
                         <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
-                    </div>
+                    </div> */}
         
                     {form({
                         isFormOpen,

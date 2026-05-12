@@ -24,12 +24,12 @@ router = APIRouter(prefix="/biomaterials", tags=["biomaterials"])
 
 # Biomaterial Types Endpoints
 @router.get("/types/search", summary="Search biomaterials types, supports pagination", tags=["Get"])
-async def search_biomaterialsTypes_route(q: str = Query(..., min_length=1, description="Search term"), page: int = Query(1, ge=1, description="Page number"), limit: int = Query(None, description="Number of items per page, -1 for all")):
-    return search_biomaterial_types(q, page, limit)
+async def search_biomaterialsTypes_route(q: str = Query(..., min_length=1, description="Search term")):
+    return search_biomaterial_types(q)
 
 @router.get("/types", summary="Get a list of biomaterials types", tags=["Get"])
-async def get_biomaterialsTypes_route(page: int = Query(1, ge=1, description="Page number"), limit: int = Query(None, description="Number of items per page, -1 for all")):
-    return get_biomaterial_types(page, limit)
+async def get_biomaterialsTypes_route():
+    return get_biomaterial_types()
 
 @router.post("/types", summary="Create a new biomaterial type", tags=["Post"])
 async def create_biomaterial_type_route(biomaterial_type: BiomaterialType):
@@ -50,16 +50,16 @@ async def delete_biomaterial_type_route(id: int):
 
 # Biomaterials Endpoints
 @router.get("/search", summary="Search biomaterials by name, supports pagination and filtering by type", tags=["Get"])
-async def search_biomaterials_route(q: str = Query(..., min_length=1, description="Search term"), page: int = Query(1, ge=1, description="Page number"), types: list[str] = Query([], description="List of types to filter by separated by &"), limit: int = Query(None, description="Number of items per page, -1 for all")):
-    return search_biomaterials(q, page, types, limit)
+async def search_biomaterials_route(q: str = Query(..., min_length=1, description="Search term"), types: list[str] = Query([], description="List of types to filter by separated by &")):
+    return search_biomaterials(q, types)
 
 @router.post("/upload-image", summary="Upload an image for a biomaterial", tags=["Post"])
 async def upload_biomaterial_image_route(image: UploadFile = File(...)):
     return await ImageSaver.saveImage(image)
 
 @router.get("", summary="Get a list of biomaterials, supports pagination and filtering by type", tags=["Get"])
-async def get_biomaterials_route(page: int = Query(1, ge=1, description="Page number"), types: list[str] = Query([], description="List of types to filter by separated by &"), limit: int = Query(None, description="Number of items per page, -1 for all")):
-    return get_biomaterials(page, types, limit)
+async def get_biomaterials_route(types: list[str] = Query([], description="List of types to filter by separated by &")):
+    return get_biomaterials(types)
 
 @router.get("/{id}", summary="Get a biomaterial by its ID", tags=["Get"])
 async def get_biomaterial_by_id_route(id: int):

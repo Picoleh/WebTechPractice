@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import FilterDropdown from "../../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
 import {fetchData, uploadImage} from "../../DataManagement/DataManager";
@@ -53,22 +53,15 @@ export default function SearchComponent() {
         });
     }
 
-    async function loadBiomaterials(searchTerm: string, page: number) {
+    async function loadBiomaterials(searchTerm: string) {
         try {
-            let fetch_path = `biomaterials?page=${page}&limit=9`;
+            let fetch_path = `biomaterials/`;
             if (searchTerm.trim() !== "") {
-                fetch_path = `biomaterials/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
+                fetch_path = `biomaterials/search?q=${encodeURIComponent(searchTerm)}`;
             }
-
-            const typeParams = selectedTypes.map(type => `types=${encodeURIComponent(type.id.toString())}`).join("&");
-            fetch_path += `&${typeParams}`;
-            
             const responseJson = await fetchData(fetch_path);
-            const result = responseJson.data as Biomaterial[];
-            return {
-                data: result,
-                totalPages: Math.ceil(responseJson.meta.total / responseJson.meta.per_page),
-            };
+            const result = responseJson as Biomaterial[];
+            return result;
         } catch (err) {
             throw new Error("Unknown error while fetching data");
         }
@@ -109,7 +102,7 @@ export default function SearchComponent() {
 
     async function loadBiomaterialTypes() {
         try{
-            const responseJson = await fetchData("biomaterials/types?limit=-1");
+            const responseJson = await fetchData("biomaterials/types");
             const types = responseJson.data as BiomaterialType[];
             setFilterTypes(types);
         } catch (err) {

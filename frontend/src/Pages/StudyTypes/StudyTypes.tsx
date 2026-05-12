@@ -15,19 +15,16 @@ const columns: MRT_ColumnDef<StudyType>[] = [
 
 export default function StudyTypes() {
 
-    async function loadStudyTypes(searchTerm: string, page: number) {
+    async function loadStudyTypes(searchTerm: string) {
         try {
-            let fetch_path = `studyTypes?page=${page}&limit=10`;
+            let fetch_path = `studyTypes`;
             if (searchTerm.trim() !== "") {
-                fetch_path = `studyTypes/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
+                fetch_path = `studyTypes/search?q=${encodeURIComponent(searchTerm)}`;
             }
             
             const responseJson = await fetchData(fetch_path);
-            const result = responseJson.data as StudyType[];
-            return {
-                data: result,
-                totalPages: Math.ceil(responseJson.meta.total / responseJson.meta.per_page),
-            };
+            const result = responseJson as StudyType[];
+            return result;
         } catch (err) {
             throw console.error(err);
         }

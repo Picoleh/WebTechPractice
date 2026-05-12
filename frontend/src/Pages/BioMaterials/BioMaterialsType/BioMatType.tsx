@@ -14,19 +14,15 @@ const columns: MRT_ColumnDef<BiomaterialType>[] = [
 
 export default function BioMatType() {
 
-    async function loadTypes(searchTerm: string, _page: number) {
+    async function loadTypes(searchTerm: string) {
         try {
-            let fetch_path = `biomaterials/types?page=${_page}`;
+            let fetch_path = `biomaterials/types`;
             if (searchTerm.trim() !== "") {
-                fetch_path = `biomaterials/types/search?q=${encodeURIComponent(searchTerm)}&page=${_page}`;
+                fetch_path = `biomaterials/types/search?q=${encodeURIComponent(searchTerm)}`;
             }
             const responseJson = await fetchData(fetch_path);
-            const result = responseJson.data as BiomaterialType[];
-
-            return {
-                data: result,
-                totalPages: Math.ceil(responseJson.meta.total / responseJson.meta.per_page),
-            };
+            const result = responseJson as BiomaterialType[];
+            return result;
         } catch (err) {
             throw new Error("Unknown error while fetching biomaterial types");
         }

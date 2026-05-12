@@ -14,12 +14,12 @@ router = APIRouter(prefix="/studyTypes", tags=["studyTypes"])
 
 # Study Types Endpoints
 @router.get("/search", summary="Search study types, supports pagination", tags=["Get"])
-async def search_studyTypes_route(q: str = Query(..., min_length=1, description="Search term"), page: int = Query(1, ge=1, description="Page number"), limit: int = Query(None, description="Number of items per page, -1 for all")):
-    return search_study_types(q, page, limit)
+async def search_studyTypes_route(q: str = Query(..., min_length=1, description="Search term")):
+    return search_study_types(q)
 
 @router.get("", summary="Get a list of study types", tags=["Get"])
-async def get_studyTypes_route(page: int = Query(1, ge=1, description="Page number"), limit: int = Query(None, description="Number of items per page, -1 for all")):
-    return get_study_types(page, limit)
+async def get_studyTypes_route():
+    return get_study_types()
 
 @router.get("/{id}", summary="Get a study type by its ID", tags=["Get"])
 async def get_study_type_by_id_route(id: int):

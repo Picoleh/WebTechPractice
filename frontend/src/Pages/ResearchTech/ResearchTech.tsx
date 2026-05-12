@@ -15,19 +15,16 @@ const columns: MRT_ColumnDef<ResearchTech>[] = [
 
 export default function ResearchTech() {
 
-    async function loadResearchTech(searchTerm: string, page: number) {
+    async function loadResearchTech(searchTerm: string) {
         try {
-            let fetch_path = `researchTechs?page=${page}`;
+            let fetch_path = `researchTechs`;
             if (searchTerm.trim() !== "") {
-                fetch_path = `researchTechs/search?q=${encodeURIComponent(searchTerm)}&page=${page}`;
+                fetch_path = `researchTechs/search?q=${encodeURIComponent(searchTerm)}`;
             }
             
             const responseJson = await fetchData(fetch_path);
-            const result = responseJson.data as ResearchTech[];
-            return {
-                data: result,
-                totalPages: Math.ceil(responseJson.meta.total / responseJson.meta.per_page),
-            };
+            const result = responseJson as ResearchTech[];
+            return result;
         } catch (err) {
             throw console.error(err);
         }
