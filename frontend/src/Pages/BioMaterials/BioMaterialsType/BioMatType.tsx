@@ -3,12 +3,13 @@ import type { BiomaterialType } from "../../../DataManagement/DataTypes";
 import Crud from "../../crud/Crud";
 import AsideCrudForm from "../../../Util/Pages/AsideCrudForm";
 import BioMatTypesForm from "./BioMatTypesForm";
+import type { MRT_ColumnDef } from "material-react-table";
 
-const columns: Array<{ key: keyof BiomaterialType; label: string }> = [
-    { key: "id", label: "ID" },
-    { key: "name", label: "Name" },
-    { key: "description", label: "Description" },
-    { key: "created_at", label: "Created At" },
+const columns: MRT_ColumnDef<BiomaterialType>[] = [
+    { accessorKey: "id", header: "ID" },
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "description", header: "Description" },
+    { accessorKey: "created_at", header: "Created At" },
 ];
 
 export default function BioMatType() {

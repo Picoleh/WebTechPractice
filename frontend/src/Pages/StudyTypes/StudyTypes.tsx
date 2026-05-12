@@ -3,13 +3,14 @@ import type { StudyType } from "../../DataManagement/DataTypes";
 import Crud from "../crud/Crud";
 import StudyTypeForm from "./StudyTypeForm";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
+import type { MRT_ColumnDef } from "material-react-table";
 
-const columns: Array<{ key: keyof StudyType; label: string }> = [
-    { key: "id", label: "ID" },
-    { key: "name", label: "Name" },
-    { key: "description", label: "Description" },
-    { key: "level_evidence", label: "Level of Evidence" },
-    { key: "created_at", label: "Created At" },
+const columns: MRT_ColumnDef<StudyType>[] = [
+    { accessorKey: "id", header: "ID" },
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "description", header: "Description" },
+    { accessorKey: "level_evidence", header: "Level of Evidence" },
+    { accessorKey: "created_at", header: "Created At" },
 ];
 
 export default function StudyTypes() {

@@ -4,20 +4,21 @@ import type { Biomaterial, Experiment, ResearchTech, StudyType } from "../../Dat
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 import Crud from "../crud/Crud";
 import ExperimentForm from "./ExperimentForm";
+import type { MRT_ColumnDef } from "material-react-table";
 
 
-const columns: Array<{ key: keyof Experiment; label: string }> = [
-    { key: "id", label: "ID" },
-    { key: "title", label: "Title" },
-    { key: "objective", label: "Objective" },
-    { key: "description", label: "Description" },
-    { key: "start_date", label: "Start Date" },
-    { key: "end_date", label: "End Date" },
-    { key: "status", label: "Status" },
-    { key: "biomaterial_id", label: "Biomaterial ID" },
-    { key: "study_type_id", label: "Study Type ID" },
-    { key: "results", label: "Results" },
-    { key: "created_at", label: "Created At" },
+const columns: MRT_ColumnDef<Experiment>[] = [
+    { accessorKey: "id", header: "ID" },
+    { accessorKey: "title", header: "Title" },
+    { accessorKey: "objective", header: "Objective" },
+    { accessorKey: "description", header: "Description" },
+    { accessorKey: "start_date", header: "Start Date" },
+    { accessorKey: "end_date", header: "End Date" },
+    { accessorKey: "status", header: "Status" },
+    { accessorKey: "biomaterial_id", header: "Biomaterial ID" },
+    { accessorKey: "study_type_id", header: "Study Type ID" },
+    { accessorKey: "results", header: "Results" },
+    { accessorKey: "created_at", header: "Created At" },
 ];
 
 export default function Experiments() {

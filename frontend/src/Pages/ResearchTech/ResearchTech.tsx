@@ -3,13 +3,14 @@ import type { ResearchTech } from "../../DataManagement/DataTypes";
 import Crud from "../crud/Crud";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 import ResearchTechForm from "./ResearchTechForm";
+import type { MRT_ColumnDef } from "material-react-table";
 
-const columns: Array<{ key: keyof ResearchTech; label: string }> = [
-    { key: "id", label: "ID" },
-    { key: "name", label: "Name" },
-    { key: "description", label: "Description" },
-    { key: "cost_level", label: "Cost Level" },
-    { key: "created_at", label: "Created At" },
+const columns: MRT_ColumnDef<ResearchTech>[] = [
+    { accessorKey: "id", header: "ID" },
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "description", header: "Description" },
+    { accessorKey: "cost_level", header: "Cost Level" },
+    { accessorKey: "created_at", header: "Created At" },
 ];
 
 export default function ResearchTech() {

@@ -1,20 +1,42 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FilterDropdown from "../../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
 import {fetchData, uploadImage} from "../../DataManagement/DataManager";
 import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
 import Crud from "../crud/Crud";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
+import type { MRT_ColumnDef } from "material-react-table";
 
-const columns: Array<{ key: keyof Biomaterial; label: string }> = [
-    { key: "id", label: "ID" },
-    { key: "name", label: "Name" },
-    { key: "type_id", label: "Type" },
-    { key: "description", label: "Description" },
-    { key: "density", label: "Density" },
-    { key: "biocompatibility", label: "Biocompatibility" },
-    { key: "created_at", label: "Created At" },
-    { key: "img_path", label: "Image" },
+
+const columns: MRT_ColumnDef<Biomaterial>[] = [    
+    {
+        accessorKey: "id",
+        header: "ID",
+    },
+    {
+        accessorKey: "name",
+        header: "Name",
+    },
+    {
+        accessorKey: "type_id",
+        header: "Type",
+    },
+    {
+        accessorKey: "description",
+        header: "Description",
+    },
+    {
+        accessorKey: "density",
+        header: "Density (g/cm³)",
+    },
+    {
+        accessorKey: "biocompatibility",
+        header: "Biocompatibility",
+    },
+    {
+        accessorKey: "created_at",
+        header: "Created At",
+    }
 ];
 
 export default function SearchComponent() {

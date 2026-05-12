@@ -1,13 +1,19 @@
 import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import PageCounter from "../../Util/Pages/PageCounter";
-import { TableRender } from "../../Util/Tables/TableRender";
 import { useEffect, useRef, useState } from "react";
-import type { Column } from "../../DataManagement/DataTypes";
 import Alert from "../../Util/Alert";
 import { useAlert } from "../../Util/Hooks/useAlert";
 import { useConfirmAlert } from "../../Util/Hooks/useConfirmAlert";
 import ConfirmAlert from "../../Util/ConfirmAlert";
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+    type MRT_ColumnDef,
+    type MRT_RowData,
+} from 'material-react-table';
+import { Box, IconButton } from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material";
 
 type CrudFormProps<T> = {
     isFormOpen: boolean;
@@ -22,8 +28,8 @@ type CrudLoadResult<T> = {
     totalPages: number;
 };
 
-type CrudProps<T> = {
-    columns: Column<T>[];
+type CrudProps<T extends MRT_RowData> = {
+    columns: MRT_ColumnDef<T>[];
     loadData: (searchTerm: string, page: number) => Promise<CrudLoadResult<T>>;
     onAddItem: (item: T) => Promise<void>;
     onUpdateItem: (item: T) => Promise<void>;
@@ -33,7 +39,7 @@ type CrudProps<T> = {
     form: (props: CrudFormProps<T>) => React.ReactNode;
 }
 
-export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, onDeleteItem, renderFilters, searchPlaceholder = "Search...", form }: CrudProps<T>) {
+export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddItem, onUpdateItem, onDeleteItem, renderFilters, searchPlaceholder = "Search...", form }: CrudProps<T>) {
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
@@ -44,6 +50,44 @@ export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, on
     const loadDataRef = useRef(loadData);
     const { alert, showAlert, closeAlert } = useAlert();
     const { isConfirmOpen, confirmMessage, triggerId, openConfirm, handleConfirmResult } = useConfirmAlert();
+
+    async function deleteData(item: T) {
+        try {
+            const confirmed = await openConfirm("Do you want to delete this item?");
+
+            if (!confirmed) {
+                return;
+            }
+
+            await onDeleteItem(item);
+            await reloadData();
+            showAlert("Item deleted successfully.", "success");
+        } catch (err) {
+            console.error("Error while deleting item:", err);
+            showAlert("An error occurred while deleting the item.", "error");
+        }
+    }
+
+
+    const table = useMaterialReactTable({
+        columns,
+        data,
+        enableRowActions: true,
+        positionActionsColumn: "last",
+        renderRowActions: ({ row }) => (
+            <Box sx={{ display: "flex", gap: 1 }}>
+                <IconButton color="primary" onClick={() => toggleForm(row.original)}>
+                    <Edit />
+                </IconButton>
+                <IconButton color="error" onClick={() => void deleteData(row.original)}>
+                    <Delete />
+                </IconButton>
+            </Box>
+        ),
+        state: {
+            isLoading: loading,
+        },
+    });
 
     useEffect(() => {
         loadDataRef.current = loadData;
@@ -146,22 +190,7 @@ export default function Crud<T>({ columns, loadData, onAddItem, onUpdateItem, on
                         
                     </div>
         
-                    {!loading && <TableRender data={data} columns={columns} onDeleteClick={async (item) => {
-                        const confirmed = await openConfirm("Are you sure you want to delete this item?");
-                        if (!confirmed) {
-                            return;
-                        }
-                        else{
-                            try {
-                                await onDeleteItem(item);
-                                await reloadData();
-                                showAlert("Item deleted successfully.", "success");
-                            } catch (err) {
-                                console.error("Error while deleting item:", err);
-                                showAlert("An error occurred while deleting the item.", "error");
-                            }
-                        }
-                    }} onEditClick={(item) => toggleForm(item)} />}
+                    <MaterialReactTable table={table}/>
                     <div className="mt-3 rounded bg-white p-2 shadow-lg" >
                         <PageCounter page={page} totalPages={totalPages} onPageChange={(newPage) => setPage(newPage)}/>
                     </div>
