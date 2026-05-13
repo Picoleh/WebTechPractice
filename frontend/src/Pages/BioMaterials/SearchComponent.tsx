@@ -5,6 +5,7 @@ import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataType
 import Crud from "../crud/Crud";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 import type { MRT_ColumnDef } from "material-react-table";
+import { Box } from "@mui/material";
 
 
 const columns: MRT_ColumnDef<Biomaterial>[] = [    
@@ -31,6 +32,29 @@ const columns: MRT_ColumnDef<Biomaterial>[] = [
     {
         accessorKey: "biocompatibility",
         header: "Biocompatibility",
+        Cell: ({ cell }) => (
+            <Box component="span" sx={(theme) => ({
+                backgroundColor:
+                    cell.getValue<string>() == "Low" ?
+                    theme.palette.error.dark :
+                    cell.getValue<string>() == "Moderate" ?
+                    theme.palette.warning.dark :
+                    theme.palette.success.dark,
+                borderRadius: "0.25rem",
+                color: "#fff",
+                padding: "0.25rem 0.5rem",
+            })}>
+                {cell.getValue<string>()}
+            </Box>
+        ),
+    },
+    {
+        accessorKey: "img_path",
+        header: "Image",
+        Cell: ({ cell }) => {
+            const imgPath = cell.getValue<string>();
+            return imgPath ? <img src={imgPath} alt="Biomaterial" style={{ width: "100px", height: "auto" }} /> : "No image";
+        }
     },
     {
         accessorKey: "created_at",
