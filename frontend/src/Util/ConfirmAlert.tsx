@@ -70,10 +70,10 @@ export default function ConfirmAlert({ message, isOpen, triggerId, onConfirm }: 
                     <p className="text-center text-lg">{message}</p>
                     <div className="flex gap-3">
                         <button onClick={handleCancel} className="flex-1 rounded bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400">
-                            Cancelar
+                            Cancel
                         </button>
                         <button onClick={handleConfirm} className="flex-1 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700">
-                            Sim
+                            Yes
                         </button>
                     </div>
                 </div>
