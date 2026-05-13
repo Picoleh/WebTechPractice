@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import FilterDropdown from "../../Util/FilterDropdown";
 import BioMatForm from "./BioMatForm";
 import {fetchData, uploadImage} from "../../DataManagement/DataManager";
 import type { Biomaterial, BiomaterialType } from "../../DataManagement/DataTypes";
@@ -41,17 +40,6 @@ const columns: MRT_ColumnDef<Biomaterial>[] = [
 
 export default function SearchComponent() {
     const [filterTypes, setFilterTypes] = useState<BiomaterialType[]>([]);
-    const [selectedTypes, setSelectedTypes] = useState<BiomaterialType[]>([]);
-
-    function handleTypeFilterChange(type: BiomaterialType) {
-        setSelectedTypes(prev => {
-            if (prev.includes(type)) {  
-                return prev.filter(t => t !== type);
-            } else {
-                return [...prev, type];
-            }
-        });
-    }
 
     async function loadBiomaterials(searchTerm: string) {
         try {
@@ -103,7 +91,7 @@ export default function SearchComponent() {
     async function loadBiomaterialTypes() {
         try{
             const responseJson = await fetchData("biomaterials/types");
-            const types = responseJson.data as BiomaterialType[];
+            const types = responseJson as BiomaterialType[];
             setFilterTypes(types);
         } catch (err) {
             throw new Error("Unknown error while fetching biomaterial types");
@@ -132,7 +120,6 @@ export default function SearchComponent() {
             onUpdateItem={updateBiomaterial}
             onDeleteItem={deleteBiomaterial}
             searchPlaceholder="Search biomaterials..."
-            renderFilters={<FilterDropdown filterByTitle="Type" data={filterTypes} onTypeChange={handleTypeFilterChange} getLabel={(type) => type.name}/>}
             form={(crudProps) => (
                 <AsideCrudForm title="Biomaterial" isOpenState={crudProps.isFormOpen} editingObject={crudProps.editingObj} onClose={() => crudProps.toggleForm(null)} onUpdate={crudProps.onUpdate} onAdd={crudProps.onAdd}
                     children={(asideFormProps) => (
