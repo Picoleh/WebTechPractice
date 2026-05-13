@@ -65,12 +65,12 @@ const columns: MRT_ColumnDef<Biomaterial>[] = [
 export default function SearchComponent() {
     const [filterTypes, setFilterTypes] = useState<BiomaterialType[]>([]);
 
-    async function loadBiomaterials(searchTerm: string) {
+    async function loadBiomaterials() {
         try {
             let fetch_path = `biomaterials/`;
-            if (searchTerm.trim() !== "") {
-                fetch_path = `biomaterials/search?q=${encodeURIComponent(searchTerm)}`;
-            }
+            // if (searchTerm.trim() !== "") {
+            //     fetch_path = `biomaterials/search?q=${encodeURIComponent(searchTerm)}`;
+            // }
             const responseJson = await fetchData(fetch_path);
             const result = responseJson as Biomaterial[];
             return result;

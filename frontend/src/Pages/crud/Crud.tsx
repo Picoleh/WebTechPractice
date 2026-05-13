@@ -1,18 +1,18 @@
-import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
-import PageCounter from "../../Util/Pages/PageCounter";
 import { useEffect, useRef, useState } from "react";
 import Alert from "../../Util/Alert";
 import { useAlert } from "../../Util/Hooks/useAlert";
 import { useConfirmAlert } from "../../Util/Hooks/useConfirmAlert";
 import ConfirmAlert from "../../Util/ConfirmAlert";
 import {
-  MaterialReactTable,
+    MaterialReactTable,
+    MRT_GlobalFilterTextField,
+    MRT_ToggleFiltersButton,
   useMaterialReactTable,
     type MRT_ColumnDef,
     type MRT_RowData,
 } from 'material-react-table';
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, lighten } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 
 type CrudFormProps<T> = {
@@ -25,7 +25,7 @@ type CrudFormProps<T> = {
 
 type CrudProps<T extends MRT_RowData> = {
     columns: MRT_ColumnDef<T>[];
-    loadData: (searchTerm: string) => Promise<T[]>;
+    loadData: () => Promise<T[]>;
     onAddItem: (item: T) => Promise<void>;
     onUpdateItem: (item: T) => Promise<void>;
     onDeleteItem: (item: T) => Promise<void>;
@@ -35,7 +35,6 @@ type CrudProps<T extends MRT_RowData> = {
 }
 
 export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddItem, onUpdateItem, onDeleteItem, renderFilters, searchPlaceholder = "Search...", form }: CrudProps<T>) {
-    const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<T[]>([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -67,6 +66,13 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
         data,
         enableRowActions: true,
         positionActionsColumn: "last",
+        enableGlobalFilter: true,
+        positionGlobalFilter: 'none',
+        enableColumnFilters: true,
+        enableToolbarInternalActions: false,
+        enableFullScreenToggle: false,
+        enableDensityToggle: false,
+        enableHiding: false,
         renderRowActions: ({ row }) => (
             <Box sx={{ display: "flex", gap: 1 }}>
                 <IconButton color="primary" onClick={() => toggleForm(row.original)}>
@@ -77,11 +83,38 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
                 </IconButton>
             </Box>
         ),
+        renderTopToolbarCustomActions: ({ table}) => {
+            return (
+                <Box 
+                    sx={(theme) => ({
+                        backgroundColor: lighten(theme.palette.background.default, 0.05),
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "1rem",
+                        p: "0.5rem",
+                        width: "100%",
+                        justifyContent: "space-between",
+                    })}>
+
+                    <Box sx={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                        <MRT_GlobalFilterTextField table={table} autoFocus placeholder={searchPlaceholder} />
+                        <MRT_ToggleFiltersButton table={table} />
+                    </Box>
+                    <Box>
+                        <button className="flex w-full items-center justify-center gap-2 rounded bg-teal-500 px-4 py-2 text-white hover:bg-teal-700 lg:w-auto" onClick={() => toggleForm(null)}>
+                            <FaPlus size={28}/>
+                            Add
+                        </button>
+                    </Box>
+                </Box>
+            );
+        },
         initialState: {
             pagination: {
                 pageIndex: 0,
                 pageSize: 7,
             },
+            showGlobalFilter: true,
         },
         state: {
             isLoading: loading,
@@ -97,7 +130,7 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
         setLoading(true);
 
         try {
-            const response = await loadDataRef.current(searchTerm);
+            const response = await loadDataRef.current();
             setData(response);
         } catch (err) {
             console.error("Error while loading data:", err);
@@ -154,15 +187,6 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
         <div className="mt-4 w-full sm:mt-8">
             <Alert message={alert.message} type={alert.type} isOpen={alert.isOpen} triggerId={alert.triggerId} onClose={closeAlert}/>
             <ConfirmAlert message={confirmMessage} isOpen={isConfirmOpen} triggerId={triggerId} onConfirm={handleConfirmResult}/>
-                    <div className="mb-3 flex flex-col gap-3 rounded bg-white p-3 shadow-lg lg:flex-row lg:items-center lg:justify-end">
-                        {renderFilters}
-        
-                        <button className="flex w-full items-center justify-center gap-2 rounded bg-teal-500 px-4 py-2 text-white hover:bg-teal-700 lg:w-auto" onClick={() => toggleForm(null)}>
-                            <FaPlus size={28}/>
-                            Add
-                        </button>
-                        
-                    </div>
         
                     <MaterialReactTable table={table}/>
         
