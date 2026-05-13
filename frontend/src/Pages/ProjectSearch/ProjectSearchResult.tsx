@@ -33,7 +33,7 @@ export default function ProjectSearchResult({title, content, searchTerm, path, i
                 <h1 className="text-2xl font-semibold">{title}</h1>
             </div>
 
-            <div className="flex flex-row gap-8 justify-start">
+            <div className="flex flex-row gap-8 justify-start flex-wrap">
 
                 {content.map((result, index) => (
                     <div key={index} className="flex flex-col gap-2">
