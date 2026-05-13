@@ -165,6 +165,12 @@ export default function HomePage() {
                                             </span>
                                         </li>
                                     ))}
+
+                                    {homeData.researchTechData.length === 0 && (
+                                        <span className="text-gray-500 italic">
+                                            No recent research techniques added.
+                                        </span>
+                                    )}
                                 </ul>
 
                     </ContentCard>
