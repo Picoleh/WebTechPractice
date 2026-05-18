@@ -5,8 +5,27 @@ import Password from "../../Util/Password";
 import Dropdown from "../../Util/Dropdown";
 import { FaUserTag } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchData } from "../../DataManagement/DataManager";
+
+
+type Role = {
+    id: number;
+    name: string;
+}
 
 export default function Register(){
+    const [roles, setRoles] = useState<Role[]>([]);
+
+    async function loadRoles(){
+        const response = await fetchData("register/roles");
+        setRoles(response as Role[]);
+    }
+
+    useEffect(() => {
+        loadRoles();
+    }, []);
+
     return(
         <>
             <div className="flex flex-row items-center bg-teal-600 p-4 rounded-t w-full justify-center">
@@ -50,8 +69,8 @@ export default function Register(){
                     <span className="bg-gray-300 p-2 flex items-center justify-center rounded-l shadow">
                         <FaUserTag size={28}/>
                     </span>
-                    <Dropdown data={["Researcher", "Student", "Industry Professional", "Other"]} title="Select Role" settedValueId={null} expandRight={true} 
-                    onValueChange={(item) => {}} getLabel={(item) => item} getId={(item) => item.length}/>
+                    <Dropdown data={roles} title="Select Role" settedValueId={null} expandRight={true} 
+                    onValueChange={(item) => {}} getLabel={(item) => item.name} getId={(item) => item.id}/>
                 </div>
 
                 <button className="bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded w-full">
