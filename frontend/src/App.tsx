@@ -10,6 +10,7 @@ import PrivateLayout from "./Layouts/PrivateLayout";
 import Login from "./Menu/LoginMenu/Login";
 import PublicLayout from "./Layouts/PublicLayout";
 import Register from "./Menu/LoginMenu/Register";
+import PrivateRoute from "./Auth/PrivateRoute";
 
 function App() {
 
@@ -22,14 +23,16 @@ function App() {
           <Route path="/register" element={<Register/>}/>
         </Route>
 
-        <Route element={<PrivateLayout/>}>
-          <Route path="/biomaterials" element={<SearchComponent/>}/>
-          <Route path="/" element={<HomePage/>}/>
-          <Route path="/biomaterial_types" element={<BioMatType/>}/> 
-          <Route path="/study_types" element={<StudyTypes/>}/>
-          <Route path="/research_tech" element={<ResearchTech/>}/>
-          <Route path="/experiments" element={<Experiments/>}/>
-          <Route path="/project_search" element={<ProjectSearch/>}/>
+        <Route element={<PrivateRoute/>}>
+          <Route element={<PrivateLayout/>}>
+            <Route path="/biomaterials" element={<SearchComponent/>}/>
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/biomaterial_types" element={<BioMatType/>}/> 
+            <Route path="/study_types" element={<StudyTypes/>}/>
+            <Route path="/research_tech" element={<ResearchTech/>}/>
+            <Route path="/experiments" element={<Experiments/>}/>
+            <Route path="/project_search" element={<ProjectSearch/>}/>
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

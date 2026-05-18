@@ -5,9 +5,10 @@ import Password from "../../Util/Password";
 import Dropdown from "../../Util/Dropdown";
 import { FaUserTag } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { fetchData } from "../../DataManagement/DataManager";
 import { EmptyUser, type User } from "../../DataManagement/DataTypes";
+import { useKeycloak } from "@react-keycloak/web";
 
 
 type Role = {
@@ -18,6 +19,7 @@ type Role = {
 export default function Register(){
     const [roles, setRoles] = useState<Role[]>([]);
     const [newUser, setNewUser] = useState<User>(EmptyUser());
+    const { keycloak} = useKeycloak();
 
     async function loadRoles(){
         const response = await fetchData("register/roles");
@@ -25,7 +27,7 @@ export default function Register(){
     }
 
     async function handleRegister(){
-
+        keycloak.register();
     }
 
     function checkPasswordMatch(confirmPassword: string): boolean{

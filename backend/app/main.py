@@ -8,7 +8,6 @@ from .api.studyTypes import router as study_types_router
 from .api.researchTechs import router as research_techs_router
 from .api.experiments import router as experiments_router
 from .api.project_search import router as project_search_router
-from .api.register import router as register_router
 from .core.config import settings
 
 app = FastAPI(
@@ -50,4 +49,3 @@ app.include_router(study_types_router)
 app.include_router(research_techs_router)
 app.include_router(experiments_router)
 app.include_router(project_search_router)
-app.include_router(register_router)
