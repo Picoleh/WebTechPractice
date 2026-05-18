@@ -1,7 +1,7 @@
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import NotificationsButton from "./NotificationsButton";
 
 export default function TopBarMenu() {
     return(
@@ -15,10 +15,7 @@ export default function TopBarMenu() {
                 </Link>
             </div>
 
-            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200">
-                <IoIosNotificationsOutline size={24}/>
-                Notifications
-            </button>
+            <NotificationsButton />
 
             <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200">
                 <CgProfile size={24}/>

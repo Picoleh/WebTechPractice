@@ -15,13 +15,9 @@ const columns: MRT_ColumnDef<StudyType>[] = [
 
 export default function StudyTypes() {
 
-    async function loadStudyTypes(searchTerm: string) {
+    async function loadStudyTypes() {
         try {
             let fetch_path = `studyTypes`;
-            if (searchTerm.trim() !== "") {
-                fetch_path = `studyTypes/search?q=${encodeURIComponent(searchTerm)}`;
-            }
-            
             const responseJson = await fetchData(fetch_path);
             const result = responseJson as StudyType[];
             return result;

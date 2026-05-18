@@ -14,12 +14,9 @@ const columns: MRT_ColumnDef<BiomaterialType>[] = [
 
 export default function BioMatType() {
 
-    async function loadTypes(searchTerm: string) {
+    async function loadTypes() {
         try {
             let fetch_path = `biomaterials/types`;
-            if (searchTerm.trim() !== "") {
-                fetch_path = `biomaterials/types/search?q=${encodeURIComponent(searchTerm)}`;
-            }
             const responseJson = await fetchData(fetch_path);
             const result = responseJson as BiomaterialType[];
             return result;

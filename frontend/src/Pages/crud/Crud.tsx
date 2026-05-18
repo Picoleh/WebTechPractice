@@ -29,12 +29,11 @@ type CrudProps<T extends MRT_RowData> = {
     onAddItem: (item: T) => Promise<void>;
     onUpdateItem: (item: T) => Promise<void>;
     onDeleteItem: (item: T) => Promise<void>;
-    renderFilters?: React.ReactNode;
     searchPlaceholder?: string;
     form: (props: CrudFormProps<T>) => React.ReactNode;
 }
 
-export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddItem, onUpdateItem, onDeleteItem, renderFilters, searchPlaceholder = "Search...", form }: CrudProps<T>) {
+export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddItem, onUpdateItem, onDeleteItem, searchPlaceholder = "Search...", form }: CrudProps<T>) {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<T[]>([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -112,7 +111,7 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
         initialState: {
             pagination: {
                 pageIndex: 0,
-                pageSize: 7,
+                pageSize: 10,
             },
             showGlobalFilter: true,
         },

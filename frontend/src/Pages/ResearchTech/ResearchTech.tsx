@@ -15,13 +15,9 @@ const columns: MRT_ColumnDef<ResearchTech>[] = [
 
 export default function ResearchTech() {
 
-    async function loadResearchTech(searchTerm: string) {
+    async function loadResearchTech() {
         try {
             let fetch_path = `researchTechs`;
-            if (searchTerm.trim() !== "") {
-                fetch_path = `researchTechs/search?q=${encodeURIComponent(searchTerm)}`;
-            }
-            
             const responseJson = await fetchData(fetch_path);
             const result = responseJson as ResearchTech[];
             return result;

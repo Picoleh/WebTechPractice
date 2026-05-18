@@ -27,13 +27,9 @@ export default function Experiments() {
     const [studyTypes, setStudyTypes] = useState<StudyType[]>([]);
     const [researchTechs, setResearchTechs] = useState<ResearchTech[]>([]);
 
-    async function loadExperiments(searchTerm: string) {
+    async function loadExperiments() {
         try {
             let fetch_path = `experiments`;
-            if (searchTerm.trim() !== "") {
-                fetch_path = `experiments/search?q=${encodeURIComponent(searchTerm)}`;
-            }
-            
             const responseJson = await fetchData(fetch_path);
             const result = responseJson as Experiment[];
             return result;
