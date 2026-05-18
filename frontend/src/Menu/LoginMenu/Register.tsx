@@ -7,6 +7,7 @@ import { FaUserTag } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchData } from "../../DataManagement/DataManager";
+import { EmptyUser, type User } from "../../DataManagement/DataTypes";
 
 
 type Role = {
@@ -16,10 +17,19 @@ type Role = {
 
 export default function Register(){
     const [roles, setRoles] = useState<Role[]>([]);
+    const [newUser, setNewUser] = useState<User>(EmptyUser());
 
     async function loadRoles(){
         const response = await fetchData("register/roles");
         setRoles(response as Role[]);
+    }
+
+    async function handleRegister(){
+
+    }
+
+    function checkPasswordMatch(confirmPassword: string): boolean{
+        return newUser.password === confirmPassword;
     }
 
     useEffect(() => {
@@ -30,24 +40,24 @@ export default function Register(){
         <>
             <div className="flex flex-row items-center bg-teal-600 p-4 rounded-t w-full justify-center">
                 <FcBiomass size={48}/> 
-                <h1 className="text-3xl font-bold text-white ml-2">BioMatDB | Register</h1>
+                <h1 className="text-xl lg:text-3xl font-bold text-white ml-2">BioMatDB | Register</h1>
             </div>
 
-            <div className="flex flex-col items-center gap-4 p-6 min-w-96">
-                <h1 className="text-4xl mb-4">Create a new Account</h1>
+            <div className="flex flex-col items-center gap-4 p-6">
+                <h1 className="text-2xl lg:text-4xl mb-4">Create a new Account</h1>
 
                 <div className="flex flex-row items-stretch w-full">
                     <span className="bg-gray-300 p-2 flex items-center justify-center rounded-l shadow">
                         <IoPersonOutline size={28}/>
                     </span>
-                    <input type="text" placeholder="Full Name" className="w-full p-2 rounded-r shadow"/>
+                    <input type="text" placeholder="Username" className="w-full p-2 rounded-r shadow" onChange={(e) => setNewUser({...newUser, username: e.target.value})}/>
                 </div>
 
                 <div className="flex flex-row items-stretch w-full">
                     <span className="bg-gray-300 p-2 flex items-center justify-center rounded-l shadow">
                         <MdOutlineEmail size={28}/>
                     </span>
-                    <input type="email" placeholder="Email Address" className="w-full p-2 rounded-r shadow"/>
+                    <input type="email" placeholder="Email Address" className="w-full p-2 rounded-r shadow" onChange={(e) => setNewUser({...newUser, email: e.target.value})}/>
                 </div>
 
                 <div className="flex flex-row gap-2 w-full">
@@ -55,13 +65,13 @@ export default function Register(){
                         <span className="bg-gray-300 p-2 flex items-center justify-center rounded-l shadow">
                             <MdLockOutline size={28}/>
                         </span>
-                        <Password placeholder="Password"/>
+                        <Password placeholder="Password" onChange={(e) => setNewUser({...newUser, password: e.target.value})}/>
                     </div>
                     <div className="flex flex-row items-stretch w-full">
                         <span className="bg-gray-300 p-2 flex items-center justify-center rounded-l shadow">
                             <MdLockOutline size={28}/>
                         </span>
-                        <Password placeholder="Confirm Password"/>
+                        <Password placeholder="Confirm Password" onChange={(e) => checkPasswordMatch(e.target.value)}/>
                     </div>
                 </div>
 
@@ -70,10 +80,10 @@ export default function Register(){
                         <FaUserTag size={28}/>
                     </span>
                     <Dropdown data={roles} title="Select Role" settedValueId={null} expandRight={true} 
-                    onValueChange={(item) => {}} getLabel={(item) => item.name} getId={(item) => item.id}/>
+                    onValueChange={(item) => setNewUser({...newUser, role_id: item.id})} getLabel={(item) => item.name} getId={(item) => item.id}/>
                 </div>
 
-                <button className="bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded w-full">
+                <button className="bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded w-full" onClick={handleRegister}>
                     <span className="text-white font-bold">Create Account</span>
                 </button>
 

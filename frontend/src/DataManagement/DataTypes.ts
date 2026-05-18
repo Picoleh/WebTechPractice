@@ -121,3 +121,21 @@ export type ProjectSearchResultType = {
     title: string;
     content: string;
 };
+
+export type User = {
+    id: number;
+    username: string;
+    email: string;
+    password: string;
+    role_id: number;
+    created_at: string | null;
+}
+
+export const EmptyUser = (): User => ({
+    id: 0,
+    username: "",
+    email: "",
+    password: "",
+    role_id: 0,
+    created_at: null,
+});

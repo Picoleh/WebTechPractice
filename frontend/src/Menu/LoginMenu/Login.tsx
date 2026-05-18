@@ -8,11 +8,11 @@ export default function Login() {
         <>
             <div className="flex flex-row items-center bg-teal-600 p-4 rounded-t w-full justify-center">
                 <FcBiomass size={48}/> 
-                <h1 className="text-3xl font-bold text-white ml-2">BioMatDB | Login</h1>
+                <h1 className="text-xl lg:text-3xl font-bold text-white ml-2">BioMatDB | Login</h1>
             </div>
 
             <div className="flex flex-col items-center gap-4 p-6 min-w-96">
-                <h1 className="text-4xl mb-4">Sign In to BioMat</h1>
+                <h1 className="text-2xl lg:text-4xl mb-4">Sign In to BioMat</h1>
 
                 <div className="flex flex-row items-stretch w-full">
                     <span className="bg-gray-300 p-2 flex items-center justify-center rounded-l shadow">
