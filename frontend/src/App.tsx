@@ -8,6 +8,8 @@ import Experiments from "./Pages/Experiments/Experiments";
 import ProjectSearch from "./Pages/ProjectSearch/ProjectSearch";
 import PrivateLayout from "./Layouts/PrivateLayout";
 import Login from "./Menu/LoginMenu/Login";
+import PublicLayout from "./Layouts/PublicLayout";
+import Register from "./Menu/LoginMenu/Register";
 
 function App() {
 
@@ -15,7 +17,10 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/login" element={<Login/>}/>
+        <Route element={<PublicLayout/>}>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+        </Route>
 
         <Route element={<PrivateLayout/>}>
           <Route path="/biomaterials" element={<SearchComponent/>}/>

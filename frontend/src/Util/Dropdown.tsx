@@ -47,7 +47,7 @@ export default function Dropdown<T>({title, data, settedValueId, expandRight, on
 
     return (
         <div className="relative w-full lg:w-full" ref={dropdownRef}>
-            <button className="flex w-full items-center justify-center gap-2 rounded border border-gray-400 px-3 py-2 hover:bg-gray-100 lg:w-full" onClick={() => setIsOpen(!isOpen)}>
+            <button className="flex h-full w-full items-center justify-center gap-2 rounded border border-gray-400 px-3 py-2 hover:bg-gray-100 lg:w-full" onClick={() => setIsOpen(!isOpen)}>
                 {selectedValue !== undefined ? getLabel(selectedValue) : title}
                 <RiArrowDropDownLine size={24}/>
             </button>
