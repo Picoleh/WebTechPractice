@@ -57,7 +57,7 @@ export default function ProfileButton() {
                     <div className="border-t border-gray-400"/>
 
                     <div className="flex w-full">
-                        <button className="text-left hover:bg-red-200 w-full py-1 px-2 rounded flex flex-row items-center gap-4 text-red-600" onClick={() => keycloak.logout()}>
+                        <button className="text-left hover:bg-red-100 w-full py-1 px-2 rounded flex flex-row items-center gap-4 text-red-600" onClick={() => keycloak.logout()}>
                             <IoIosLogOut size={24} />
                             <h1 className="text-lg">Logout</h1>
                         </button>
