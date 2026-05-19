@@ -43,8 +43,8 @@ def get_biomaterial_by_id(id: int):
 
 def create_biomaterial(biomaterial: BiomaterialCreateUpdate):
     sql = f"""
-        INSERT INTO {TABLE} (name, type_id, description, density, biocompatibility, img_path)
-        VALUES (:name, :type_id, :description, :density, :biocompatibility, :img_path)
+        INSERT INTO {TABLE} (name, type_id, description, density, biocompatibility, img_path, added_by)
+        VALUES (:name, :type_id, :description, :density, :biocompatibility, :img_path, :added_by)
     """
     execute_write(sql, biomaterial.model_dump())
 

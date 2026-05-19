@@ -29,8 +29,8 @@ def search_biomaterial_types(q: str):
 
 def create_biomaterial_type(biomaterial_type: BiomaterialType):
     sql = f"""
-        INSERT INTO {TABLE} (name, description)
-        VALUES (:name, :description)
+        INSERT INTO {TABLE} (name, description, added_by)
+        VALUES (:name, :description, :added_by)
     """
     execute_write(sql, biomaterial_type.model_dump())
 

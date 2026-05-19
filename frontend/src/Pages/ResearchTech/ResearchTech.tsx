@@ -4,6 +4,7 @@ import Crud from "../crud/Crud";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 import ResearchTechForm from "./ResearchTechForm";
 import type { MRT_ColumnDef } from "material-react-table";
+import { useKeycloak } from "@react-keycloak/web";
 
 const columns: MRT_ColumnDef<ResearchTech>[] = [
     { accessorKey: "id", header: "ID" },
@@ -14,6 +15,7 @@ const columns: MRT_ColumnDef<ResearchTech>[] = [
 ];
 
 export default function ResearchTech() {
+    const {keycloak} = useKeycloak();
 
     async function loadResearchTech() {
         try {
@@ -30,6 +32,7 @@ export default function ResearchTech() {
         console.log("Adding research technology:", obj);
         
         try {
+            obj.added_by = keycloak.idTokenParsed?.sub || null
             await fetchData("researchTechs", "POST", obj);
         }
         catch (err) {

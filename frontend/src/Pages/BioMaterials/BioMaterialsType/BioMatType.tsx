@@ -4,6 +4,7 @@ import Crud from "../../crud/Crud";
 import AsideCrudForm from "../../../Util/Pages/AsideCrudForm";
 import BioMatTypesForm from "./BioMatTypesForm";
 import type { MRT_ColumnDef } from "material-react-table";
+import { useKeycloak } from "@react-keycloak/web";
 
 const columns: MRT_ColumnDef<BiomaterialType>[] = [
     { accessorKey: "id", header: "ID" },
@@ -13,6 +14,7 @@ const columns: MRT_ColumnDef<BiomaterialType>[] = [
 ];
 
 export default function BioMatType() {
+    const {keycloak} = useKeycloak();
 
     async function loadTypes() {
         try {
@@ -27,6 +29,7 @@ export default function BioMatType() {
 
     async function addType(obj: BiomaterialType) {
         try {
+            obj.added_by = keycloak.idTokenParsed?.sub ?? null;
             await fetchData("biomaterials/types", "POST", obj);
         } catch (err) {
             throw new Error("Unknown error while adding biomaterial type");

@@ -40,8 +40,8 @@ def get_research_technology_by_id(id: int):
 
 def create_research_technology(research_tech: ResearchTechCreateUpdate):
     sql = f"""
-        INSERT INTO {TABLE} (name, description, cost_level)
-        VALUES (:name, :description, :cost_level)
+        INSERT INTO {TABLE} (name, description, cost_level, added_by)
+        VALUES (:name, :description, :cost_level, :added_by)
     """
     execute_write(sql, research_tech.model_dump())
 

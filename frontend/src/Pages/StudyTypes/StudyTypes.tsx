@@ -4,6 +4,7 @@ import Crud from "../crud/Crud";
 import StudyTypeForm from "./StudyTypeForm";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 import type { MRT_ColumnDef } from "material-react-table";
+import { useKeycloak } from "@react-keycloak/web";
 
 const columns: MRT_ColumnDef<StudyType>[] = [
     { accessorKey: "id", header: "ID" },
@@ -14,6 +15,7 @@ const columns: MRT_ColumnDef<StudyType>[] = [
 ];
 
 export default function StudyTypes() {
+    const {keycloak} = useKeycloak();
 
     async function loadStudyTypes() {
         try {
@@ -30,6 +32,7 @@ export default function StudyTypes() {
         console.log("Adding study type:", obj);
         
         try {
+            obj.added_by = keycloak.idTokenParsed?.sub || null;
             await fetchData("studyTypes", "POST", obj);
         }
         catch (err) {

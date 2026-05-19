@@ -6,6 +6,7 @@ import Crud from "../crud/Crud";
 import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 import type { MRT_ColumnDef } from "material-react-table";
 import { Box } from "@mui/material";
+import { useKeycloak } from "@react-keycloak/web";
 
 
 const columns: MRT_ColumnDef<Biomaterial>[] = [    
@@ -64,6 +65,7 @@ const columns: MRT_ColumnDef<Biomaterial>[] = [
 
 export default function SearchComponent() {
     const [filterTypes, setFilterTypes] = useState<BiomaterialType[]>([]);
+    const {keycloak} = useKeycloak();
 
     async function loadBiomaterials() {
         try {
@@ -88,6 +90,7 @@ export default function SearchComponent() {
                 obj.img_path = imgPath;   
                 delete obj.image;
             }
+            obj.added_by = keycloak.idTokenParsed?.sub ?? null;
             await fetchData("biomaterials", "POST", obj);
         }
         catch (err) {

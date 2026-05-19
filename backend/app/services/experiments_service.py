@@ -40,8 +40,8 @@ def get_experiment_by_id(id: int):
 
 def create_experiment(experiment: ExperimentCreateUpdate):
     sql = f"""
-        INSERT INTO {TABLE} (title, objective, description, start_date, end_date, status, biomaterial_id, study_type_id, results)
-        VALUES (:title, :objective, :description, :start_date, :end_date, :status, :biomaterial_id, :study_type_id, :results)
+        INSERT INTO {TABLE} (title, objective, description, start_date, end_date, status, biomaterial_id, study_type_id, results, added_by)
+        VALUES (:title, :objective, :description, :start_date, :end_date, :status, :biomaterial_id, :study_type_id, :results, :added_by)
         RETURNING id
     """
     row = execute_write_returning_id(sql, experiment.model_dump())

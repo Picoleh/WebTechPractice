@@ -5,6 +5,7 @@ import AsideCrudForm from "../../Util/Pages/AsideCrudForm";
 import Crud from "../crud/Crud";
 import ExperimentForm from "./ExperimentForm";
 import type { MRT_ColumnDef } from "material-react-table";
+import { useKeycloak } from "@react-keycloak/web";
 
 
 const columns: MRT_ColumnDef<Experiment>[] = [
@@ -22,7 +23,7 @@ const columns: MRT_ColumnDef<Experiment>[] = [
 ];
 
 export default function Experiments() {
-
+    const {keycloak} = useKeycloak();
     const [biomaterials, setBiomaterials] = useState<Biomaterial[]>([]);
     const [studyTypes, setStudyTypes] = useState<StudyType[]>([]);
     const [researchTechs, setResearchTechs] = useState<ResearchTech[]>([]);
@@ -42,6 +43,7 @@ export default function Experiments() {
         console.log("Adding experiment:", obj);
         
         try {
+            obj.added_by = keycloak.idTokenParsed?.sub || null;
             await fetchData("experiments", "POST", obj);
         }
         catch (err) {

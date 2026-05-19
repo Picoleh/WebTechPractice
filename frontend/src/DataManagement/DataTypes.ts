@@ -3,6 +3,7 @@ export type BiomaterialType = {
     name: string;
     description: string;
     created_at: string | null;
+    added_by: string | null;
 };
 
 export type Biomaterial = {
@@ -15,6 +16,7 @@ export type Biomaterial = {
     created_at: string | null;
     img_path?: string;
     image?: File;
+    added_by: string | null;
 };
 
 export const EmptyBiomaterial = (): Biomaterial => ({
@@ -27,6 +29,7 @@ export const EmptyBiomaterial = (): Biomaterial => ({
     created_at: null,
     img_path: undefined,
     image: undefined,
+    added_by: null,
 });
 
 export type FilterDropdownProps<T> = {
@@ -60,6 +63,7 @@ export type StudyType = {
     description: string;
     level_evidence: string;
     created_at: string | null;
+    added_by: string | null;
 }
 
 export const EmptyStudyType = (): StudyType => ({
@@ -68,6 +72,7 @@ export const EmptyStudyType = (): StudyType => ({
     description: "",
     level_evidence: "High",
     created_at: null,
+    added_by: null,
 });
 
 export type ResearchTech = {
@@ -76,6 +81,7 @@ export type ResearchTech = {
     description: string;
     cost_level: string;
     created_at: string | null;
+    added_by: string | null;
 }
 
 export const EmptyResearchTech = (): ResearchTech => ({
@@ -84,6 +90,7 @@ export const EmptyResearchTech = (): ResearchTech => ({
     description: "",
     cost_level: "High",
     created_at: null,
+    added_by: null,
 });
 
 export type Experiment = {
@@ -99,6 +106,7 @@ export type Experiment = {
     research_tech_ids: number[];
     results: string;
     created_at: string | null;
+    added_by: string | null;
 }
 
 export const EmptyExperiment = (): Experiment => ({
@@ -114,6 +122,7 @@ export const EmptyExperiment = (): Experiment => ({
     research_tech_ids: [],
     results: "",
     created_at: null,
+    added_by: null,
 });
 
 export type ProjectSearchResultType = {

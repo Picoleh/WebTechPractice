@@ -38,8 +38,8 @@ def get_study_type_by_id(id: int):
 
 def create_study_type(study_type: StudyTypeCreateUpdate):
     sql = f"""
-        INSERT INTO {TABLE} (name, description, level_evidence)
-        VALUES (:name, :description, :level_evidence)
+        INSERT INTO {TABLE} (name, description, level_evidence, added_by)
+        VALUES (:name, :description, :level_evidence, :added_by)
     """
     execute_write(sql, study_type.model_dump())
 

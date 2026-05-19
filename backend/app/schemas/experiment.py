@@ -12,4 +12,5 @@ class ExperimentCreateUpdate(BaseModel):
     study_type_id: int
     research_tech_ids: list[int] 
     results: str
+    added_by: str | None = None
     
