@@ -42,14 +42,32 @@ services:
     image: quay.io/keycloak/keycloak:26.1
     container_name: keycloak
 
-    command: start-dev
+    command:
+      - start-dev
+      - --spi-theme-static-max-age=-1
+      - --spi-theme-cache-themes=false
+      - --spi-theme-cache-templates=false
 
     environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: db
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: postgres
+
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: root
+
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
 
     ports:
       - "8080:8080"
+
+    depends_on:
+      - db
+    
+    volumes:
+      - ./keycloak/themes:/opt/keycloak/themes
 
 volumes:
   postgres_data:
