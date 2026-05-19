@@ -8,11 +8,13 @@ import Experiments from "./Pages/Experiments/Experiments";
 import ProjectSearch from "./Pages/ProjectSearch/ProjectSearch";
 import PrivateLayout from "./Layouts/PrivateLayout";
 import PrivateRoute from "./Auth/PrivateRoute";
+import AuthInitializer from "./Auth/AuthInitializer";
 
 function App() {
 
   return (
     <BrowserRouter>
+      <AuthInitializer/>
         <Routes>
           <Route element={<PrivateRoute/>}>
             <Route element={<PrivateLayout/>}>
