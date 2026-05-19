@@ -7,22 +7,12 @@ import ResearchTech from "./Pages/ResearchTech/ResearchTech";
 import Experiments from "./Pages/Experiments/Experiments";
 import ProjectSearch from "./Pages/ProjectSearch/ProjectSearch";
 import PrivateLayout from "./Layouts/PrivateLayout";
-import PublicLayout from "./Layouts/PublicLayout";
 import PrivateRoute from "./Auth/PrivateRoute";
-import Login from "./Menu/Login";
 
 function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-
-        <Route>
-          <Route element={<PublicLayout/>}>
-            <Route path="/login" element={<Login/>}/>
-          </Route>
-        </Route>
-
         <Route element={<PrivateRoute/>}>
           <Route element={<PrivateLayout/>}>
             <Route path="/biomaterials" element={<SearchComponent/>}/>
@@ -34,7 +24,6 @@ function App() {
             <Route path="/project_search" element={<ProjectSearch/>}/>
           </Route>
         </Route>
-      </Routes>
     </BrowserRouter>
   )
 }

@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useKeycloak } from "@react-keycloak/web";
 
 export default function PrivateRoute() {
@@ -8,7 +8,10 @@ export default function PrivateRoute() {
     return <div>Loading...</div>;
   }
 
-  return keycloak.authenticated
-    ? <Outlet />
-    : <Navigate to="/login" />;
+  if(!keycloak.authenticated){
+    keycloak.login();
+    return <div>Redirecting to login...</div>;
+  }
+
+  return <Outlet />;
 }
