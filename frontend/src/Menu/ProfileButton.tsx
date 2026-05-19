@@ -35,7 +35,7 @@ export default function ProfileButton() {
         </button>
 
         {isOpen && (
-                <div className="absolute right-0 mt-2 w-64 rounded-lg bg-white shadow-lg flex flex-col p-4 gap-2">
+                <div className="absolute right-0 mt-2 w-64 rounded-lg bg-white shadow-lg flex flex-col p-4 gap-2 z-10">
                     <div className="flex flex-col">
                         <span className="font-bold">{keycloak.idTokenParsed?.name}</span>
                         <span className="text-sm text-gray-500">{keycloak.idTokenParsed?.email}</span>
