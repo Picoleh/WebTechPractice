@@ -22,19 +22,15 @@ export default function NotificationsButton() {
         };
     }, []);
 
-    useEffect(() => {
-        console.log("uepa");
-    }, [isOpen]);
-
     return(
-        <div className="relative">
+        <div className="relative" ref={divRef}>
             <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
                 <IoIosNotificationsOutline size={24}/>
                 Notifications
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-64 rounded-lg bg-white shadow-lg" ref={divRef}>
+                <div className="absolute right-0 mt-2 w-64 rounded-lg bg-white shadow-lg" >
                     <div className="p-4">
                         <p className="text-sm text-gray-700">No new notifications</p>
                     </div>

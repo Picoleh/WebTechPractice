@@ -13,17 +13,19 @@ function App() {
 
   return (
     <BrowserRouter>
-        <Route element={<PrivateRoute/>}>
-          <Route element={<PrivateLayout/>}>
-            <Route path="/biomaterials" element={<SearchComponent/>}/>
-            <Route path="/" element={<HomePage/>}/>
-            <Route path="/biomaterial_types" element={<BioMatType/>}/> 
-            <Route path="/study_types" element={<StudyTypes/>}/>
-            <Route path="/research_tech" element={<ResearchTech/>}/>
-            <Route path="/experiments" element={<Experiments/>}/>
-            <Route path="/project_search" element={<ProjectSearch/>}/>
+        <Routes>
+          <Route element={<PrivateRoute/>}>
+            <Route element={<PrivateLayout/>}>
+              <Route path="/biomaterials" element={<SearchComponent/>}/>
+              <Route path="/" element={<HomePage/>}/>
+              <Route path="/biomaterial_types" element={<BioMatType/>}/> 
+              <Route path="/study_types" element={<StudyTypes/>}/>
+              <Route path="/research_tech" element={<ResearchTech/>}/>
+              <Route path="/experiments" element={<Experiments/>}/>
+              <Route path="/project_search" element={<ProjectSearch/>}/>
+            </Route>
           </Route>
-        </Route>
+        </Routes>
     </BrowserRouter>
   )
 }
