@@ -2,8 +2,10 @@ import { CgProfile } from "react-icons/cg";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import NotificationsButton from "./NotificationsButton";
+import { useKeycloak } from "@react-keycloak/web";
 
 export default function TopBarMenu() {
+    const { keycloak } = useKeycloak();
     return(
         <div className='flex flex-row bg-white px-8 py-3 gap-4'>
             <div className="mr-auto relative">
@@ -17,7 +19,7 @@ export default function TopBarMenu() {
 
             <NotificationsButton />
 
-            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200">
+            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200" onClick={() => keycloak.logout()}>
                 <CgProfile size={24}/>
                 Profile
             </button>

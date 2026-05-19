@@ -7,10 +7,9 @@ import ResearchTech from "./Pages/ResearchTech/ResearchTech";
 import Experiments from "./Pages/Experiments/Experiments";
 import ProjectSearch from "./Pages/ProjectSearch/ProjectSearch";
 import PrivateLayout from "./Layouts/PrivateLayout";
-import Login from "./Menu/LoginMenu/Login";
 import PublicLayout from "./Layouts/PublicLayout";
-import Register from "./Menu/LoginMenu/Register";
 import PrivateRoute from "./Auth/PrivateRoute";
+import Login from "./Menu/Login";
 
 function App() {
 
@@ -18,9 +17,10 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route element={<PublicLayout/>}>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
+        <Route>
+          <Route element={<PublicLayout/>}>
+            <Route path="/login" element={<Login/>}/>
+          </Route>
         </Route>
 
         <Route element={<PrivateRoute/>}>
