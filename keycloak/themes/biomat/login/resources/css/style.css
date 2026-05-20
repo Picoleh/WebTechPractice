@@ -79,6 +79,10 @@ body{
     margin-top:20px;
 }
 
+.btn-default{
+    font-size: 1.25rem;
+}
+
 @media(min-width: 768px) {
     .login-pf{
         background-size: 100% 100%;

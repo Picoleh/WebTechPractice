@@ -60,6 +60,12 @@ export default function Settings() {
         })
     }
 
+    async function handleVerifyEmail() {
+        keycloak.login({
+            action: "VERIFY_EMAIL"
+        })
+    }
+
     return (
         <div className="flex flex-col mt-8 gap-6">
             <SettingsCard title="Profile" icon={GoPerson}>
@@ -153,7 +159,7 @@ export default function Settings() {
 
                     <hr className="border-gray-300"/>
 
-                    <button className="flex flex-row items-center gap-6 p-3 rounded-lg hover:bg-gray-100">
+                    <button className="flex flex-row items-center gap-6 p-3 rounded-lg hover:bg-gray-100" onClick={handleVerifyEmail}>
                         <MdOutlineVerifiedUser size={28}/>
 
                         <div className="flex flex-col items-start">
