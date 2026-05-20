@@ -33,6 +33,7 @@ type BiomaterialsData = {
 
 type researchTechData = {
     name: string;
+    username: string;
     days: number;
 }
 
@@ -161,7 +162,10 @@ export default function HomePage() {
                                                 {tech.name + " "}
                                             </span>
                                             <span>
-                                                was added {tech.days} days ago    
+                                                was added {tech.days} days ago by
+                                            </span>
+                                            <span className="font-semibold">
+                                                {" " + tech.username}
                                             </span>
                                         </li>
                                     ))}

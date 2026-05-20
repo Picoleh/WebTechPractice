@@ -36,9 +36,10 @@ def get_home_data():
     biomaterialData = fetch_all(sql)
 
     sql = """SELECT 
-    name, NOW()::date - created_at::date AS days 
-    FROM biomaterials_db.research_technologies 
-    WHERE created_at >= NOW() - INTERVAL '7 days'
+    name, username, NOW()::date - r.created_at::date AS days 
+    FROM biomaterials_db.research_technologies AS r
+	  JOIN biomaterials_db.users ON added_by = keycloak_id
+    WHERE r.created_at >= NOW() - INTERVAL '7 days'
     ORDER BY days
     LIMIT 7
     """
