@@ -133,18 +133,22 @@ export type ProjectSearchResultType = {
 
 export type User = {
     id: number;
+    keycloak_id: string;
     username: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    password: string;
-    role_id: number;
     created_at: string | null;
+    img_path: string | null;
 }
 
 export const EmptyUser = (): User => ({
     id: 0,
+    keycloak_id: "",
+    first_name: "",
+    last_name: "",
     username: "",
     email: "",
-    password: "",
-    role_id: 0,
     created_at: null,
+    img_path: null,
 });

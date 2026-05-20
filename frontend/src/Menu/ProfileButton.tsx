@@ -3,9 +3,10 @@ import { useState, useRef, useEffect } from "react";
 import { CgProfile } from "react-icons/cg";
 import { FaCog, FaQuestionCircle } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 export default function ProfileButton() {
     const { keycloak } = useKeycloak();
-
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const divRef = useRef<HTMLDivElement | null>(null);
     
@@ -44,11 +45,11 @@ export default function ProfileButton() {
                     <div className="border-t border-gray-400"/>
 
                     <div className="flex flex-col gap-2">
-                        <button className="text-left hover:bg-gray-200 py-1 px-2 rounded flex flex-row items-center gap-4">
+                        <button className="text-left hover:bg-gray-200 py-1 px-2 rounded flex flex-row items-center gap-4" onClick={() => navigate("/settings")}>
                             <FaCog size={24}/>
                             <h1 className="text-lg">Settings</h1>
                         </button>
-                        <button className="text-left hover:bg-gray-200 py-1 px-2 rounded flex flex-row items-center gap-4">
+                        <button className="text-left hover:bg-gray-200 py-1 px-2 rounded flex flex-row items-center gap-4" onClick={() => navigate("/help_support")}>
                             <FaQuestionCircle size={24} />
                             <h1 className="text-lg">Help</h1>
                         </button>

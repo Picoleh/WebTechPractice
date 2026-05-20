@@ -9,6 +9,7 @@ import ProjectSearch from "./Pages/ProjectSearch/ProjectSearch";
 import PrivateLayout from "./Layouts/PrivateLayout";
 import PrivateRoute from "./Auth/PrivateRoute";
 import AuthInitializer from "./Auth/AuthInitializer";
+import Settings from "./Pages/Settings/Settings";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
               <Route path="/research_tech" element={<ResearchTech/>}/>
               <Route path="/experiments" element={<Experiments/>}/>
               <Route path="/project_search" element={<ProjectSearch/>}/>
+              <Route path="/settings" element={<Settings/>}/>
             </Route>
           </Route>
         </Routes>

@@ -7,4 +7,5 @@ class UserCreateUpdate(BaseModel):
     first_name: str
     last_name: str
     email: str
+    img_path: str | None = None
     
