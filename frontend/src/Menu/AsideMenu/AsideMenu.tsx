@@ -2,7 +2,7 @@ import { FaBars } from "react-icons/fa";
 import AsideButton from "./AsideButton";
 import { Link, useLocation, useNavigate } from "react-router";
 import { FcBiomass } from "react-icons/fc";
-import { PAGES_INFO } from "../../Util/Pages/Paths";
+import { DIVISION_PAGE_NUMBER, PAGES_INFO } from "../../Util/Pages/Paths";
 
 export default function AsideMenu({ isSideBarOpen, toggleSideBar }: { isSideBarOpen: boolean, toggleSideBar: () => void }) {
     const navigate = useNavigate();
@@ -27,10 +27,13 @@ export default function AsideMenu({ isSideBarOpen, toggleSideBar }: { isSideBarO
                 <AsideButton title="Menu" Icon={FaBars} isOpen={isSideBarOpen} isActive={false} onClick={toggleSideBar} />
               </li>
             )}
-            {PAGES_INFO.map((item) => (
-              <li key={item.path}>
-                <AsideButton title={item.name} Icon={item.icon} isOpen={isSideBarOpen} isActive={location.pathname === item.path} onClick={() => navigate(item.path)} />
-              </li>
+            {PAGES_INFO.map((item, index) => (
+              <>
+                {index === DIVISION_PAGE_NUMBER && <hr key="divider" className="my-2 border-gray-200" />}
+                <li key={item.path}>
+                  <AsideButton title={item.name} Icon={item.icon} isOpen={isSideBarOpen} isActive={location.pathname === item.path} onClick={() => navigate(item.path)} />
+                </li>
+              </>
             ))}
           </ul>
         </aside>
