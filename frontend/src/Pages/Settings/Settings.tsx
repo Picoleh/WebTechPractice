@@ -15,6 +15,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { BsPencil } from "react-icons/bs";
 import { useAlert } from "../../Util/Hooks/useAlert";
 import Alert from "../../Util/Alert";
+import { useTheme } from "../../Layouts/ThemeProvider";
 
 export default function Settings() {
     const { keycloak } = useKeycloak();
@@ -22,6 +23,7 @@ export default function Settings() {
     const [selectedTheme, setSelectedTheme] = useState<string>("Light");
     const [imgPath, setImgPath] = useState<string>("");
     const { alert, showAlert, closeAlert } = useAlert();
+    const { theme, setTheme } = useTheme();
 
     async function loadProfileImage(profileImagePath: string = imgPath) {
         console.log("loadinf prof info " + profileImagePath + "*");
@@ -123,18 +125,27 @@ export default function Settings() {
 
                         <div className="flex-1">
                             <div className="flex flex-row justify-center">
-                                <button type="button" className={`rounded-l-lg rounded-r-none border border-gray-400 p-3 w-full ${selectedTheme === "Light" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                                <button type="button" className={`rounded-l-lg rounded-r-none border border-gray-400 p-3 w-full
+                                 ${selectedTheme === "Light" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} 
+                                 onClick={() => {
                                     setSelectedTheme("Light");
+                                    setTheme("light");
                                 }}>
                                     Light
                                 </button>
-                                <button type="button" className={`border border-gray-400 p-3 w-full ${selectedTheme === "Dark" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                                <button type="button" className={`border border-gray-400 p-3 w-full 
+                                 ${selectedTheme === "Dark" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} 
+                                 onClick={() => {
                                     setSelectedTheme("Dark");
+                                    setTheme("dark");
                                 }}>
                                     Dark
                                 </button>
-                                <button type="button" className={`rounded-l-none rounded-r-md border border-gray-400 p-3 w-full ${selectedTheme === "System" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                                <button type="button" className={`rounded-l-none rounded-r-md border border-gray-400 p-3 w-full 
+                                 ${selectedTheme === "System" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} 
+                                 onClick={() => {
                                     setSelectedTheme("System");
+                                    setTheme("system");
                                 }}>
                                     System
                                 </button>

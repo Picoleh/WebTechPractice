@@ -24,7 +24,7 @@ export default function PrivateLayout() {
             <div className="flex flex-1 flex-col overflow-hidden">
                 <TopBarMenu/>
 
-                <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:m-8 lg:rounded-lg lg:bg-gray-100 lg:p-8 lg:shadow-[0_0_40px_rgba(0,0,0,0.15)]">
+                <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:m-8 lg:rounded-lg lg:bg-[var(--bg-color-100)] lg:p-8 lg:shadow-[0_0_40px_rgba(0,0,0,0.15)]">
                     <PageTitle/>
                     <Outlet/>
                 </div>
