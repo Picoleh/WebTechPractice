@@ -8,8 +8,8 @@ export default function NumberCard({ title, number, icon }: { title: string; num
             <span className="text-5xl font-bold">{number}</span>
         </div>
 
-        <div className="bg-[var(--primary-color-hover)] bg-opacity-20 rounded-lg p-2">
-            {icon({ size: 60, className: "text-[var(--primary-color)]" })}
+        <div className="bg-[var(--primary-color-dark)] bg-opacity-20 rounded-lg p-2">
+            {icon({ size: 60, className: "text-[var(--primary-color-bright)]" })}
         </div>
     </div>
   );

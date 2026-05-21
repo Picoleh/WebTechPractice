@@ -103,11 +103,11 @@ export default function Settings() {
 
                     <div className="flex flex-col items-center lg:items-start w-full gap-4">
                         <label className="text-lg font-bold hidden lg:block text-[var(--text-color)]">Name</label>
-                        <input type="text" className="w-full text-2xl font-bold text-center outline-none border-gray-300 rounded-lg
-                         lg:p-2 lg:border lg:font-normal lg:text-left" value={`${user?.first_name} ${user?.last_name}`} readOnly/>
+                        <input type="text" className="w-full text-2xl font-bold text-center outline-none bg-transparent text-[var(--text-color)] border-[var(--gray-color)] rounded-lg
+                         lg:p-2 lg:border lg:font-normal lg:text-left lg:bg-[var(--bg-color-100)]" value={`${user?.first_name} ${user?.last_name}`} readOnly/>
                         <label className="text-lg font-bold hidden lg:block text-[var(--text-color)]">Email</label>
-                        <input type="email" className="w-full text-base text-gray-500 text-center outline-none border-gray-300 rounded-lg
-                         lg:p-2 lg:border lg:text-left lg:text-black" value={user?.email} readOnly/>
+                        <input type="email" className="w-full text-base text-[var(--gray-color)] bg-transparent text-center outline-none border-[var(--gray-color)] rounded-lg
+                         lg:p-2 lg:border lg:text-left lg:text-[var(--text-color)] lg:bg-[var(--bg-color-100)]" value={user?.email} readOnly/>
                     </div>
                 </div>
             </SettingsCard>

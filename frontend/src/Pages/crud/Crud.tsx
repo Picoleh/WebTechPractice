@@ -217,7 +217,7 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
                         />
                     </Box>
                     <Box>
-                        <button className="flex w-full items-center justify-center gap-2 rounded bg-[var(--primary-color)] px-4 py-2 text-[var(--text-color)] hover:bg-[var(--primary-color-hover)] lg:w-auto" onClick={() => toggleForm(null)}>
+                        <button className="flex w-full items-center justify-center gap-2 rounded bg-[var(--primary-color-bright)] px-4 py-2 text-white hover:bg-[var(--primary-color-bright-hover)] lg:w-auto" onClick={() => toggleForm(null)}>
                             <FaPlus size={28}/>
                             Add
                         </button>
