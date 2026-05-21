@@ -11,7 +11,7 @@ export default function AsideMenu({ isSideBarOpen, toggleSideBar }: { isSideBarO
     return (
       <>
         {isSideBarOpen && <div className="fixed inset-0 z-40 bg-black/30 lg:hidden" onClick={toggleSideBar}/>}
-        <aside className="border-b border-teal-700 bg-teal-600 text-white transition-all duration-300 z-50">
+        <aside className="border-b border-teal-700 bg-[var(--primary-color)] text-white transition-all duration-300 z-50">
           {isSideBarOpen && (
             <div className="flex items-center justify-between p-4 lg:flex-col lg:items-stretch">
               <Link to="/" className="inline-flex items-center gap-2 font-bold transition-colors duration-200 hover:text-gray-300 sm:text-2xl lg:text-3xl">

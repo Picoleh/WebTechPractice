@@ -5,7 +5,7 @@ export default function FileSelect({ onFileSelect, accept }: { onFileSelect: (fi
     return (
         <div className="w-full">
             <div>
-                <label htmlFor="file-input" className="bg-teal-500 text-white py-2 px-4 rounded cursor-pointer hover:bg-teal-700">
+                <label htmlFor="file-input" className="bg-[var(--primary-color)] text-white py-2 px-4 rounded cursor-pointer hover:bg-[var(--primary-color-hover)]">
                     {selectedFile ? selectedFile.name : "Select File"}
                 </label>
             </div>

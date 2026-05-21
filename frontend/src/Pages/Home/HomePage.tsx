@@ -105,7 +105,7 @@ export default function HomePage() {
                                     <XAxis dataKey="name" angle={-15} textAnchor="end" interval={0} tick={{ fontSize: 12 }}/>
                                     <YAxis />
                                     <Tooltip />
-                                    <Bar dataKey="count" fill="#14b8a6" />
+                                    <Bar dataKey="count" fill="var(--primary-color)" />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
@@ -120,23 +120,23 @@ export default function HomePage() {
                                     <XAxis dataKey="month" axisLine={false} />
                                     <YAxis tickLine={false}/>
                                     <Tooltip />
-                                    <Line dataKey="count" stroke="#14b8a6" strokeWidth={4} type={"monotone"} dot={false} />
+                                    <Line dataKey="count" stroke="var(--primary-color)" strokeWidth={4} type={"monotone"} dot={false} />
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
                     </ContentCard>
                 </div>
 
-                <div className="bg-green-200 row-[span_20/span_20] col-start-3 row-start-1">
+                <div className="row-[span_20/span_20] col-start-3 row-start-1">
                     <ContentCard title="Quick Actions">
                         <div className="flex flex-col gap-4 w-full h-full">
-                            <Link to="/biomaterials" className="bg-teal-500 w-full px-4 py-2 rounded-lg text-white font-bold hover:bg-teal-600 transition-colors">
+                            <Link to="/biomaterials" className="bg-[var(--primary-color)] w-full px-4 py-2 rounded-lg text-white font-bold hover:bg-[var(--primary-color-hover)] transition-colors">
                                 Add Biomaterial
                             </Link>
-                            <Link to="/biomaterials" className="bg-teal-500 w-full px-4 py-2 rounded-lg text-white font-bold hover:bg-teal-600 transition-colors">
+                            <Link to="/biomaterials" className="bg-[var(--primary-color)] w-full px-4 py-2 rounded-lg text-white font-bold hover:bg-[var(--primary-color-hover)] transition-colors">
                                 Import Dataset
                             </Link>
-                            <Link to="/biomaterials" className="bg-teal-500 w-full px-4 py-2 rounded-lg text-white font-bold hover:bg-teal-600 transition-colors">
+                            <Link to="/biomaterials" className="bg-[var(--primary-color)] w-full px-4 py-2 rounded-lg text-white font-bold hover:bg-[var(--primary-color-hover)] transition-colors">
                                 Download Report
                             </Link>
                         </div>

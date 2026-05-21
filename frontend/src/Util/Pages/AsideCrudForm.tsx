@@ -48,7 +48,7 @@ export default function AsideCrudForm<T>({title, isOpenState, onClose, editingOb
                                 }
                             )}
 
-                            <button className="bg-teal-500 hover:bg-teal-700 text-white px-4 py-2 rounded-md mt-4" onClick={isEditMode ? () => {
+                            <button className="bg-[var(--primary-color)] hover:bg-[var(--primary-color-hover)] text-white px-4 py-2 rounded-md mt-4" onClick={isEditMode ? () => {
                                 onUpdate(formData);
                                 onClose();
                             } : () => {

@@ -12,6 +12,8 @@
     --bg-color-500: theme(colors.gray.500);
     --bg-color-600: theme(colors.gray.600);
     --text-color: #333333;
+    --primary-color: theme(colors.teal.600);
+    --primary-color-hover: theme(colors.teal.700);
 }
 
 .dark{
@@ -23,4 +25,6 @@
     --bg-color-500: theme(colors.slate.400);
     --bg-color-600: theme(colors.slate.300);
     --text-color: #f0f0f0;
+    --primary-color: theme(colors.teal.700);
+    --primary-color-hover: theme(colors.teal.800);
 }

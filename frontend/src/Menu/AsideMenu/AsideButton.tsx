@@ -4,7 +4,7 @@ export default function AsideButton({ title, Icon, onClick, isOpen, isActive }: 
     return (
         <button
       onClick={onClick}
-      className={`flex items-center w-full p-2 hover:bg-teal-700 rounded transition-colors duration-200 ${isActive ? 'bg-teal-700' : ''} ${isOpen ? 'justify-start' : 'justify-center'}`}>
+      className={`flex items-center w-full p-2 hover:bg-[var(--primary-color-hover)] rounded transition-colors duration-200 ${isActive ? 'bg-[var(--primary-color-hover)]' : ''} ${isOpen ? 'justify-start' : 'justify-center'}`}>
         <Icon size={24} />
         { isOpen && <span
         className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${
