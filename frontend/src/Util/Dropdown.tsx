@@ -47,15 +47,15 @@ export default function Dropdown<T>({title, data, settedValueId, expandRight, on
 
     return (
         <div className="relative w-full lg:w-full" ref={dropdownRef}>
-            <button className="flex h-full w-full items-center justify-center gap-2 rounded border border-gray-400 px-3 py-2 hover:bg-gray-100 lg:w-full" onClick={() => setIsOpen(!isOpen)}>
+            <button className="flex h-full w-full items-center justify-center gap-2 rounded border border-gray-400 px-3 py-2 hover:bg-[var(--bg-color-100)] lg:w-full" onClick={() => setIsOpen(!isOpen)}>
                 {selectedValue !== undefined ? getLabel(selectedValue) : title}
                 <RiArrowDropDownLine size={24}/>
             </button>
 
-            <div className={`absolute ${expandRight ? "right-0" : "left-0"} z-20 mt-2 max-h-96 w-full rounded border border-gray-300 bg-white shadow-lg lg:w-64 overflow-y-scroll ${isOpen ? "block" : "hidden"}`}>
+            <div className={`absolute ${expandRight ? "right-0" : "left-0"} z-20 mt-2 max-h-96 w-full rounded border border-gray-300 bg-[var(--bg-color-100)] text-[var(--text-color)] shadow-lg lg:w-64 overflow-y-scroll ${isOpen ? "block" : "hidden"}`}>
                 <ul>
                     {data.map((option, index) => (
-                        <label key={index} className="block cursor-pointer px-4 py-2 hover:bg-gray-100">
+                        <label key={index} className="block cursor-pointer px-4 py-2 hover:bg-[var(--bg-color-200)]">
                                 <button className="flex flex-row gap-2 items-center" onClick={() => {
                                     setSelectedValue(option);
                                     onValueChange(option);

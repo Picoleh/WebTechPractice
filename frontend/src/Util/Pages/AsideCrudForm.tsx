@@ -31,11 +31,11 @@ export default function AsideCrudForm<T>({title, isOpenState, onClose, editingOb
         <>
                 {isOpenState && <div className="fixed inset-0 z-40 bg-black/30" onClick={onClose}/>}
         
-                <aside className={`fixed right-0 top-0 z-50 h-screen w-full bg-white p-4 text-black shadow-lg transition-all duration-300 sm:w-[420px] lg:w-[520px] ${isOpenState ? "translate-x-0" : "translate-x-full"}`}>
+                <aside className={`fixed right-0 top-0 z-50 h-screen w-full bg-[var(--bg-color-100)] p-4 text-[var(--text-color)] shadow-lg transition-all duration-300 sm:w-[420px] lg:w-[520px] ${isOpenState ? "translate-x-0" : "translate-x-full"}`}>
                     <div className="flex h-full flex-col overflow-y-auto">
                         <div className="flex flex-row items-start gap-3">
                             <label className="font-bold text-3xl">{isEditMode ? `Edit ${title}` : `Add ${title}`}</label>
-                            <button onClick={onClose} className="ml-auto px-2 py-1 rounded hover:bg-gray-300">
+                            <button onClick={onClose} className="ml-auto px-2 py-1 rounded hover:bg-[var(--bg-color-200)]">
                                 <IoMdClose size={20}/>
                             </button>
                         </div>
@@ -57,7 +57,7 @@ export default function AsideCrudForm<T>({title, isOpenState, onClose, editingOb
                             }}>
                                 Save
                             </button>
-                            <button className="bg-white hover:bg-gray-200 text-black border border-gray-400 px-4 py-2 rounded-md mt-4" onClick={onClose}>
+                            <button className="bg-[var(--bg-color-100)] hover:bg-[var(--bg-color-200)] text-[var(--text-color)] border border-gray-400 px-4 py-2 rounded-md mt-4" onClick={onClose}>
                                 Cancel
                             </button>
                         </div>

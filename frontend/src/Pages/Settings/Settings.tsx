@@ -102,10 +102,10 @@ export default function Settings() {
                     </div>
 
                     <div className="flex flex-col items-center lg:items-start w-full gap-4">
-                        <label className="text-lg font-bold hidden lg:block">Name</label>
+                        <label className="text-lg font-bold hidden lg:block text-[var(--text-color)]">Name</label>
                         <input type="text" className="w-full text-2xl font-bold text-center outline-none border-gray-300 rounded-lg
                          lg:p-2 lg:border lg:font-normal lg:text-left" value={`${user?.first_name} ${user?.last_name}`} readOnly/>
-                        <label className="text-lg font-bold hidden lg:block">Email</label>
+                        <label className="text-lg font-bold hidden lg:block text-[var(--text-color)]">Email</label>
                         <input type="email" className="w-full text-base text-gray-500 text-center outline-none border-gray-300 rounded-lg
                          lg:p-2 lg:border lg:text-left lg:text-black" value={user?.email} readOnly/>
                     </div>
@@ -115,7 +115,7 @@ export default function Settings() {
             <SettingsCard title="Preferences" icon={GrConfigure}>
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-6 lg:flex-row justify-between lg:items-center">                    
-                        <div className="flex flex-row items-center gap-6 flex-1">
+                        <div className="flex flex-row items-center gap-6 flex-1 text-[var(--text-color)]">
                             <FiMonitor size={28}/>
                             <div className="flex flex-col">
                                 <h1 className="font-semibold text-xl">Theme</h1>
@@ -125,24 +125,24 @@ export default function Settings() {
 
                         <div className="flex-1">
                             <div className="flex flex-row justify-center">
-                                <button type="button" className={`rounded-l-lg rounded-r-none border border-gray-400 p-3 w-full
-                                 ${selectedTheme === "Light" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} 
+                                <button type="button" className={`rounded-l-lg rounded-r-none border border-gray-400 p-3 w-full text-[var(--text-color)]
+                                 ${selectedTheme === "Light" ? "bg-[var(--bg-color)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
                                  onClick={() => {
                                     setSelectedTheme("Light");
                                     setTheme("light");
                                 }}>
                                     Light
                                 </button>
-                                <button type="button" className={`border border-gray-400 p-3 w-full 
-                                 ${selectedTheme === "Dark" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} 
+                                <button type="button" className={`border border-gray-400 p-3 w-full text-[var(--text-color)]
+                                 ${selectedTheme === "Dark" ? "bg-[var(--bg-color)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
                                  onClick={() => {
                                     setSelectedTheme("Dark");
                                     setTheme("dark");
                                 }}>
                                     Dark
                                 </button>
-                                <button type="button" className={`rounded-l-none rounded-r-md border border-gray-400 p-3 w-full 
-                                 ${selectedTheme === "System" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} 
+                                <button type="button" className={`rounded-l-none rounded-r-md border border-gray-400 p-3 w-full text-[var(--text-color)]
+                                 ${selectedTheme === "System" ? "bg-[var(--bg-color)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
                                  onClick={() => {
                                     setSelectedTheme("System");
                                     setTheme("system");
@@ -156,7 +156,7 @@ export default function Settings() {
                     <hr className="border-gray-300 hidden lg:block"/>
 
                     <div className="flex flex-col gap-6 lg:flex-row justify-between lg:items-center">
-                        <div className="flex flex-row items-center gap-6 flex-1">
+                        <div className="flex flex-row items-center gap-6 flex-1 text-[var(--text-color)]">
                             <CiGlobe size={28}/>
                             <div className="flex flex-col">
                                 <h1 className="font-semibold text-xl">Language</h1>
@@ -173,7 +173,7 @@ export default function Settings() {
 
             <SettingsCard title="Security" icon={IoShieldCheckmarkOutline}>
                 <div className="flex flex-col gap-3">
-                    <button className="flex flex-row items-center gap-6 p-3 rounded-lg hover:bg-gray-100" onClick={handlePasswordChange}>
+                    <button className="flex flex-row items-center gap-6 p-3 rounded-lg text-[var(--text-color)] hover:bg-[var(--bg-color-300)]" onClick={handlePasswordChange}>
                         <MdOutlineLock size={28}/>
 
                         <div className="flex flex-col items-start">
@@ -186,7 +186,7 @@ export default function Settings() {
 
                     <hr className="border-gray-300"/>
 
-                    <button className="flex flex-row items-center gap-6 p-3 rounded-lg hover:bg-gray-100" onClick={handleVerifyEmail}>
+                    <button className="flex flex-row items-center gap-6 p-3 rounded-lg text-[var(--text-color)] hover:bg-[var(--bg-color-300)]" onClick={handleVerifyEmail}>
                         <MdOutlineVerifiedUser size={28}/>
 
                         <div className="flex flex-col items-start">
@@ -203,7 +203,7 @@ export default function Settings() {
 
                     <hr className="border-gray-300"/>
 
-                    <button className="flex flex-row items-center gap-6 p-3 rounded-lg hover:bg-gray-100" onClick={keycloak.accountManagement}>
+                    <button className="flex flex-row items-center gap-6 p-3 rounded-lg text-[var(--text-color)] hover:bg-[var(--bg-color-300)]" onClick={keycloak.accountManagement}>
                         <BsPencil size={28}/>
 
                         <div className="flex flex-col items-start">

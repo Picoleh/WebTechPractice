@@ -12,7 +12,7 @@ import {
     type MRT_ColumnDef,
     type MRT_RowData,
 } from 'material-react-table';
-import { Box, IconButton, lighten } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 
 type CrudFormProps<T> = {
@@ -72,6 +72,96 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
         enableFullScreenToggle: false,
         enableDensityToggle: false,
         enableHiding: false,
+        muiTablePaperProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+                backgroundImage: "none",
+            },
+        },
+        muiTableContainerProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+            },
+        },
+        muiTopToolbarProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+                color: "var(--text-color)",
+            },
+        },
+        muiBottomToolbarProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+                color: "var(--text-color)",
+                "& .MuiTablePagination-root": {
+                    color: "var(--text-color)",
+                },
+                "& .MuiTablePagination-root .MuiInputLabel-root": {
+                    color: "var(--text-color)",
+                },
+                "& .MuiTablePagination-root .MuiIconButton-root": {
+                    color: "var(--text-color)",
+                },
+                "& .MuiTablePagination-root .MuiIconButton-root.Mui-disabled": {
+                    color: "var(--bg-color-400)",
+                },
+                "& .MuiTablePagination-root .MuiSvgIcon-root": {
+                    color: "inherit",
+                },
+            },
+        },
+        muiPaginationProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+                color: "var(--text-color)",
+                "& .MuiTablePagination-toolbar": {
+                    backgroundColor: "var(--bg-color)",
+                    color: "var(--text-color)",
+                },
+                "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": {
+                    color: "var(--text-color)",
+                },
+                "& .MuiTablePagination-actions, & .MuiSvgIcon-root": {
+                    color: "var(--text-color)",
+                },
+            },
+            SelectProps: {
+                sx: {
+                    color: "var(--text-color)",
+                    "& .MuiSelect-select": {
+                        color: "var(--text-color)",
+                    },
+                    "& .MuiSvgIcon-root": {
+                        color: "var(--text-color)",
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "var(--bg-color-300)",
+                    },
+                },
+            },
+        },
+        muiTableHeadProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+            },
+        },
+        muiTableHeadCellProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+                color: "var(--text-color)",
+            },
+        },
+        muiTableBodyProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+            },
+        },
+        muiTableBodyCellProps: {
+            sx: {
+                backgroundColor: "var(--bg-color)",
+                color: "var(--text-color)",
+            },
+        },
         renderRowActions: ({ row }) => (
             <Box sx={{ display: "flex", gap: 1 }}>
                 <IconButton color="primary" onClick={() => toggleForm(row.original)}>
@@ -85,22 +175,49 @@ export default function Crud<T extends MRT_RowData>({ columns, loadData, onAddIt
         renderTopToolbarCustomActions: ({ table}) => {
             return (
                 <Box 
-                    sx={(theme) => ({
-                        backgroundColor: lighten(theme.palette.background.default, 0.05),
+                    sx={{
                         display: "flex",
                         flexDirection: "row",
                         gap: "1rem",
                         p: "0.5rem",
                         width: "100%",
                         justifyContent: "space-between",
-                    })}>
+                    }}>
 
                     <Box sx={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                        <MRT_GlobalFilterTextField table={table} autoFocus placeholder={searchPlaceholder} />
-                        <MRT_ToggleFiltersButton table={table} />
+                        <MRT_GlobalFilterTextField
+                            table={table}
+                            autoFocus
+                            placeholder={searchPlaceholder}
+                            sx={{
+                                backgroundColor: "var(--bg-color)",
+                                color: "var(--text-color)",
+                                "& .MuiInputBase-input": {
+                                    color: "var(--text-color)",
+                                },
+                                "& .MuiInputLabel-root": {
+                                    color: "var(--text-color)",
+                                },
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "var(--bg-color-300)",
+                                },
+                            }}
+                        />
+                        <MRT_ToggleFiltersButton
+                            table={table}
+                            sx={{
+                                color: "var(--text-color)",
+                                backgroundColor: "var(--bg-color-200)",
+                                borderRadius: 1,
+                                p: 1,
+                                "&:hover": {
+                                    backgroundColor: "var(--bg-color-300)",
+                                },
+                            }}
+                        />
                     </Box>
                     <Box>
-                        <button className="flex w-full items-center justify-center gap-2 rounded bg-teal-500 px-4 py-2 text-white hover:bg-teal-700 lg:w-auto" onClick={() => toggleForm(null)}>
+                        <button className="flex w-full items-center justify-center gap-2 rounded bg-[var(--bg-color-200)] px-4 py-2 text-[var(--text-color)] hover:bg-[var(--bg-color-300)] lg:w-auto" onClick={() => toggleForm(null)}>
                             <FaPlus size={28}/>
                             Add
                         </button>

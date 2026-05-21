@@ -53,10 +53,10 @@ export default function ExperimentForm({formData, setFormData, biomaterials, stu
 
             <div className="flex flex-row gap-4 items-center">
                 <label className="font-bold">Start Date:</label>
-                <input type="date" value={formData?.start_date ?? ""} onChange={(e) => setFormData(prev => ({...prev, start_date: e.target.value}))} className="w-full p-2 rounded border border-gray-400"/>
+                <input type="date" value={formData?.start_date ?? ""} onChange={(e) => setFormData(prev => ({...prev, start_date: e.target.value}))} className="w-full p-2 rounded border border-gray-400 bg-[var(--bg-color-100)]"/>
 
                 <label className="font-bold">End Date:</label>
-                <input type="date" value={formData?.end_date ?? ""} onChange={(e) => setFormData(prev => ({...prev, end_date: e.target.value}))} className="w-full p-2 rounded border border-gray-400"/>
+                <input type="date" value={formData?.end_date ?? ""} onChange={(e) => setFormData(prev => ({...prev, end_date: e.target.value}))} className="w-full p-2 rounded border border-gray-400 bg-[var(--bg-color-100)]"/>
             </div>
 
             <div className="flex flex-row gap-4 items-center">
@@ -81,19 +81,25 @@ export default function ExperimentForm({formData, setFormData, biomaterials, stu
 
             <label className="font-bold">Status:</label>
             <div className="flex flex-row justify-center">
-                <button type="button" key={"Completed"}  className={`rounded-l-lg rounded-r-none border border-gray-400 p-3 w-full ${selectedStatus === "Completed" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                <button type="button" key={"Completed"}  className={`rounded-l-lg rounded-r-none border border-gray-400 p-3 w-full 
+                ${selectedStatus === "Completed" ? "bg-[var(--bg-color-200)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
+                onClick={() => {
                     setSelectedStatus("Completed");
                     setFormData(prev => ({...prev, status: "Completed"}));
                 }}>
                     Completed
                 </button>
-                <button type="button" key={"In Progress"} className={`border border-gray-400 p-3 w-full ${selectedStatus === "In Progress" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                <button type="button" key={"In Progress"} className={`border border-gray-400 p-3 w-full 
+                ${selectedStatus === "In Progress" ? "bg-[var(--bg-color-200)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
+                onClick={() => {
                     setSelectedStatus("In Progress");
                     setFormData(prev => ({...prev, status: "In Progress"}));
                 }}>
                     In Progress
                 </button>
-                <button type="button" key={"Failed"} className={`rounded-l-none rounded-r-md border border-gray-400 p-3 w-full ${selectedStatus === "Failed" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                <button type="button" key={"Failed"} className={`rounded-l-none rounded-r-md border border-gray-400 p-3 w-full 
+                ${selectedStatus === "Failed" ? "bg-[var(--bg-color-200)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
+                onClick={() => {
                     setSelectedStatus("Failed");
                     setFormData(prev => ({...prev, status: "Failed"}));
                 }}>

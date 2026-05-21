@@ -16,7 +16,7 @@ export default function ProjectSearch() {
         </div>
 
         <div className="flex flex-col gap-2">
-            <h1 className="text-xl font-bold">Dynamic Search Results</h1>
+            <h1 className="text-xl font-bold text-[var(--text-color)]">Dynamic Search Results</h1>
 
             <ProjectSearchResults searchTerm={searchTerm} />
         </div>

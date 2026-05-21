@@ -30,26 +30,26 @@ export default function ProfileButton() {
 
   return (
     <div className="relative" ref={divRef}>
-        <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
+        <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors text-[var(--text-color)] hover:bg-[var(--bg-color-100)]" onClick={() => setIsOpen(!isOpen)}>
             <CgProfile size={24} />
             Profile
         </button>
 
         {isOpen && (
-                <div className="absolute right-0 mt-2 w-64 rounded-lg bg-white shadow-lg flex flex-col p-4 gap-2 z-10">
+                <div className="absolute right-0 mt-2 w-64 rounded-lg bg-[var(--bg-color-100)] text-[var(--text-color)] shadow-lg flex flex-col p-4 gap-2 z-10">
                     <div className="flex flex-col">
                         <span className="font-bold">{keycloak.idTokenParsed?.name}</span>
-                        <span className="text-sm text-gray-500">{keycloak.idTokenParsed?.email}</span>
+                        <span className="text-sm text-[var(--text-color)]">{keycloak.idTokenParsed?.email}</span>
                     </div>
 
                     <div className="border-t border-gray-400"/>
 
                     <div className="flex flex-col gap-2">
-                        <button className="text-left hover:bg-gray-200 py-1 px-2 rounded flex flex-row items-center gap-4" onClick={() => navigate("/settings")}>
+                        <button className="text-left hover:bg-[var(--bg-color-100)] py-1 px-2 rounded flex flex-row items-center gap-4" onClick={() => navigate("/settings")}>
                             <FaCog size={24}/>
                             <h1 className="text-lg">Settings</h1>
                         </button>
-                        <button className="text-left hover:bg-gray-200 py-1 px-2 rounded flex flex-row items-center gap-4" onClick={() => navigate("/help_support")}>
+                        <button className="text-left hover:bg-[var(--bg-color-100)] py-1 px-2 rounded flex flex-row items-center gap-4" onClick={() => navigate("/help_support")}>
                             <FaQuestionCircle size={24} />
                             <h1 className="text-lg">Help</h1>
                         </button>

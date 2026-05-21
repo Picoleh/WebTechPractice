@@ -29,8 +29,8 @@ export default function ProjectSearchResult({title, content, searchTerm, path, i
         content.length > 0 && (
         <div className="flex flex-col justify-center gap-4">
             <div className="flex flex-row gap-2">
-                {icon({size: 32, className: ""})}
-                <h1 className="text-2xl font-semibold">{title}</h1>
+                {icon({size: 32, className: "text-[var(--text-color)]"})}
+                <h1 className="text-2xl font-semibold text-[var(--text-color)]">{title}</h1>
             </div>
 
             <div className="flex flex-row gap-8 justify-start flex-wrap">

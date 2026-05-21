@@ -31,19 +31,25 @@ export default function ResearchTechForm({formData, setFormData}: ResearchTechFo
 
             <label className="font-bold">Cost Level:</label>
             <div className="flex flex-row justify-center">
-                <button type="button" key={"High"}  className={`rounded-l-lg rounded-r-none border border-gray-400 p-3 w-full ${selectedCostLevel === "High" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                <button type="button" key={"High"}  className={`rounded-l-lg rounded-r-none border border-gray-400 p-3 w-full 
+                ${selectedCostLevel === "High" ? "bg-[var(--bg-color-200)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
+                onClick={() => {
                     setSelectedCostLevel("High");
                     setFormData(prev => ({...prev, cost_level: "High"}));
                 }}>
                     High
                 </button>
-                <button type="button" key={"Moderate"} className={`border border-gray-400 p-3 w-full ${selectedCostLevel === "Moderate" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                <button type="button" key={"Moderate"} className={`border border-gray-400 p-3 w-full 
+                ${selectedCostLevel === "Moderate" ? "bg-[var(--bg-color-200)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
+                onClick={() => {
                     setSelectedCostLevel("Moderate");
                     setFormData(prev => ({...prev, cost_level: "Moderate"}));
                 }}>
                     Moderate
                 </button>
-                <button type="button" key={"Low"} className={`rounded-l-none rounded-r-md border border-gray-400 p-3 w-full ${selectedCostLevel === "Low" ? "bg-gray-200 border-teal-600 border-2 text-teal-600" : "bg-white"}`} onClick={() => {
+                <button type="button" key={"Low"} className={`rounded-l-none rounded-r-md border border-gray-400 p-3 w-full 
+                ${selectedCostLevel === "Low" ? "bg-[var(--bg-color-200)] border-teal-600 border-2 text-teal-600" : "bg-[var(--bg-color-100)]"}`} 
+                onClick={() => {
                     setSelectedCostLevel("Low");
                     setFormData(prev => ({...prev, cost_level: "Low"}));
                 }}>

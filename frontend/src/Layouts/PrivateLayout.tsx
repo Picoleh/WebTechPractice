@@ -18,7 +18,7 @@ export default function PrivateLayout() {
     };
 
     return(
-        <div className="flex min-h-screen flex-row overflow-hidden bg-gray-100">
+        <div className="flex min-h-screen flex-row overflow-hidden bg-[var(--bg-color)]">
             <AsideMenu isSideBarOpen={isSideBarOpen} toggleSideBar={toggleSideBar}/>
 
             <div className="flex flex-1 flex-col overflow-hidden">

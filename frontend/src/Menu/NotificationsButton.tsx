@@ -24,15 +24,15 @@ export default function NotificationsButton() {
 
     return(
         <div className="relative" ref={divRef}>
-            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-200" onClick={() => setIsOpen(!isOpen)}>
+            <button className="flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors text-[var(--text-color)] hover:bg-[var(--bg-color-100)]" onClick={() => setIsOpen(!isOpen)}>
                 <IoIosNotificationsOutline size={24}/>
                 Notifications
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-64 rounded-lg bg-white shadow-lg" >
+                <div className="absolute right-0 mt-2 w-64 rounded-lg bg-[var(--bg-color-100)] shadow-lg" >
                     <div className="p-4">
-                        <p className="text-sm text-gray-700">No new notifications</p>
+                        <p className="text-sm text-[var(--text-color)]">No new notifications</p>
                     </div>
                 </div>
             )}

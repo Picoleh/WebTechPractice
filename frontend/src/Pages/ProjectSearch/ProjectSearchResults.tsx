@@ -26,7 +26,7 @@ export default function ProjectSearchResults({searchTerm}: {searchTerm: string})
     }, [searchTerm]);
 
     return (
-        <div className="bg-white w-full rounded-lg flex flex-col items-start gap-8 p-6">
+        <div className="bg-[var(--bg-color)] w-full rounded-lg flex flex-col items-start gap-8 p-6">
             {searchTerm.length > 2 ? (
                 <>
                     
@@ -46,7 +46,7 @@ export default function ProjectSearchResults({searchTerm}: {searchTerm: string})
                     
                 </>
                 ) : (
-                <span className="text-gray-500">Please enter at least 3 characters to search.</span>
+                <span className="text-[var(--text-color)]">Please enter at least 3 characters to search.</span>
                  )
             }
         </div>
