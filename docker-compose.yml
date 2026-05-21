@@ -54,6 +54,7 @@ services:
       KC_DB_URL_PORT: 5432
       KC_DB_URL_DATABASE: postgres
 
+      KC_HOSTNAME: localhost
       KC_DB_USERNAME: postgres
       KC_DB_PASSWORD: root
 

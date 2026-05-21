@@ -13,12 +13,15 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { MdOutlineLock, MdOutlineVerifiedUser } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 import { BsPencil } from "react-icons/bs";
+import { useAlert } from "../../Util/Hooks/useAlert";
+import Alert from "../../Util/Alert";
 
 export default function Settings() {
     const { keycloak } = useKeycloak();
     const [user, setUser] = useState<User | null>(null);
     const [selectedTheme, setSelectedTheme] = useState<string>("Light");
     const [imgPath, setImgPath] = useState<string>("");
+    const { alert, showAlert, closeAlert } = useAlert();
 
     async function loadProfileImage(profileImagePath: string = imgPath) {
         console.log("loadinf prof info " + profileImagePath + "*");
@@ -55,19 +58,32 @@ export default function Settings() {
     };
 
     async function handlePasswordChange() {
-        keycloak.login({
+        await keycloak.login({
             action: "UPDATE_PASSWORD"
         })
     }
 
     async function handleVerifyEmail() {
-        keycloak.login({
-            action: "VERIFY_EMAIL"
-        })
+        if(keycloak.idTokenParsed?.email_verified) {
+            showAlert("Your email is already verified.", "info");
+            return;
+        }
+        try{
+            await fetchData(`users/verify-email?keycloak_id=${keycloak.tokenParsed?.sub}`)
+
+            showAlert("Verification email sent successfully.", "success");
+        }
+        catch (error) {
+            console.error("Error sending verification email:", error);
+            showAlert("Failed to send verification email.", "error");
+        }
+
+
     }
 
     return (
         <div className="flex flex-col mt-8 gap-6">
+            <Alert message={alert.message} type={alert.type} isOpen={alert.isOpen} triggerId={alert.triggerId} onClose={closeAlert}/>
             <SettingsCard title="Profile" icon={GoPerson}>
                 <div className="flex flex-col justify-center items-center lg:flex-row lg:justify-start lg:items-start lg:p-4 lg:gap-16">
                     <div className="relative">
